@@ -761,3 +761,22 @@ textarea::placeholder,.field input::placeholder{color:#6b6b6b}
 .consent-dialog p{font-size:17px;line-height:1.6;margin:0 0 20px}
 .consent-action{display:block;width:100%;margin:12px 0;padding:14px;border:2px solid #141414;border-radius:10px;background:#fff;color:#141414;font:700 17px sans-serif;cursor:pointer;min-height:48px}
 .consent-close{border:0;background:transparent;color:#141414;font:16px sans-serif;text-decoration:underline;min-height:44px;cursor:pointer;width:100%}
+
+
+/* Argentina: lettore delle telecronache */
+.pp-big[role="button"]{cursor:pointer;border-radius:50%;outline-offset:8px}
+.pp-big[role="button"]:focus-visible{outline:3px solid var(--acc)}
+.pp-disc.audio-active .pp-big svg{animation:vin-audio-spin 3.6s linear infinite}
+@keyframes vin-audio-spin{to{transform:rotate(360deg)}}
+.vin-audio{max-width:530px;margin:22px 0 4px;padding:16px 18px;border:1px solid color-mix(in srgb,var(--acc) 45%,transparent);border-radius:18px;background:linear-gradient(130deg,rgba(116,172,223,.13),rgba(255,255,255,.035));box-shadow:0 12px 26px rgba(0,0,0,.13)}
+.vin-audio-top,.vin-audio-bar{display:flex;align-items:center;gap:14px}
+.vin-audio-top{justify-content:space-between;margin-bottom:12px}
+.vin-audio-kicker{font:800 12px/1.2 var(--text);text-transform:uppercase;letter-spacing:.11em;color:var(--acc)}
+.vin-audio-time{font:700 12px/1 var(--text);color:var(--soft);font-variant-numeric:tabular-nums}
+.vin-audio-btn{border:0;border-radius:99px;padding:12px 17px;min-height:44px;white-space:nowrap;background:var(--acc);color:var(--onAcc);font:800 15px/1 var(--text);cursor:pointer}
+.vin-audio-btn:hover{filter:brightness(1.12)}
+.vin-audio-btn:focus-visible,.vin-audio-seek:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.vin-audio-seek{flex:1;min-width:55px;accent-color:var(--acc);cursor:pointer}
+.vin-audio-seek:disabled{opacity:.4;cursor:default}
+.vin-audio-status{display:block;color:var(--soft);font-size:12px;min-height:1em;margin-top:7px}
+@media (prefers-reduced-motion:reduce){.pp-disc.audio-active .pp-big svg{animation:none}}

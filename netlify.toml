@@ -1,42 +1,17 @@
-functionsDirectory = "C:\\Users\\yass\\Desktop\\vinilazo_sito (6)\\netlify\\functions"
-functionsDirectoryOrigin = "config"
-headersOrigin = "config"
-plugins = []
-redirects = []
-
 [build]
-publish = "C:\\Users\\yass\\Desktop\\vinilazo_sito (6)"
-publishOrigin = "config"
-functions = "C:\\Users\\yass\\Desktop\\vinilazo_sito (6)\\netlify\\functions"
-
-  [build.environment]
-
-  [build.processing]
-
-    [build.processing.css]
-
-    [build.processing.html]
-
-    [build.processing.images]
-
-    [build.processing.js]
-
-  [build.services]
+publish = "."
+functions = "netlify/functions"
 
 [functions]
-
-  [functions."*"]
   node_bundler = "esbuild"
 
 [[headers]]
 for = "/assets/*"
-
   [headers.values]
   Cache-Control = "public, max-age=604800"
 
 [[headers]]
 for = "/*"
-
   [headers.values]
   X-Content-Type-Options = "nosniff"
   Referrer-Policy = "strict-origin-when-cross-origin"
