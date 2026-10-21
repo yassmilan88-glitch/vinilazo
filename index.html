@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VINILAZO</title>
+<meta name="description" content="VINILAZO – mini record player for your fridge with your team's legendary goals. Worldwide shipping.">
+<link rel="alternate" hreflang="it" href="/it/">
+<link rel="alternate" hreflang="es" href="/es/">
+<link rel="alternate" hreflang="fr" href="/fr/">
+<link rel="alternate" hreflang="en" href="/en/">
+<link rel="alternate" hreflang="de" href="/de/">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#08142A;color:#F3F6FB;font:20px system-ui,sans-serif;text-align:center}a{color:#74ACDF;margin:0 .4em}</style>
+<script>
+(function(){
+  var langs=["it", "es", "fr", "en", "de"], pick="en";
+  var prefs=(navigator.languages||[navigator.language||"en"]).map(function(x){return (x||"").slice(0,2).toLowerCase();});
+  for(var i=0;i<prefs.length;i++){ if(langs.indexOf(prefs[i])>-1){ pick=prefs[i]; break; } }
+  location.replace("/"+pick+"/"+location.search+location.hash);
+})();
+</script>
+</head>
+<body><p>VINILAZO<br><a href="/it/">Italiano</a> · <a href="/es/">Español</a> · <a href="/fr/">Français</a> · <a href="/en/">English</a> · <a href="/de/">Deutsch</a></p></body>
+</html>
