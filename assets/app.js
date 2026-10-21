@@ -131,6 +131,9 @@
       hd += '<li style="--i:' + i + '"><a href="' + href + '"' + (!pp && i < nSt ? ' data-story="' + (i + 1) + '"' : "") + ' aria-label="' + label + '">' +
             '<span class="hd-disc">' + pic + "</span>" + '<span class="hd-name">' + esc(g[0]) + "</span>" +
             (pp ? '<span class="hd-more">' + esc(T.details) + " ▸</span>" : "") + "</a></li>";
+      var shot = ((DATA.celebrations || {})[t.id] || {})[i + 1];
+      var shotImg = shot ? '<img class="story-goal-photo" src="' + esc(shot.src) + '" alt="" loading="lazy" decoding="async">' : "";
+      var shotCredit = shot ? '<a class="story-goal-credit" href="' + esc(shot.page) + '" target="_blank" rel="noopener">' + esc(shot.credit) + ' ↗</a>' : "";
       var st = (t.st || [])[i], q = "";
       if (!st) return;
       if (st.q) {
@@ -140,10 +143,10 @@
       // prima pagina vera (o foto d'epoca) del giorno dopo, quando ce l'abbiamo
       var cl = press[i + 1], clip = cl ? '<figure class="s-clip"><img src="' + cl.src + '" width="' + cl.w + '" height="' + cl.h + '" alt="' + esc(cl.cap) + '" loading="lazy" decoding="async">' +
                "<figcaption>" + esc(cl.cap) + " · " + (cl.page ? '<a href="' + cl.page + '" target="_blank" rel="noopener">' : "<span>") + esc(cl.credit + " – " + cl.lic) + (cl.page ? "</a>" : "</span>") + "</figcaption></figure>" : "";
-      cards += '<article class="story rv' + (clip ? " has-clip" : "") + '" id="storia-' + (i + 1) + '"><div class="sdisc">' + pic + "</div><div>" +
+      cards += '<article class="story rv' + (clip ? " has-clip" : "") + (shot ? " has-goal-photo" : "") + '" id="storia-' + (i + 1) + '">' + shotImg + '<div class="sdisc">' + pic + "</div><div>" +
                '<h3><span class="s-n">' + (i + 1) + "</span>" + esc(g[0]) + " <small>" + esc(g[1]) + "</small></h3>" +
                (st.m ? '<p class="memory"><span class="memory-k">' + esc(T.memory_word) + "</span>" + esc(st.m) + "</p>" : "") +
-               "<p>" + esc(st.s) + "</p>" + clip + '<p class="fact"><b>' + esc(pp ? T.fact_curio : T.fact_label) + "</b> " + esc(st.f) + "</p>" + q +
+               "<p>" + esc(st.s) + "</p>" + clip + '<p class="fact"><b>' + esc(pp ? T.fact_curio : T.fact_label) + "</b> " + esc(st.f) + "</p>" + shotCredit + q +
                (pp ? '<a class="read-more" href="' + pp + "#disco-" + (i + 1) + '">' + esc(T.read_more) + " ▸</a>" : "") + "</div></article>";
     });
     var cta = $("#hd-cta");

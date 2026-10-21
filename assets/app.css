@@ -794,3 +794,19 @@ textarea::placeholder,.field input::placeholder{color:#6b6b6b}
 .pp #dischi,.pp .pp-disc,.pp #pp-order{scroll-margin-top:155px}
 .stack>.cv:only-child{transform:translate(0,0) rotate(4deg)}
 @media(max-width:700px){.pp-shortcuts{top:calc(env(safe-area-inset-top,0px) + 62px);justify-content:space-between;gap:4px;padding:8px 7px}.pp-shortcuts>a,.pp-shortcuts-menu>summary{font-size:11px;padding:8px 7px}.pp-shortcuts>a:nth-child(2){display:none}.pp-shortcuts-list{position:absolute;right:-60px;left:auto;width:min(320px,94vw)}.pp #dischi,.pp .pp-disc,.pp #pp-order{scroll-margin-top:135px}}
+
+/* Fotografie archiviate delle esultanze: il disco e i testi restano in primo piano */
+.story.has-goal-photo{position:relative;isolation:isolate;overflow:hidden;background:#08142a;min-height:235px}
+.story-goal-photo{position:absolute!important;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 32%;opacity:.38;filter:saturate(.78);z-index:-2!important;pointer-events:none}
+.story.has-goal-photo::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,rgba(8,20,42,.94),rgba(8,20,42,.78) 40%,rgba(8,20,42,.42))}
+.story.has-goal-photo>.sdisc,.story.has-goal-photo>div{position:relative;z-index:1}
+.story-goal-credit{display:inline-block;color:var(--soft);font-size:12px;text-decoration:underline;text-underline-offset:3px;margin-top:8px}
+.pp-disc.has-goal-photo{position:relative;isolation:isolate;overflow:hidden}
+.pp-disc>.pp-goal-photo{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;object-position:center 32%;opacity:.34;pointer-events:none}
+.pp-disc.has-goal-photo::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,rgba(8,20,42,.82),rgba(8,20,42,.77) 55%,rgba(8,20,42,.64))}
+.pp-disc.has-goal-photo>.pp-media,.pp-disc.has-goal-photo>.pp-text{position:relative;z-index:1}
+.pp-disc .pp-goal-credit{display:block;color:var(--soft);font-size:12px;text-decoration:underline;text-underline-offset:3px;margin-top:8px}
+.ix-list a.has-goal-photo{position:relative;isolation:isolate;overflow:hidden;background:rgba(255,255,255,.035)}
+.ix-list .ix-goal-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.32;z-index:-1;pointer-events:none;filter:saturate(.7)}
+.ix-list a.has-goal-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,20,42,.9),transparent 70%);z-index:-1;pointer-events:none}
+@media(max-width:700px){.story-goal-photo{opacity:.26}.story.has-goal-photo::before{background:linear-gradient(90deg,rgba(8,20,42,.87),rgba(8,20,42,.65))}.pp-disc>.pp-goal-photo{opacity:.23}}
