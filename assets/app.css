@@ -780,3 +780,17 @@ textarea::placeholder,.field input::placeholder{color:#6b6b6b}
 .vin-audio-seek:disabled{opacity:.4;cursor:default}
 .vin-audio-status{display:block;color:var(--soft);font-size:12px;min-height:1em;margin-top:7px}
 @media (prefers-reduced-motion:reduce){.pp-disc.audio-active .pp-big svg{animation:none}}
+
+/* Scorciatoie in evidenza e invito all'ascolto sui dischi Argentina */
+.pp-shortcuts{position:sticky;top:calc(env(safe-area-inset-top,0px) + 68px);z-index:39;display:flex;align-items:center;justify-content:center;gap:8px;padding:9px 16px;background:rgba(8,20,42,.95);border-bottom:1px solid rgba(116,172,223,.36);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.pp-shortcuts>a,.pp-shortcuts-menu>summary{display:flex;align-items:center;justify-content:center;min-height:40px;padding:8px 14px;color:var(--ink);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.17);border-radius:999px;font:800 14px/1.15 var(--text);text-decoration:none;white-space:nowrap;cursor:pointer}
+.pp-shortcuts>a:hover,.pp-shortcuts-menu>summary:hover{background:rgba(116,172,223,.22)}
+.pp-shortcuts .pp-shortcut-order{background:var(--acc);color:var(--onAcc);border-color:var(--acc)}
+.pp-shortcuts-menu{position:relative}.pp-shortcuts-menu>summary{list-style:none}.pp-shortcuts-menu>summary::-webkit-details-marker{display:none}
+.pp-shortcuts-list{position:absolute;right:0;top:calc(100% + 8px);display:grid;grid-template-columns:repeat(2,minmax(110px,1fr));gap:4px;width:min(360px,90vw);max-height:60vh;overflow:auto;padding:12px;background:#0b1c37;border:1px solid rgba(116,172,223,.5);border-radius:16px;box-shadow:0 12px 36px rgba(0,0,0,.45)}
+.pp-shortcuts-list a{padding:10px;border-radius:9px;color:white;text-decoration:none;font-size:14px}.pp-shortcuts-list a:hover{background:rgba(255,255,255,.12)}
+.pp-listen-hero{display:inline-flex;align-items:center;gap:8px;width:fit-content;margin:22px 0 0;padding:12px 18px;border-radius:99px;border:2px solid var(--acc);background:rgba(116,172,223,.16);color:#fff;font:900 clamp(16px,2vw,20px)/1.2 var(--text);text-decoration:none;box-shadow:0 0 25px rgba(116,172,223,.20);transition:transform .2s,background .2s}
+.pp-listen-hero:hover{transform:translateY(-3px);background:rgba(116,172,223,.28)}
+.pp #dischi,.pp .pp-disc,.pp #pp-order{scroll-margin-top:155px}
+.stack>.cv:only-child{transform:translate(0,0) rotate(4deg)}
+@media(max-width:700px){.pp-shortcuts{top:calc(env(safe-area-inset-top,0px) + 62px);justify-content:space-between;gap:4px;padding:8px 7px}.pp-shortcuts>a,.pp-shortcuts-menu>summary{font-size:11px;padding:8px 7px}.pp-shortcuts>a:nth-child(2){display:none}.pp-shortcuts-list{position:absolute;right:-60px;left:auto;width:min(320px,94vw)}.pp #dischi,.pp .pp-disc,.pp #pp-order{scroll-margin-top:135px}}

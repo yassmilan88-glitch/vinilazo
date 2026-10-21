@@ -12,7 +12,7 @@
 <meta name="theme-color" content="#08142A">
 <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="../../assets/fonts/BigShouldersDisplay.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../assets/app.css?v=27">
+<link rel="stylesheet" href="../../assets/app.css?v=30">
 <script>document.documentElement.classList.add("js");</script>
 </head>
 <body class="pp">
@@ -25,6 +25,12 @@
     <label class="lang"><span class="sr">Sprache</span><select id="lang-select"><option value="it">Italiano</option><option value="es">Español</option><option value="fr">Français</option><option value="en">English</option><option value="de" selected>Deutsch</option></select></label>
   </div>
 </header>
+<nav class="pp-shortcuts" aria-label="Schnellzugriff">
+  <a href="#dischi">🎧 Platten anhören</a>
+  <a href="#disco-1">📰 Die Geschichten</a>
+  <details class="pp-shortcuts-menu"><summary>Tor auswählen <span aria-hidden="true">⌄</span></summary><div class="pp-shortcuts-list"><a href="#disco-1">1. Maradona</a><a href="#disco-2">2. Burruchaga</a><a href="#disco-3">3. Messi</a><a href="#disco-4">4. Montiel</a><a href="#disco-5">5. Messi</a><a href="#disco-6">6. Maradona</a><a href="#disco-7">7. Kempes</a><a href="#disco-8">8. Di María</a><a href="#disco-9">9. Messi</a></div></details>
+  <a class="pp-shortcut-order" href="#pp-order">🛒 Bestellen</a>
+</nav>
 <main id="main">
   <section class="hero pp-hero has-press" aria-labelledby="h1">
     <div class="paper paper-real" aria-hidden="true"><div class="stack" id="sheet"><figure class="cv cv-1"><img src="../../assets/img/press/eg-3065-1978.webp" width="900" height="1246" alt="" decoding="async"><span class="cv-year">1978</span></figure><figure class="cv cv-2"><img src="../../assets/img/press/eg-3482-1986.webp" width="900" height="1175" alt="" decoding="async"><span class="cv-year">1986</span></figure><figure class="cv cv-3"><img src="../../assets/img/press/la-nacion-2022.webp" width="900" height="1159" alt="" decoding="async" fetchpriority="high"><span class="cv-year">2022</span></figure></div></div>
@@ -34,6 +40,7 @@
       <p class="edition"><svg class="disc ed-disc" viewBox="0 0 200 200" aria-hidden="true"></svg><span>Edition Argentinien</span><span class="ready">Sofort lieferbar</span></p>
       <h1 id="h1" class="pp-h1">Die 9 Platten Argentiniens</h1>
       <p class="sub">Neun Tore, neun Geschichten. Tipp auf eine Platte und lies, wie es war – mit den Worten der Zeitungen und Kommentatoren von damals.</p>
+      <a class="pp-listen-hero" href="#dischi">🎧 Tippe auf eine Platte und hör das Tor <span aria-hidden="true">↓</span></a>
       <div class="buy"><a class="btn btn-acc" href="../?team=argentina#ordina">Hol dir deinen VINILAZO · 69 €</a></div>
       <p class="fine">Sofort lieferbar: geht direkt raus. Weltweiter Versand inklusive.</p>
     </div>
@@ -216,7 +223,7 @@
   </div>
 </section>
 
-  <section class="pp-order rv" aria-labelledby="po-h">
+  <section class="pp-order rv" id="pp-order" aria-labelledby="po-h">
     <h2 id="po-h">Alle 9 Platten im leuchtenden Rahmen</h2>
     <p class="fine">Sofort lieferbar: geht direkt raus. Weltweiter Versand inklusive.</p>
     <a class="btn btn-acc pp-obtn" href="../?team=argentina#ordina"><span>Albiceleste-Edition bestellen</span><b data-price>69 €</b></a>
