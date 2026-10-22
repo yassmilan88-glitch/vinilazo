@@ -61,3 +61,33 @@
 @keyframes vz-editorial-reveal{0%{opacity:0;transform:translateX(-54px) translateY(22px);filter:blur(7px)}70%{opacity:1;filter:blur(0)}100%{opacity:1;transform:none;filter:none}}
 @keyframes vz-editorial-punch{0%{opacity:0;transform:translateX(-55px) scale(.86);filter:blur(9px)}70%{opacity:1;transform:translateX(5px) scale(1.045);filter:none}100%{opacity:1;transform:none;filter:none}}
 @media(prefers-reduced-motion:reduce){.moment #moment-h.vz-head-play,.moment .poem p.vz-copy-line.vz-in,.moment .poem p.vz-copy-line.vz-in.hit,.moment .moment-after.vz-in{animation:none!important;opacity:1;transform:none;filter:none}}
+
+/* Homepage light pass v6: clearer hierarchy, fewer composited effects */
+.hero{background:radial-gradient(850px 530px at 76% 44%,var(--navy3),var(--navy) 74%)}
+.hero-copy{gap:clamp(10px,1.5vw,14px)}
+.hero-stage .halo{opacity:.36;filter:none}
+.hero-stage .kit{opacity:.27;filter:none}
+.hero-stage .product{filter:drop-shadow(0 18px 22px rgba(0,0,0,.36))}
+.hero .quote::before{text-shadow:none}
+.topbar{font-weight:550;letter-spacing:0}
+.topbar li{opacity:.8}
+.moment{background:radial-gradient(circle at 90% 50%,color-mix(in srgb,var(--acc) 14%,transparent) 0,transparent 52%),var(--deep)}
+.moment::after{opacity:.22;animation:none}
+.moment h2::after,.poem p.hit::after{box-shadow:none}
+@media(max-width:700px){
+ .topbar{padding:5px 12px;font-size:12px;gap:8px}
+ .topbar li:nth-child(n+2){display:none}
+ .hero{min-height:auto;padding-top:20px;padding-bottom:48px;gap:14px}
+ .hero-copy{gap:10px}
+ .hero .quote{font-size:clamp(42px,10vw,64px)}
+ .hero-stage .halo{opacity:.25}
+ .hero-stage .kit{opacity:.16}
+ .hero-stage .product{filter:drop-shadow(0 12px 16px rgba(0,0,0,.3))}
+ .moment{padding-top:64px;padding-bottom:70px}
+ .moment::after{display:none}
+ .wm-disc,.sticky-disc{animation:none}
+ .vz-nav-links{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+}
+@media(prefers-reduced-motion:reduce){
+ .moment #moment-h.vz-head-play,.moment .poem p.vz-copy-line.vz-in{animation:none!important}
+}
