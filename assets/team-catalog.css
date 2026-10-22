@@ -532,3 +532,30 @@ body:not(.vz-catalog-mode) .hero-copy .vz-sub-extra[hidden]{display:none!importa
 .vz-choice-orb-mark .vz-trophy-icon{display:grid;place-items:center;width:64%;height:70%;filter:drop-shadow(0 5px 12px #0008)}
 .vz-choice-orb-mark .vz-trophy-icon svg{display:block;width:100%;height:100%;max-height:125px}
 .vz-choice-orb-mark{display:grid!important;place-items:center!important}
+
+
+/* VINILAZO — curated 30-photo supporters cinematic rail */
+.vz-fans{position:relative;isolation:isolate}
+.vz-fans::before{content:"";position:absolute;inset:4% -15% 18%;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 30% 50%,#30608f25,transparent 38%),radial-gradient(ellipse at 77% 60%,#e4bb5920,transparent 40%);animation:vz-fans-ambient 10s ease-in-out infinite alternate}
+@keyframes vz-fans-ambient{to{opacity:.38;transform:translateX(2%)}}
+.vz-fans-grid.vz-fans-ready{width:100%;display:flex;gap:clamp(13px,2vw,25px);max-width:none;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scroll-padding-inline:clamp(15px,7vw,100px);padding:16px clamp(15px,7vw,100px) 25px;scrollbar-width:thin;scrollbar-color:#6485a0 #07162a}
+.vz-fans-grid.vz-fans-ready .vz-fans-card{flex:0 0 clamp(230px,28vw,375px);height:auto;aspect-ratio:4/5;scroll-snap-align:start;scroll-snap-stop:normal;opacity:1;transform:none}
+.vz-fans-grid.vz-fans-ready .vz-fans-photo{object-fit:cover}
+.vz-fans-grid.vz-fans-ready .vz-fans-card:hover{box-shadow:0 18px 65px #3c75ad40,0 0 0 1px #a8d5ff66}
+.vz-fans-controls{display:flex;align-items:center;justify-content:center;gap:clamp(18px,4vw,35px);padding:17px 10px 0}
+.vz-fans-arrow{appearance:none;display:grid;place-items:center;width:45px;height:45px;border-radius:50%;border:1px solid #a5d5ff65;background:#142d4b;color:#f1faff;font:800 23px/1 system-ui,sans-serif;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,background .2s}
+.vz-fans-arrow:hover,.vz-fans-arrow:focus-visible{background:#24587e;transform:translateY(-2px);box-shadow:0 0 25px #79befb36}
+.vz-fans-status{font:800 13px/1.1 system-ui,sans-serif;letter-spacing:.18em;color:#bddaf5;min-width:80px;text-align:center;font-variant-numeric:tabular-nums}
+.vz-fans-caption{padding:25px 19px 19px;gap:9px}
+.vz-fans-caption strong{font-size:clamp(22px,2.1vw,30px);line-height:1.08}
+.vz-fans-credit{font-size:10px;max-width:100%;line-height:1.45}
+@media(max-width:800px){
+ .vz-fans-grid.vz-fans-ready{gap:12px;padding:13px 15px 22px;scroll-padding-inline:15px}
+ .vz-fans-grid.vz-fans-ready .vz-fans-card{flex-basis:min(79vw,330px)}
+ .vz-fans-controls{padding-top:10px}
+}
+@media(prefers-reduced-motion:reduce){
+ .vz-fans::before{animation:none}
+ .vz-fans-grid.vz-fans-ready{scroll-behavior:auto}
+ .vz-fans-arrow{transition:none}
+}
