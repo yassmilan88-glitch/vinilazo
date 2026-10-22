@@ -28,6 +28,7 @@
     return;
   }
   document.body.classList.add('vz-catalog-mode');
+  var skip=document.querySelector('a[href="#main"]');if(skip)skip.href='#vz-catalog-main';
   if(brand)brand.href='#vz-catalog-main';
   var picker=document.getElementById('team-pick');if(picker)picker.setAttribute('aria-hidden','true');
   var langSelect=document.getElementById('lang-select');
