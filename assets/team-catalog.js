@@ -18,6 +18,24 @@ var teamParam=params.get('team');
 var teamValid=D.teams&&D.teams.some(function(x){return x.id===teamParam});
 var legacy=location.hash&&/^#(ordina|storie|come-funziona|cosa|idea-regalo|il-mio-ordine|chi-siamo|come-si-usa|storia-\d+)$/.test(location.hash);
 function make(tag,cls,content){var e=document.createElement(tag);if(cls)e.className=cls;if(content!==undefined)e.textContent=content;return e}
+var flags={argentina:'🇦🇷',brasile:'🇧🇷',francia:'🇫🇷',spagna:'🇪🇸',italia:'🇮🇹',germania:'🇩🇪',inghilterra:'🇬🇧',portogallo:'🇵🇹',olanda:'🇳🇱',messico:'🇲🇽'};
+var crestSlugs={
+ argentina:'argentina-national-team',brasile:'brazil-national-team',francia:'france-national-team',spagna:'spain-national-team',italia:'italy-national-team',germania:'germany-national-team',inghilterra:'england-national-team',portogallo:'portugal-national-team',olanda:'netherlands-national-team',messico:'mexico-national-team',
+ 'real-madrid':'real-madrid',barcelona:'fc-barcelona','manchester-united':'manchester-united',liverpool:'liverpool-fc',bayern:'bayern-munich',juventus:'juventus',milan:'ac-milan',inter:'inter-milan',psg:'paris-saint-germain-psg','manchester-city':'manchester-city'
+};
+function crestUrl(team){var slug=crestSlugs[team.id];return slug?'https://assets.footylogos.com/logos/'+slug+'/'+slug+'-logo-footylogos.svg':''}
+function teamMark(team,className){
+ var mark=make('span',className);
+ var fallback=team.g==='nat'?(flags[team.id]||'🏆'):(team.code||team.name.slice(0,3)).toUpperCase().slice(0,3);
+ var src=crestUrl(team);
+ if(!src){mark.textContent=fallback;return mark}
+ var img=make('img','vz-crest-image');img.src=src;img.alt='';img.loading=(className==='vz-edition-crest'||className==='vz-header-crest')?'eager':'lazy';
+ img.decoding='async';img.addEventListener('error',function(){
+  if(mark.contains(img)){mark.textContent=fallback;mark.classList.add('vz-crest-fallback')}
+ });
+ mark.append(img);return mark;
+}
+
 if(teamValid||params.has('demo')||legacy){
  var copy=document.querySelector('.hero-copy');
  if(copy&&!copy.querySelector('.vz-back-teams')){var back=make('a','vz-back-teams','← '+t.all);back.href='./';copy.insertBefore(back,copy.firstChild)}
@@ -38,9 +56,33 @@ if(teamValid||params.has('demo')||legacy){
    hiddenText.hidden=expanded;toggle.setAttribute('aria-expanded',String(!expanded));
    toggle.textContent=expanded?l[0]:l[1];
   });
-  sub.append(hiddenText,toggle);
+  sub.append(hiddenText,document.createTextNode(' '),toggle);
  }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',foldDescription,{once:true});else foldDescription();
+ function detailCrests(){
+  (D.teams||[]).forEach(function(team){
+   var button=document.querySelector('#squadre .team[data-team="'+team.id+'"]');if(!button)return;
+   var original=button.querySelector('svg.tflag');if(original)original.replaceWith(teamMark(team,'vz-detail-crest'));
+  });
+  var picker=document.getElementById('team-pick');if(!picker)return;
+  function refreshHeader(){
+   var name=picker.querySelector('[data-team-name]')?.textContent?.trim().toLowerCase();
+   var selected=(D.teams||[]).find(function(team){return team.name.toLowerCase()===name})
+    ||(D.teams||[]).find(function(team){return team.id===new URLSearchParams(location.search).get('team')});
+   if(!selected)return;
+   var old=picker.querySelector('svg.pick-flag')||picker.querySelector('.vz-header-crest');
+   if(old&&old.classList.contains('vz-header-crest')&&old.dataset.teamId===selected.id)return;
+   var mark=teamMark(selected,'vz-header-crest');mark.dataset.teamId=selected.id;
+   if(old)old.replaceWith(mark);else picker.prepend(mark);
+  }
+  refreshHeader();
+  var pending=false;
+  new MutationObserver(function(){
+   if(pending)return;pending=true;
+   queueMicrotask(function(){pending=false;refreshHeader()});
+  }).observe(picker,{subtree:true,childList:true,characterData:true});
+ }
+ function detailInit(){foldDescription();detailCrests()}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',detailInit,{once:true});else detailInit();
  return;
 }
 document.body.classList.add('vz-catalog-mode');
@@ -93,23 +135,6 @@ label.append(emblem,labelName);disc.append(label);
 var gloss=make('div','vz-product-gloss');
 var tag=make('p','vz-product-tag','');
 product.append(aura,backHalo,frame,art,disc,ring,gloss,tag);
-var flags={argentina:'🇦🇷',brasile:'🇧🇷',francia:'🇫🇷',spagna:'🇪🇸',italia:'🇮🇹',germania:'🇩🇪',inghilterra:'🇬🇧',portogallo:'🇵🇹',olanda:'🇳🇱',messico:'🇲🇽'};
-var crestSlugs={
- argentina:'argentina-national-team',brasile:'brazil-national-team',francia:'france-national-team',spagna:'spain-national-team',italia:'italy-national-team',germania:'germany-national-team',inghilterra:'england-national-team',portogallo:'portugal-national-team',olanda:'netherlands-national-team',messico:'mexico-national-team',
- 'real-madrid':'real-madrid',barcelona:'fc-barcelona','manchester-united':'manchester-united',liverpool:'liverpool-fc',bayern:'bayern-munich',juventus:'juventus',milan:'ac-milan',inter:'inter-milan',psg:'paris-saint-germain-psg','manchester-city':'manchester-city'
-};
-function crestUrl(team){var slug=crestSlugs[team.id];return slug?'https://assets.footylogos.com/logos/'+slug+'/'+slug+'-logo-footylogos.svg':''}
-function teamMark(team,className){
- var mark=make('span',className);
- var fallback=team.g==='nat'?(flags[team.id]||'🏆'):(team.code||team.name.slice(0,3)).toUpperCase().slice(0,3);
- var src=crestUrl(team);
- if(!src){mark.textContent=fallback;return mark}
- var img=make('img','vz-crest-image');img.src=src;img.alt='';img.loading=className==='vz-team-logo'?'lazy':'eager';
- img.decoding='async';img.addEventListener('error',function(){
-  if(mark.contains(img)){mark.textContent=fallback;mark.classList.add('vz-crest-fallback')}
- });
- mark.append(img);return mark;
-}
 var flagPatterns={
  argentina:['#74ACDF','#FFFFFF','#74ACDF',180],
  brasile:['#009C3B','#FFDF00','#009C3B',90],
