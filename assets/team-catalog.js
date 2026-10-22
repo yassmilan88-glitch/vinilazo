@@ -38,29 +38,78 @@ left.append(make('p','vz-kicker',t.eyebrow),make('h1','vz-catalog-title',t.title
 var choose=make('div','vz-choose');choose.id='vz-choose';
 choose.append(make('h2','vz-choose-heading',t.choose));
 var choices=make('div','vz-choices');
-function vinylChoice(group,label,subtitle,icon){
+function categorySymbol(group){
+ var ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
+ svg.setAttribute('viewBox','0 0 64 64');svg.setAttribute('aria-hidden','true');svg.classList.add('vz-choice-symbol');
+ svg.setAttribute('fill','none');svg.setAttribute('stroke','currentColor');svg.setAttribute('stroke-width','3');svg.setAttribute('stroke-linecap','round');svg.setAttribute('stroke-linejoin','round');
+ svg.innerHTML=group==='nat'
+  ? '<path d="M23 12h18v13c0 9-4 16-9 16s-9-7-9-16V12Z"/><path d="M23 18H13v5c0 7 4 11 12 11M41 18h10v5c0 7-4 11-12 11"/><path d="M32 41v8m-11 5h22m-18-5h14"/><path d="m32 18 2.1 4.5 4.9.7-3.5 3.4.8 4.8L32 29l-4.3 2.4.8-4.8-3.5-3.4 4.9-.7Z" fill="currentColor" stroke="none"/>'
+  : '<path d="M32 7 51 15v16c0 13-9 21-19 26-10-5-19-13-19-26V15L32 7Z"/><path d="m32 16 4.2 9.3 10 .9-7.6 6.8 2.2 10-8.8-5.2-8.8 5.2 2.2-10-7.6-6.8 10-.9Z" fill="currentColor" stroke="none"/>';
+ return svg;
+}
+function vinylChoice(group,label,subtitle){
  var button=make('button','vz-choice');button.type='button';button.setAttribute('aria-expanded','false');button.setAttribute('aria-controls','vz-teams-stage');button.dataset.group=group;
  var face=make('span','vz-choice-vinyl');
- var centre=make('span','vz-choice-centre');centre.append(make('span','vz-choice-symbol',icon),make('strong','',label));
+ var centre=make('span','vz-choice-centre');centre.append(categorySymbol(group),make('strong','',label));
  face.append(centre);
  button.append(face,make('span','vz-choice-caption',subtitle));
  button.addEventListener('click',function(){openGroup(group)});
  return button;
 }
-var natButton=vinylChoice('nat',t.nat,t.natSub,'🌍');
-var clubButton=vinylChoice('club',t.club,t.clubSub,'★');
+var natButton=vinylChoice('nat',t.nat,t.natSub);
+var clubButton=vinylChoice('club',t.club,t.clubSub);
 choices.append(natButton,clubButton);choose.append(choices);
 var product=make('div','vz-hero-product');
 var aura=make('div','vz-product-aura');
 var backHalo=make('div','vz-product-halo');
-var frame=make('img','vz-product-frame');frame.src='../assets/img/quadro.webp';frame.width=576;frame.height=658;frame.alt='VINILAZO — quadro-giradischi luminoso';
+var frame=make('img','vz-product-frame');frame.src='../assets/img/quadro.webp';frame.width=576;frame.height=658;frame.alt='VINILAZO — quadro-giradischi luminoso, grafica squadra intercambiabile';
+var art=make('div','vz-product-art');art.setAttribute('aria-hidden','true');
 var ring=make('div','vz-product-led');
 var disc=make('div','vz-product-disc');
 var label=make('div','vz-product-label');
-label.append(make('span','vz-product-mini','VINILAZO'),make('strong','', '9 GOL'));
-disc.append(label);
+var emblem=make('span','vz-product-emblem');
+var labelName=make('strong','vz-product-label-name');
+label.append(emblem,labelName);disc.append(label);
 var gloss=make('div','vz-product-gloss');
-product.append(aura,backHalo,frame,ring,disc,gloss,make('p','vz-product-tag',t.tag));
+var tag=make('p','vz-product-tag','');
+product.append(aura,backHalo,frame,art,disc,ring,gloss,tag);
+var flags={argentina:'🇦🇷',brasile:'🇧🇷',francia:'🇫🇷',spagna:'🇪🇸',italia:'🇮🇹',germania:'🇩🇪',inghilterra:'🇬🇧',portogallo:'🇵🇹',olanda:'🇳🇱',messico:'🇲🇽'};
+var flagPatterns={
+ argentina:['#74ACDF','#FFFFFF','#74ACDF',180],
+ brasile:['#009C3B','#FFDF00','#009C3B',90],
+ francia:['#002654','#FFFFFF','#ED2939',90],
+ spagna:['#AA151B','#F1BF00','#AA151B',180],
+ italia:['#009246','#FFFFFF','#CE2B37',90],
+ germania:['#111111','#DD0000','#FFCE00',180],
+ inghilterra:['#FFFFFF','#CF081F','#FFFFFF',90],
+ portogallo:['#046A38','#DA291C','#DA291C',90],
+ olanda:['#AE1C28','#FFFFFF','#21468B',180],
+ messico:['#006847','#FFFFFF','#CE1126',90]
+};
+var featuredIds=['argentina','milan','brasile','barcelona','francia','inter','italia','real-madrid','portogallo','liverpool'];
+var featured=featuredIds.map(function(id){return D.teams.find(function(x){return x.id===id})}).filter(Boolean);
+if(!featured.length)featured=(D.teams||[]).slice(0,8);
+function displayEdition(team){
+ var col=team.cols||['#74ACDF','#FFFFFF','#F6B40E'];
+ var pat=team.g==='nat'?(flagPatterns[team.id]||[col[0],col[1],col[0],90]):[col[0],col[1],col[0],90];
+ product.style.setProperty('--edition-color',col[0]);
+ product.style.setProperty('--art-a',pat[0]);product.style.setProperty('--art-b',pat[1]);product.style.setProperty('--art-c',pat[2]);product.style.setProperty('--art-angle',pat[3]+'deg');
+ art.dataset.kind=team.g;
+ emblem.className='vz-product-emblem'+(team.g==='club'?' vz-product-shield':'');
+ emblem.textContent=team.g==='nat'?(flags[team.id]||'🏆'):(team.code||team.name.slice(0,3)).slice(0,3);
+ labelName.textContent=team.name;
+ tag.textContent=team.name+' · 9';
+ product.setAttribute('aria-label','VINILAZO: '+team.name+', nove dischi intercambiabili');
+}
+displayEdition(featured[0]);
+if(featured.length>1&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+ var editionIndex=0;
+ window.setInterval(function(){
+  if(document.hidden)return;
+  editionIndex=(editionIndex+1)%featured.length;
+  displayEdition(featured[editionIndex]);
+ },4300);
+}
 hero.append(left,product,choose);main.append(hero);
 var stage=make('section','vz-teams-stage');stage.id='vz-teams-stage';stage.hidden=true;stage.setAttribute('aria-live','polite');
 var stageHead=make('div','vz-stage-head');
