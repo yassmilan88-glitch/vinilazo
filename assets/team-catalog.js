@@ -217,11 +217,11 @@ var grid=make('div','vz-flag-grid');stage.append(grid);main.append(stage);
 
 // Editorial newspaper carousel: the press memory becomes a VINILAZO record.
 var pressTx={
- it:['IL GOL FA STORIA','Prima era una prima pagina. Ora è un disco.','Sfoglia i ricordi, ritrova la voce, rivivi quel momento.','Scopri questa squadra','Articolo precedente','Articolo successivo','Giornali d’epoca e ricordi calcistici'],
- es:['EL GOL HACE HISTORIA','Antes era una portada. Hoy es un disco.','Volvé a esas portadas, escuchá aquella voz, reviví ese momento.','Descubrí este equipo','Anterior portada','Siguiente portada','Portadas históricas y recuerdos del fútbol'],
- fr:['LE BUT ENTRE DANS L’HISTOIRE','Hier en une. Aujourd’hui sur un disque.','Retrouvez les unes, la voix du match et cette émotion intacte.','Découvrir cette équipe','Une précédente','Une suivante','Archives de presse et souvenirs de football'],
- en:['WHEN GOALS MAKE HISTORY','Once a front page. Now a record.','See the headlines, hear the voice and relive that instant.','Explore this team','Previous newspaper','Next newspaper','Historic newspaper covers and football memories'],
- de:['TORE SCHREIBEN GESCHICHTE','Damals Titelseite. Heute Schallplatte.','Erlebe die Schlagzeilen, die Stimme und den Moment noch einmal.','Dieses Team entdecken','Vorherige Zeitung','Nächste Zeitung','Historische Zeitungsseiten und Fußballerinnerungen']
+ it:['IL GOL FA STORIA','Certi gol non si dimenticano mai.','Sfoglia i ricordi, ritrova la voce, rivivi quel momento.','Scopri questa squadra','Articolo precedente','Articolo successivo','Giornali d’epoca e ricordi calcistici','Prima era una prima pagina. Ora è un disco.'],
+ es:['EL GOL HACE HISTORIA','Hay goles que no se olvidan jamás.','Volvé a esas portadas, escuchá aquella voz, reviví ese momento.','Descubrí este equipo','Anterior portada','Siguiente portada','Portadas históricas y recuerdos del fútbol','Antes era una portada. Hoy es un disco.'],
+ fr:['LE BUT ENTRE DANS L’HISTOIRE','Certains buts ne s’oublient jamais.','Retrouvez les unes, la voix du match et cette émotion intacte.','Découvrir cette équipe','Une précédente','Une suivante','Archives de presse et souvenirs de football','Hier en une. Aujourd’hui sur un disque.'],
+ en:['WHEN GOALS MAKE HISTORY','Some goals are never forgotten.','See the headlines, hear the voice and relive that instant.','Explore this team','Previous newspaper','Next newspaper','Historic newspaper covers and football memories','Once a front page. Now a record.'],
+ de:['TORE SCHREIBEN GESCHICHTE','Manche Tore vergisst man nie.','Erlebe die Schlagzeilen, die Stimme und den Moment noch einmal.','Dieses Team entdecken','Vorherige Zeitung','Nächste Zeitung','Historische Zeitungsseiten und Fußballerinnerungen','Damals Titelseite. Heute Schallplatte.']
 }[locale]||[];
 var pressStories=[
  {id:'argentina',goal:5,paper:'eg-3481-1986.webp',place:'México · 1986'},
@@ -231,7 +231,14 @@ var pressStories=[
 ];
 var press=make('section','vz-press-section');press.id='vz-press';
 var pressIntro=make('div','vz-press-intro');
-pressIntro.append(make('p','vz-section-eyebrow',pressTx[0]),make('h2','vz-section-title',pressTx[1]),make('p','vz-section-sub',pressTx[2]));
+var pressTitle=make('h2','vz-section-title vz-cine-title');
+var emphasisByLocale={it:'non si dimenticano mai.',es:'no se olvidan jamás.',fr:'ne s’oublient jamais.',en:'never forgotten.',de:'vergisst man nie.'};
+var emphasis=emphasisByLocale[locale]||emphasisByLocale.it;
+var emphasisAt=pressTx[1].lastIndexOf(emphasis);
+if(emphasisAt>=0){
+ pressTitle.append(document.createTextNode(pressTx[1].slice(0,emphasisAt)),make('span','vz-cine-highlight',emphasis));
+}else pressTitle.textContent=pressTx[1];
+pressIntro.append(make('p','vz-section-eyebrow',pressTx[0]),pressTitle,make('p','vz-press-statement',pressTx[7]),make('p','vz-section-sub',pressTx[2]));
 var pressStage=make('div','vz-press-stage');
 var pressPaper=make('div','vz-press-paper');
 var pressCover=make('img','vz-press-cover');pressCover.alt='';pressCover.loading='lazy';pressCover.decoding='async';pressCover.width=640;pressCover.height=850;
