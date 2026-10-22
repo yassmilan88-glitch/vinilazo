@@ -47,3 +47,17 @@
 .vz-nav-toggle:hover,.vz-nav-toggle:focus-visible{background:rgba(8,20,42,.52);opacity:1}
 .vz-nav-links{background:rgba(8,20,42,.52);border-color:rgba(255,255,255,.22);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
 .vz-quick-nav.vz-open .vz-nav-toggle{background:rgba(8,20,42,.62);color:#fff;text-shadow:none}
+
+/* V5: highly visible editorial kinetic storytelling, without looping */
+.moment .moment-in{overflow:visible}
+.moment #moment-h{border-left:6px solid var(--acc);padding-left:clamp(12px,2.5vw,28px);background:linear-gradient(90deg,color-mix(in srgb,var(--acc) 12%,transparent),transparent 70%);border-radius:4px}
+.moment #moment-h.vz-head-play{animation:vz-head-reveal 1.25s cubic-bezier(.16,1,.3,1) both}
+.moment .poem p.vz-copy-line.vz-in{animation:vz-editorial-reveal 1.15s cubic-bezier(.15,.8,.2,1) both!important;transition:none!important}
+.moment .poem p.vz-copy-line.vz-in.hit{animation:vz-editorial-punch 1.25s cubic-bezier(.15,.8,.2,1) both!important;background:linear-gradient(100deg,color-mix(in srgb,var(--acc) 21%,transparent),transparent);border-radius:5px;padding:6px 10px}
+.moment .poem p.vz-copy-line.vz-in.hit::before{content:"";position:absolute;left:-clamp(13px,3vw,25px);top:5px;height:80%;width:5px;background:var(--acc);box-shadow:0 0 14px var(--acc)}
+.moment .poem p.hit.vz-in::after{animation:vz-score-line .85s .35s both}
+.moment .moment-after.vz-in{animation:vz-editorial-reveal 1.1s ease-out both!important}
+@keyframes vz-head-reveal{0%{opacity:.1;transform:translateX(-45px);filter:blur(9px)}65%{filter:blur(0)}100%{opacity:1;transform:none;filter:none}}
+@keyframes vz-editorial-reveal{0%{opacity:0;transform:translateX(-54px) translateY(22px);filter:blur(7px)}70%{opacity:1;filter:blur(0)}100%{opacity:1;transform:none;filter:none}}
+@keyframes vz-editorial-punch{0%{opacity:0;transform:translateX(-55px) scale(.86);filter:blur(9px)}70%{opacity:1;transform:translateX(5px) scale(1.045);filter:none}100%{opacity:1;transform:none;filter:none}}
+@media(prefers-reduced-motion:reduce){.moment #moment-h.vz-head-play,.moment .poem p.vz-copy-line.vz-in,.moment .poem p.vz-copy-line.vz-in.hit,.moment .moment-after.vz-in{animation:none!important;opacity:1;transform:none;filter:none}}
