@@ -128,7 +128,7 @@
       html += pp ? '<a class="d" style="--i:' + i + '" href="' + pp + "#disco-" + (i + 1) + '" title="' + label + '" aria-label="' + label + " – " + esc(T.details) + '">' + pic + "</a>"
                  : '<div class="d" style="--i:' + i + '" title="' + label + '">' + pic + "</div>";
       var href = pp ? pp + "#disco-" + (i + 1) : (i < nSt ? "#storia-" + (i + 1) : "#cosa");
-      hd += '<li style="--i:' + i + '"><a href="' + href + '"' + (!pp && i < nSt ? ' data-story="' + (i + 1) + '"' : "") + ' aria-label="' + label + '">' +
+      if (i < 3) hd += '<li style="--i:' + i + '"><a data-preview-disc="' + (i + 1) + '" href="' + href + '"' + (!pp && i < nSt ? ' data-story="' + (i + 1) + '"' : "") + ' aria-label="' + label + '">' +
             '<span class="hd-disc">' + pic + "</span>" + '<span class="hd-name">' + esc(g[0]) + "</span>" +
             (pp ? '<span class="hd-more">' + esc(T.details) + " ▸</span>" : "") + "</a></li>";
       var shot = ((DATA.celebrations || {})[t.id] || {})[i + 1];
@@ -162,6 +162,17 @@
     box.innerHTML = html;
     $("#story-grid").innerHTML = cards;
     $("#hd-list").innerHTML = hd;
+    var previewCaption = $("#vz-preview-caption");
+    if (!previewCaption) {
+      previewCaption = document.createElement("p");
+      previewCaption.id = "vz-preview-caption";
+      previewCaption.className = "vz-preview-caption";
+      $("#hd-list").parentNode.insertBefore(previewCaption, $("#hd-list"));
+    }
+    previewCaption.textContent = ({it:"🎧 Tocca e rivivi il gol",es:"🎧 Tocá y volvé a sentir el gol",fr:"🎧 Touchez et revivez le but",en:"🎧 Tap to relive the goal",de:"🎧 Tippe und erlebe das Tor erneut"})[DATA.lang] || "🎧 Tocca e rivivi il gol";
+    var heroDisc = $(".hero-disc");
+    if (heroDisc) heroDisc.dataset.currentDisc = "1";
+
     $("#discs-cap").textContent = t.real ? T.discs_real : fill(T.discs_cap, { team: t.name });
     drawPaper(t);
     reveal();
@@ -790,6 +801,48 @@
     else if (window.fbq) window.fbq("consent", "revoke");
   });
   initPixel();
+
+
+  /* L'anteprima in home è interattiva: scambio disco e telecronaca Argentina. */
+  var vzPreviewAudio = null;
+  var vzPreviewFiles = ["maradona-mano-de-dios.mp3","burruchaga-1986.mp3","messi-getafe-2007.mp3","montiel-2022.mp3","messi-copa-america-2007.mp3","maradona-gol-del-siglo.mp3","kempes-1978.mp3","di-maria-2022.mp3","messi-brasile-2012.mp3"];
+  document.addEventListener("click", function (event) {
+    var link = event.target.closest && event.target.closest("[data-preview-disc]");
+    if (!link) return;
+    var team = BY_ID[document.querySelector('.team[aria-pressed="true"]')?.dataset.team] || BY_ID[DATA.def_team];
+    if (!team) return;
+    event.preventDefault();
+    var index = Number(link.getAttribute("data-preview-disc")) - 1;
+    var hero = $(".hero-disc"), thumb = link.querySelector(".hd-disc");
+    if (!hero || !team.goals[index]) return;
+    var former = Math.max(0, Number(hero.dataset.currentDisc || "1")-1);
+    var oldMarkup = hero.innerHTML;
+    var nextMarkup = discSVG(team, gOpts(team, team.goals[index]));
+    var canMove = !window.matchMedia("(prefers-reduced-motion: reduce)").matches && thumb && hero.animate;
+    if (canMove) {
+      var from = thumb.getBoundingClientRect(), to = hero.getBoundingClientRect();
+      function flight(markup, start, finish, reverse) {
+        var ghost = document.createElement("div");
+        ghost.className = "vz-disc-flight";
+        ghost.innerHTML = '<svg viewBox="0 0 200 200" aria-hidden="true">'+markup+'</svg>';
+        ghost.style.cssText="position:fixed;left:"+start.left+"px;top:"+start.top+"px;width:"+start.width+"px;height:"+start.height+"px;z-index:130;pointer-events:none";
+        document.body.appendChild(ghost);
+        var anim=ghost.animate([{transform:"translate(0,0) scale(1)",opacity:.98},{transform:"translate("+(finish.left-start.left)+"px,"+(finish.top-start.top)+"px) scale("+(finish.width/start.width)+") rotate("+(reverse?-240:240)+"deg)",opacity:.9}],{duration:580,easing:"cubic-bezier(.3,.7,.2,1)",fill:"forwards"});
+        anim.onfinish=function(){ghost.remove()};
+        anim.oncancel=function(){ghost.remove()};
+      }
+      if(index!==former) flight(oldMarkup,to,from,true);
+      flight(nextMarkup,from,to,false);
+    }
+    hero.innerHTML=nextMarkup;
+    hero.dataset.currentDisc=String(index+1);
+    document.querySelectorAll("[data-preview-disc]").forEach(function(a){a.classList.toggle("vz-active-disc",a===link)});
+    if (vzPreviewAudio) { vzPreviewAudio.pause(); vzPreviewAudio=null; }
+    if (team.id==="argentina") {
+      vzPreviewAudio = new Audio("../assets/audio/argentina/"+vzPreviewFiles[index]);
+      vzPreviewAudio.play().catch(function(){});
+    }
+  });
 
   /* ---------- avvio: squadra dal link, poi quella già scelta, altrimenti la nazionale della lingua ---------- */
   var start = null, fromLink = false;
