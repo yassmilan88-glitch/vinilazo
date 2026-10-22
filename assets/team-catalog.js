@@ -21,6 +21,26 @@ function make(tag,cls,content){var e=document.createElement(tag);if(cls)e.classN
 if(teamValid||params.has('demo')||legacy){
  var copy=document.querySelector('.hero-copy');
  if(copy&&!copy.querySelector('.vz-back-teams')){var back=make('a','vz-back-teams','← '+t.all);back.href='./';copy.insertBefore(back,copy.firstChild)}
+ // Keep the buying decision clear, with the rest of the story available on demand.
+ function foldDescription(){
+  var sub=document.querySelector('.hero-copy .sub');if(!sub||sub.querySelector('.vz-read-more'))return;
+  var all=sub.textContent.trim();var sentence=/[.!?]\s+\S/.exec(all);if(!sentence)return;
+  var boundary=sentence.index+1,first=all.slice(0,boundary),rest=all.slice(boundary).trim();
+  if(rest.length<20)return;
+  var labels={it:['Continua a leggere…','Mostra meno'],es:['Seguir leyendo…','Mostrar menos'],fr:['Lire la suite…','Afficher moins'],en:['Continue reading…','Show less'],de:['Weiterlesen…','Weniger anzeigen']};
+  var l=labels[locale]||labels.it;
+  sub.textContent=first+' ';
+  var hiddenText=make('span','vz-sub-extra',' '+rest);hiddenText.id='vz-sub-extra';hiddenText.hidden=true;
+  var toggle=make('button','vz-read-more',l[0]);toggle.type='button';
+  toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-controls',hiddenText.id);
+  toggle.addEventListener('click',function(){
+   var expanded=toggle.getAttribute('aria-expanded')==='true';
+   hiddenText.hidden=expanded;toggle.setAttribute('aria-expanded',String(!expanded));
+   toggle.textContent=expanded?l[0]:l[1];
+  });
+  sub.append(hiddenText,toggle);
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',foldDescription,{once:true});else foldDescription();
  return;
 }
 document.body.classList.add('vz-catalog-mode');
@@ -74,6 +94,22 @@ var gloss=make('div','vz-product-gloss');
 var tag=make('p','vz-product-tag','');
 product.append(aura,backHalo,frame,art,disc,ring,gloss,tag);
 var flags={argentina:'🇦🇷',brasile:'🇧🇷',francia:'🇫🇷',spagna:'🇪🇸',italia:'🇮🇹',germania:'🇩🇪',inghilterra:'🇬🇧',portogallo:'🇵🇹',olanda:'🇳🇱',messico:'🇲🇽'};
+var crestSlugs={
+ argentina:'argentina-national-team',brasile:'brazil-national-team',francia:'france-national-team',spagna:'spain-national-team',italia:'italy-national-team',germania:'germany-national-team',inghilterra:'england-national-team',portogallo:'portugal-national-team',olanda:'netherlands-national-team',messico:'mexico-national-team',
+ 'real-madrid':'real-madrid',barcelona:'fc-barcelona','manchester-united':'manchester-united',liverpool:'liverpool-fc',bayern:'bayern-munich',juventus:'juventus',milan:'ac-milan',inter:'inter-milan',psg:'paris-saint-germain-psg','manchester-city':'manchester-city'
+};
+function crestUrl(team){var slug=crestSlugs[team.id];return slug?'https://assets.footylogos.com/logos/'+slug+'/'+slug+'-logo-footylogos.svg':''}
+function teamMark(team,className){
+ var mark=make('span',className);
+ var fallback=team.g==='nat'?(flags[team.id]||'🏆'):(team.code||team.name.slice(0,3)).toUpperCase().slice(0,3);
+ var src=crestUrl(team);
+ if(!src){mark.textContent=fallback;return mark}
+ var img=make('img','vz-crest-image');img.src=src;img.alt='';img.loading=className==='vz-team-logo'?'lazy':'eager';
+ img.decoding='async';img.addEventListener('error',function(){
+  if(mark.contains(img)){mark.textContent=fallback;mark.classList.add('vz-crest-fallback')}
+ });
+ mark.append(img);return mark;
+}
 var flagPatterns={
  argentina:['#74ACDF','#FFFFFF','#74ACDF',180],
  brasile:['#009C3B','#FFDF00','#009C3B',90],
@@ -95,8 +131,11 @@ function displayEdition(team){
  product.style.setProperty('--edition-color',col[0]);
  product.style.setProperty('--art-a',pat[0]);product.style.setProperty('--art-b',pat[1]);product.style.setProperty('--art-c',pat[2]);product.style.setProperty('--art-angle',pat[3]+'deg');
  art.dataset.kind=team.g;
- emblem.className='vz-product-emblem'+(team.g==='club'?' vz-product-shield':'');
- emblem.textContent=team.g==='nat'?(flags[team.id]||'🏆'):(team.code||team.name.slice(0,3)).slice(0,3);
+ emblem.className='vz-product-emblem vz-product-has-crest';
+ emblem.replaceChildren();
+ var currentMark=teamMark(team,'vz-edition-crest');
+ if(currentMark.classList.contains('vz-crest-fallback'))emblem.classList.add('vz-crest-fallback');
+ emblem.append(currentMark);
  labelName.textContent=team.name;
  tag.textContent=team.name+' · 9';
  product.setAttribute('aria-label','VINILAZO: '+team.name+', nove dischi intercambiabili');
@@ -135,11 +174,7 @@ function openGroup(group){
    a.setAttribute('aria-label',t.discover+': '+team.name);
    var colours=team.cols||['#74acdf','#fff','#f3c134'];
    a.style.setProperty('--team-one',colours[0]);a.style.setProperty('--team-two',colours[1]);a.style.setProperty('--team-three',colours[2]);
-   var mark=make('span',group==='nat'?'vz-flag-icon':'vz-club-icon');
-   if(group==='nat')mark.textContent=({
-     argentina:'🇦🇷',brasile:'🇧🇷',francia:'🇫🇷',spagna:'🇪🇸',italia:'🇮🇹',germania:'🇩🇪',inghilterra:'🇬🇧',portogallo:'🇵🇹',olanda:'🇳🇱',messico:'🇲🇽'
-   })[team.id]||'🏳️';
-   else mark.textContent=team.code||team.name.slice(0,3).toUpperCase();
+   var mark=teamMark(team,'vz-team-logo');
    a.append(mark,make('strong','vz-flag-name',team.name),make('small','vz-flag-action','→'));
    if(team.id==='argentina')a.append(make('span','vz-flag-ready',t.ready));
    grid.append(a);
@@ -147,8 +182,35 @@ function openGroup(group){
  stage.hidden=false;
  requestAnimationFrame(function(){stage.scrollIntoView({behavior:'smooth',block:'start'})});
 }
-var ending=make('div','vz-catalog-end');ending.append(make('p','',t.about));main.append(ending);
+var ending=make('div','vz-catalog-end');ending.append(make('p','',t.about));
+var source=make('small','vz-crest-source');
+source.append(document.createTextNode('Team crest images: '));
+var footy=make('a','','FootyLogos.com');footy.href='https://www.footylogos.com/';footy.target='_blank';footy.rel='noopener noreferrer';source.append(footy);
+ending.append(source);main.append(ending);
 var header=document.querySelector('header.top');if(header)header.insertAdjacentElement('afterend',main);else document.body.prepend(main);
+// Reuse the existing multilingual about section, normally inserted in the hidden product details.
+function restoreAbout(){
+ var about=document.getElementById('chi-siamo');if(about)ending.before(about);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',restoreAbout,{once:true});else restoreAbout();
+// Floating navigation follows the visitor without obscuring the product.
+var navLinks=document.getElementById('vz-nav-links');
+if(navLinks){
+ var menus={
+  it:[['Inizio','#vz-catalog-main'],['Nazionali','#vz-nazionali'],['Club','#vz-club'],['Chi siamo','#chi-siamo']],
+  es:[['Inicio','#vz-catalog-main'],['Selecciones','#vz-nazionali'],['Clubes','#vz-club'],['Quiénes somos','#chi-siamo']],
+  fr:[['Accueil','#vz-catalog-main'],['Sélections','#vz-nazionali'],['Clubs','#vz-club'],['Qui sommes-nous ?','#chi-siamo']],
+  en:[['Home','#vz-catalog-main'],['National teams','#vz-nazionali'],['Clubs','#vz-club'],['About us','#chi-siamo']],
+  de:[['Start','#vz-catalog-main'],['Nationalteams','#vz-nazionali'],['Vereine','#vz-club'],['Über uns','#chi-siamo']]
+ };
+ navLinks.replaceChildren();
+ (menus[locale]||menus.it).forEach(function(item){
+  var link=make('a','',item[0]);link.href=item[1];navLinks.append(link);
+  if(item[1]==='#vz-nazionali'||item[1]==='#vz-club')link.addEventListener('click',function(event){
+   event.preventDefault();openGroup(item[1]==='#vz-nazionali'?'nat':'club');
+  });
+ });
+}
 if(location.hash==='#vz-nazionali')openGroup('nat');
 if(location.hash==='#vz-club')openGroup('club');
 })();
