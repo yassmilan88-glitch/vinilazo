@@ -119,19 +119,21 @@ function vinylChoice(group,label,subtitle){
 var natButton=vinylChoice('nat',t.nat,t.natSub);
 var clubButton=vinylChoice('club',t.club,t.clubSub);
 choices.append(natButton,clubButton);choose.append(choices);
-// Simple, permanent trophy pictograms instead of rotating team crests.
+// Original, transparent vector trophies drawn specifically for VINILAZO.
+// No downloaded crest images, no square backgrounds and no rotating logos.
 function setTrophy(button,group){
  var mark=button.querySelector('.vz-choice-orb-mark');if(!mark)return;
- var icon=make('span','vz-trophy-icon');icon.setAttribute('aria-hidden','true');
- icon.innerHTML=group==='nat'
- ? '<svg viewBox="0 0 80 100" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="wc-gold" x2="1" y2="1"><stop stop-color="#fff2b2"/><stop offset=".5" stop-color="#c79a34"/><stop offset="1" stop-color="#80591b"/></linearGradient></defs><path d="M38 6C26 3 19 12 23 23 13 27 11 39 18 47c7 8 15 8 19 17l-3 13H23v9h35v-9H47l-3-13c11-7 18-17 17-29-1-10-7-16-14-18C47 11 43 7 38 6Z" fill="url(#wc-gold)" stroke="#ffe8a0" stroke-width="2"/><path d="M27 26c11 7 21 7 29 3M28 41c11 4 20 1 28-4" stroke="#fff0ae" stroke-width="3" fill="none"/></svg>'
- : '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ucl-silver" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".5" stop-color="#b6c9df"/><stop offset="1" stop-color="#6e87a6"/></linearGradient></defs><path d="M25 17h50l-5 40c-2 13-9 20-20 20s-18-7-20-20l-5-40ZM25 24H10v11c0 17 10 26 25 27l-3-9c-9-3-13-10-13-19v-2h7Zm50 0h15v11c0 17-10 26-25 27l3-9c9-3 13-10 13-19v-2h-7ZM45 76h10v9h16v8H29v-8h16Z" fill="url(#ucl-silver)" stroke="#f2f8ff" stroke-width="2"/><path d="m50 29 5 10 11 1-8 8 2 11-10-5-10 5 2-11-8-8 11-1Z" fill="#fff"/></svg>';
+ var icon=make('img','vz-trophy-asset');
+ icon.src=group==='nat'?'../assets/icons/vz-world-cup.svg':'../assets/icons/vz-champions.svg';
+ icon.alt='';icon.setAttribute('aria-hidden','true');
+ icon.width=120;icon.height=160;icon.decoding='async';
  mark.replaceChildren(icon);
- button.style.setProperty('--orb-a',group==='nat'?'#b99743':'#7c9ac8');
- button.style.setProperty('--orb-b',group==='nat'?'#ffe7a4':'#f3f8ff');
- button.style.setProperty('--orb-c',group==='nat'?'#8c6628':'#244b88');
+ button.style.setProperty('--orb-a',group==='nat'?'#bb8e29':'#819cbf');
+ button.style.setProperty('--orb-b',group==='nat'?'#efdba2':'#d8e7f8');
+ button.style.setProperty('--orb-c',group==='nat'?'#87631d':'#315b8a');
 }
-setTrophy(natButton,'nat');setTrophy(clubButton,'club');
+setTrophy(natButton,'nat');
+setTrophy(clubButton,'club');
 var product=make('div','vz-hero-product');
 var aura=make('div','vz-product-aura');
 var backHalo=make('div','vz-product-halo');
