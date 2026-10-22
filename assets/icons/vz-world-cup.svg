@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160"><defs>
+<linearGradient id="g" x1="0" y1="0" x2="1" y2=".4"><stop stop-color="#7b4813"/><stop offset=".18" stop-color="#f2c65a"/><stop offset=".36" stop-color="#fff1b0"/><stop offset=".56" stop-color="#d59c25"/><stop offset=".79" stop-color="#a76411"/><stop offset="1" stop-color="#fff0a1"/></linearGradient>
+<linearGradient id="globe" x1=".15" y1="0" x2=".86" y2="1"><stop stop-color="#fff3b4"/><stop offset=".23" stop-color="#b77c1a"/><stop offset=".5" stop-color="#574013"/><stop offset=".77" stop-color="#d7a832"/><stop offset="1" stop-color="#fbe485"/></linearGradient>
+<linearGradient id="base" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#003d35"/><stop offset=".25" stop-color="#26a783"/><stop offset=".65" stop-color="#01483f"/><stop offset="1" stop-color="#002c29"/></linearGradient></defs>
+<path d="M39 17C49 5 69 4 82 14c15 11 17 32 6 46S54 77 40 65 24 34 39 17Z" fill="url(#globe)" stroke="#f6d376" stroke-width="1.5"/>
+<path d="M42 22c6-6 12-6 15-3l6 8-5 8-7 2-3 8-7-2-4-9 5-12Zm19-6 8-2 8 7-1 9 7 5-5 12-9-2-3-11-9-3 4-15ZM56 50l8-5 7 3-1 11-8 7-9-5Z" fill="#edbf56" opacity=".82"/>
+<path d="M35 20c-9 17-4 35 5 43m40-44c11 12 13 24 8 39" fill="none" stroke="#fff5b7" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+<path d="M53 132c-2-18-16-29-24-44-8-13-9-22-8-31 1-6 4-12 7-13 3-2 5 2 4 6-2 14 7 21 14 30 7 8 14 16 14 27 3-17 5-31 2-42 10 10 14 24 12 39-1 12-7 21-10 28Z" fill="url(#g)" stroke="#b97d20" stroke-width="1.3"/>
+<path d="M63 132c0-18 13-29 21-45 8-16 12-27 10-35-1-5-4-8-7-7-4 1-3 7-4 12-2 12-10 19-19 28-10 12-12 20-13 32-4-21-1-33 5-44-3 12 2 24 8 35 2 7 2 15-1 24Z" fill="url(#g)" stroke="#a96b18" stroke-width="1.3"/>
+<path d="M28 55c-5 9 1 21 7 27m55-22c0 9-6 22-13 28M45 92c-1 14 9 25 9 35" fill="none" stroke="#ffec94" stroke-width="3" opacity=".67" stroke-linecap="round"/>
+<path d="M30 71c4-1 8-3 10-8m37 1c4 5 9 6 12 6" stroke="#f8d06d" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+<path d="M47 129h28l7 13H40Z" fill="url(#base)" stroke="#d8b35f" stroke-width="1.3"/><path d="M41 139h40l-2 8H43Z" fill="url(#g)"/><path d="M42 147h38l5 8H37Z" fill="url(#base)" stroke="#bd913e" stroke-width="1.5"/><path d="M45 143h32" stroke="#fbe29a" stroke-width="1.7"/></svg>
