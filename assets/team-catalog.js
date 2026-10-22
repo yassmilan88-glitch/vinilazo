@@ -285,9 +285,9 @@ function renderPress(i){
  pressLink.href='?team='+encodeURIComponent(st.id);
  pressCount.textContent=String(pressIndex+1).padStart(2,'0')+' / '+String(pressStories.length).padStart(2,'0');
  pressButtons.forEach(function(el,n){el.classList.toggle('vz-selected',n===pressIndex);el.setAttribute('aria-pressed',String(n===pressIndex))});
- pressPaper.classList.remove('vz-press-enter');pressDisc.classList.remove('vz-press-enter');
+ pressPaper.classList.remove('vz-press-enter');pressArtwork.classList.remove('vz-press-enter');
  void pressStage.offsetWidth;
- pressPaper.classList.add('vz-press-enter');pressDisc.classList.add('vz-press-enter');
+ pressPaper.classList.add('vz-press-enter');pressArtwork.classList.add('vz-press-enter');
  var active=pressButtons[pressIndex];if(active&&active.scrollIntoView&&pressIndex>1){pressStrip.scrollTo({left:active.offsetLeft-pressStrip.offsetLeft-80,behavior:'smooth'})}
 }
 pressPrev.addEventListener('click',function(){renderPress(pressIndex-1)});
@@ -297,6 +297,37 @@ renderPress(0);
 if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
  window.setInterval(function(){if(!document.hidden&&!press.matches(':hover')&&!press.contains(document.activeElement))renderPress(pressIndex+1)},5800);
 }
+
+
+ // Real supporters at verified celebrations; photo links lead to original Creative Commons files.
+ var crowdsText={
+ it:['E LA CITTÀ ESPLODE','Non era solo un gol. Era una piazza intera.','I giornali raccontano il risultato. Le strade raccontano quello che abbiamo provato.','Buenos Aires · Mondiali 2022','Roma · Mondiali 2006','Madrid · Mondiali 2010','Foto originale e licenza'],
+ es:['Y LA CIUDAD ESTALLA','No fue solo un gol. Fue toda una ciudad.','Los diarios cuentan el resultado. Las calles cuentan lo que sentimos.','Buenos Aires · Mundial 2022','Roma · Mundial 2006','Madrid · Mundial 2010','Foto original y licencia'],
+ fr:['ET LA VILLE EXULTE',"Ce n’était pas seulement un but. C’était toute une ville.",'Les unes racontent le score. La rue raconte nos émotions.','Buenos Aires · Coupe du monde 2022','Rome · Coupe du monde 2006','Madrid · Coupe du monde 2010','Photo originale et licence'],
+ en:['WHEN A CITY ERUPTS','Not just a goal. An entire city celebrating.','The newspapers record the result. The streets remember how it felt.','Buenos Aires · World Cup 2022','Rome · World Cup 2006','Madrid · World Cup 2010','Original image and licence'],
+ de:['WENN EINE STADT JUBELT','Nicht nur ein Tor. Eine ganze Stadt feiert.','Die Zeitungen zeigen das Ergebnis. Die Straßen zeigen das Gefühl.','Buenos Aires · WM 2022','Rom · WM 2006','Madrid · WM 2010','Originalfoto und Lizenz']
+ }[locale]||[];
+ var crowdPhotos=[
+ {file:'Festejos en el Obelisco de Buenos Aires por la obtención de la Copa del Mundo de Fútbol 2022.jpg',credit:'Gobierno de Buenos Aires · CC BY 2.5 AR',label:3},
+ {file:'FIFA world cup 2006 - Rome street party piazza venezia.jpg',credit:'Alessio Damato · CC BY-SA',label:4},
+ {file:'2010 0711 Sol Madrid.jpg',credit:'Takeaway · Creative Commons',label:5}];
+ var fans=make('section','vz-fans');fans.id='vz-fans';
+ fans.append(make('p','vz-section-eyebrow',crowdsText[0]),make('h2','vz-section-title vz-fans-title',crowdsText[1]),make('p','vz-section-sub vz-fans-intro',crowdsText[2]));
+ var fansGrid=make('div','vz-fans-grid');
+ crowdPhotos.forEach(function(scene){
+  var figure=make('figure','vz-fans-card'),photo=make('img','vz-fans-photo');
+  photo.src='https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(scene.file)+'?width=900';
+  photo.loading='lazy';photo.decoding='async';photo.alt=crowdsText[scene.label];photo.width=900;photo.height=660;
+  var shade=make('div','vz-fans-shade');shade.setAttribute('aria-hidden','true');
+  var figcaption=make('figcaption','vz-fans-caption');figcaption.append(make('strong','',crowdsText[scene.label]));
+  var source=make('a','vz-fans-credit',crowdsText[6]+' ↗');source.href='https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(scene.file).replace(/%20/g,'_');source.target='_blank';source.rel='noopener noreferrer';source.title=scene.credit;
+  figcaption.append(source);figure.append(photo,shade,figcaption);fansGrid.append(figure);
+ });
+ fans.append(fansGrid);main.append(fans);
+ if('IntersectionObserver' in window){
+  var fanObserver=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('vz-fans-visible');fanObserver.unobserve(entry.target)}})},{threshold:.17});
+  fansGrid.querySelectorAll('.vz-fans-card').forEach(function(card){fanObserver.observe(card)});
+ }else fansGrid.querySelectorAll('.vz-fans-card').forEach(function(card){card.classList.add('vz-fans-visible')});
 
 // A concise emotional gift message, without crowding the product selector.
 var giftTx={
