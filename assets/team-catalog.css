@@ -273,3 +273,82 @@ body:not(.vz-catalog-mode) .hero-copy .vz-sub-extra[hidden]{display:none!importa
  .vz-choice-orb::before,.vz-choice-orb-mark.vz-orb-enter{animation:none!important}
  .vz-choice{transition:none!important}
 }
+
+
+/* VINILAZO editorial home: newspaper-to-record storytelling, no extra fridge gallery. */
+.vz-product-label-name{display:none!important}
+.vz-product-emblem.vz-product-has-crest{width:58%;height:58%;margin:0}
+.vz-product-label{justify-content:center;align-items:center;padding:0}
+.vz-choice-orb{width:56px;height:56px}
+.vz-choice-orb-mark{width:61%;height:61%;overflow:visible}
+.vz-choice-orb-mark .vz-orb-crest{width:100%;height:100%;min-width:0;min-height:0;overflow:hidden}
+.vz-choice-orb-mark .vz-crest-image{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;display:block}
+.vz-choice-centre{overflow:hidden}
+.vz-press-section{padding:clamp(70px,8vw,122px) clamp(17px,5vw,80px) clamp(60px,7vw,100px);background:radial-gradient(ellipse at 50% 0%,#172d4a,#071329 66%);color:#f8fbff;border-top:1px solid #ffffff23}
+.vz-press-intro{max-width:950px;margin:0 auto 43px;text-align:center}
+.vz-press-stage{--press-a:#74acdf;--press-b:#fff;--press-c:#f6b40e;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:clamp(15px,3vw,60px);max-width:1130px;min-height:500px;margin:auto;padding:clamp(22px,4vw,50px);border:1px solid #ffffff28;border-radius:28px;background:radial-gradient(ellipse at 26% 38%,#254366bb,transparent 54%),linear-gradient(125deg,#10233d,#07152b 77%);box-shadow:0 30px 80px #0005;overflow:hidden}
+.vz-press-paper{display:grid;place-items:center;min-width:0;min-height:410px;position:relative;perspective:900px}
+.vz-press-paper::before{content:"";position:absolute;inset:12% 9% 7%;border-radius:16px;background:var(--press-a);filter:blur(60px);opacity:.25}
+.vz-press-cover{position:relative;display:block;width:auto;height:clamp(300px,32vw,465px);max-width:100%;object-fit:contain;transform:rotate(-5deg);border:7px solid #f4f0e6;box-shadow:14px 24px 35px #0009,0 0 0 1px #b0a28d;filter:saturate(.87)}
+.vz-press-paper.vz-press-enter{animation:vz-paper-arrive .95s cubic-bezier(.16,.9,.24,1) both}
+.vz-press-artwork{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:15px;min-width:0}
+.vz-press-vinyl{position:relative;display:grid;place-items:center;width:min(78%,300px);aspect-ratio:1;border-radius:50%;background:repeating-radial-gradient(circle,#090d14 0 2px,#27313e 2px 3px,#101620 3px 7px);border:2px solid #566271;box-shadow:0 23px 38px #000c,inset 0 0 0 8px #10151d,inset 0 0 20px #0008,0 0 0 9px color-mix(in srgb,var(--press-a) 26%,transparent);animation:vz-press-disc-spin 15s linear infinite}
+.vz-press-vinyl::before{content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none;background:conic-gradient(from 15deg,transparent 0 10%,#ffffff24 20%,transparent 27% 55%,#ffffff19 68%,transparent 74%)}
+.vz-press-vinyl.vz-press-enter{animation:vz-record-attach 1s cubic-bezier(.19,.87,.28,1) both,vz-press-disc-spin 15s linear 1s infinite}
+.vz-press-vinyl-center{width:44%;aspect-ratio:1;border-radius:50%;position:relative;display:grid;place-items:center;z-index:1;border:3px solid #eaf0f5;box-shadow:inset 0 0 13px #fff7,0 0 0 3px #0b111e;background:linear-gradient(135deg,var(--press-a),var(--press-b) 62%,var(--press-c))}
+.vz-press-vinyl-center::after{content:"";position:absolute;left:50%;top:50%;width:8px;height:8px;background:#0b1523;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 2px #ffffffa8}
+.vz-press-crest{display:grid;place-items:center;width:56%;height:56%;filter:drop-shadow(0 3px 3px #0007)}
+.vz-press-crest .vz-crest-image{width:100%;height:100%;object-fit:contain}
+.vz-press-meta{text-align:center;max-width:450px;display:flex;align-items:center;flex-direction:column;gap:8px}
+.vz-press-team{font:800 12px/1.2 system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#9bd1fd}
+.vz-press-goal{font:900 clamp(35px,4vw,60px)/1 var(--display),Impact,sans-serif;letter-spacing:.01em}
+.vz-press-place{font:600 13px/1.45 system-ui,sans-serif;color:#abc4df}
+.vz-press-link{text-decoration:none;color:#f6fbff;font:800 12px/1.2 system-ui,sans-serif;margin-top:4px;border-bottom:1px solid #85cfff;padding-bottom:5px}
+.vz-press-controls{display:flex;justify-content:center;align-items:center;gap:24px;margin:22px auto}
+.vz-press-arrow{width:42px;height:42px;border-radius:50%;background:#132c4b;color:#fff;border:1px solid #a7c9ea55;font:800 23px/1 system-ui,sans-serif;cursor:pointer;transition:transform .2s,background .2s}
+.vz-press-arrow:hover,.vz-press-arrow:focus-visible{background:#24527c;transform:translateY(-2px)}
+.vz-press-count{font:800 13px/1.2 system-ui,sans-serif;letter-spacing:.18em;color:#9db9d7}
+.vz-press-strip{display:flex;align-items:stretch;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 3px 15px;max-width:900px;margin:auto;scrollbar-width:thin;scrollbar-color:#4a6581 transparent}
+.vz-press-thumb{flex:0 0 170px;min-height:125px;border:1px solid #ffffff20;border-radius:12px;background:#152a44;color:#bfd7ee;cursor:pointer;display:flex;align-items:center;gap:12px;padding:12px;text-align:left;scroll-snap-align:center;transition:background .2s,border-color .2s,transform .2s;font:700 11px/1.4 system-ui,sans-serif}
+.vz-press-thumb img{width:58px;height:85px;object-fit:cover;object-position:top center;border:2px solid #e2ded4;box-shadow:0 5px 9px #0005}
+.vz-press-thumb span{min-width:0;overflow-wrap:break-word}
+.vz-press-thumb.vz-selected{background:#1d3d62;border-color:#92ceff;transform:translateY(-3px);color:#fff}
+.vz-featured-team{border-color:#4c83ad70;box-shadow:inset 0 0 22px #3269a01a}
+.vz-custom-card{border-style:dashed;background:linear-gradient(160deg,#1a2941,#0b1b33)}
+.vz-custom-symbol{display:grid;place-items:center;width:85px;height:85px;color:#fff;font:900 30px/1 var(--display),Impact,sans-serif}
+.vz-custom-hint{font:750 12px/1.2 system-ui,sans-serif;color:#a8d9ff}
+.vz-request-other{max-width:920px;margin:42px auto 0;text-align:center;padding:28px;border-radius:24px;border:1px solid #ffffff24;background:#122b49}
+.vz-request-other h3{font:900 clamp(25px,3vw,39px)/1 var(--display),Impact,sans-serif;margin:0 0 10px}
+.vz-request-other p{color:#cbdbec;font:500 15px/1.5 system-ui,sans-serif;margin:0 0 19px}
+.vz-request-button{display:inline-flex;padding:12px 20px;background:#0f754b;border-radius:99px;color:#fff!important;text-decoration:none;font:800 13px/1.2 system-ui,sans-serif}
+.vz-gift-home{padding:clamp(70px,9vw,130px) 22px;background:radial-gradient(ellipse at 50% 50%,#2b244b 0%,#121d39 53%,#071329 100%);text-align:center;border-top:1px solid #ffffff17}
+.vz-gift-home>.vz-section-title{max-width:950px;margin:0 auto 24px}
+.vz-gift-home>.vz-section-sub{max-width:760px}
+.vz-gift-button{margin-top:28px;display:inline-block;border:1px solid #e9d6a2;background:#dfb963;color:#161527;border-radius:99px;padding:15px 26px;font:900 14px/1.2 system-ui,sans-serif;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.vz-gift-button:hover,.vz-gift-button:focus-visible{transform:translateY(-3px);box-shadow:0 10px 20px #0005}
+@keyframes vz-paper-arrive{from{opacity:0;transform:translateX(-80px) rotate(-13deg) scale(.86)}to{opacity:1;transform:translateX(0) rotate(0) scale(1)}}
+@keyframes vz-record-attach{0%{opacity:0;transform:translateX(90px) rotate(95deg) scale(.66)}65%{opacity:1;transform:translateX(-6px) rotate(-9deg) scale(1.04)}100%{transform:translateX(0) rotate(0) scale(1)}}
+@keyframes vz-press-disc-spin{to{transform:rotate(360deg)}}
+@media(max-width:800px){
+ .vz-press-stage{grid-template-columns:1fr;gap:10px;max-width:570px;padding:23px 18px 31px}
+ .vz-press-paper{min-height:0}
+ .vz-press-cover{height:clamp(250px,50vw,380px);max-width:85%}
+ .vz-press-artwork{margin-top:14px}
+ .vz-press-vinyl{width:min(58%,220px)}
+ .vz-press-goal{font-size:clamp(32px,8vw,52px)}
+ .vz-press-section{padding:62px 15px 68px}
+ .vz-press-intro{margin-bottom:28px}
+ .vz-press-thumb{flex-basis:148px;min-height:112px;gap:9px;padding:9px}
+ .vz-press-thumb img{width:48px;height:72px}
+ .vz-gift-home{padding:70px 21px}
+}
+@media(max-width:720px){
+ .vz-choice-orb{width:45px;height:45px}
+ .vz-choice-orb-mark{width:62%;height:62%}
+ .vz-custom-symbol{width:65px;height:70px;font-size:25px}
+ .vz-request-other{margin-top:30px;padding:23px 16px}
+}
+@media(prefers-reduced-motion:reduce){
+ .vz-press-vinyl,.vz-press-paper.vz-press-enter,.vz-press-vinyl.vz-press-enter{animation:none!important}
+ .vz-press-arrow,.vz-press-thumb{transition:none}
+}
