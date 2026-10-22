@@ -424,62 +424,74 @@ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
  });
  fans.append(fansGrid);main.append(fans);
 
- // Populate the moving supporters gallery from Wikimedia Commons' openly licensed photo catalogue.
- // Search is scoped to historical celebrations; filter by file licence and image dimensions.
- var gallerySearches=[
-  'Argentina 2022 World Cup fans Buenos Aires celebration',
-  'Argentina 2022 World Cup celebration Obelisco',
-  'France 2018 World Cup fans celebration Paris',
-  'Spain 2010 World Cup fans celebration Madrid',
-  'Italy 2006 World Cup fans celebration Rome',
-  'Brazil World Cup football fans celebration',
-  'Morocco 2022 World Cup supporters celebration',
-  'football supporters trophy celebrations'
- ];
- var gallerySeen=new Set(crowdPhotos.map(function(scene){return scene.file.toLowerCase()}));
- var galleryCandidates=[];
- function addCommonsImage(page){
-  if(!page||!page.title||!/^File:/i.test(page.title)||!page.imageinfo?.[0])return;
-  var info=page.imageinfo[0],meta=info.extmetadata||{},license=(meta.LicenseShortName?.value||'').toLowerCase();
-  var filename=page.title.slice(5),key=filename.toLowerCase();
-  if(gallerySeen.has(key)||!/cc by|public domain|cc0/.test(license)||!info.thumburl||info.width<650||info.height<400)return;
-  if(!/\.(jpg|jpeg|png|webp)$/i.test(filename))return;
-  gallerySeen.add(key);
-  galleryCandidates.push({filename:filename,url:info.thumburl,licence:meta.LicenseShortName?.value||'Creative Commons',description:filename.replace(/\.(jpg|jpeg|png|webp)$/i,'').replace(/[_-]/g,' ')});
- }
- function appendGalleryImages(){
-  galleryCandidates.slice(0,27).forEach(function(scene){
-   var figure=make('figure','vz-fans-card vz-fans-visible');
-   var photo=make('img','vz-fans-photo');photo.src=scene.url;photo.loading='lazy';photo.decoding='async';photo.alt=scene.description;
-   var shade=make('div','vz-fans-shade');shade.setAttribute('aria-hidden','true');
-   var caption=make('figcaption','vz-fans-caption');
-   var title=make('strong','',scene.description.length>58?scene.description.slice(0,55)+'…':scene.description);
-   var source=make('a','vz-fans-credit',scene.licence+' · Wikimedia Commons ↗');
-   source.href='https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(scene.filename).replace(/%20/g,'_');source.target='_blank';source.rel='noopener noreferrer';
-   caption.append(title,source);figure.append(photo,shade,caption);fansGrid.append(figure);
-  });
-  fansGrid.classList.add('vz-fans-ready');
- }
- // Fetch only while the gallery is on screen, and preserve the existing photos if the service is unavailable.
- async function expandFanGallery(){
-  try{
-   var tasks=gallerySearches.map(async function(q){
-    var url='https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch='+encodeURIComponent(q)+'&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url|size|extmetadata&iiurlwidth=900&format=json&origin=*';
-    var response=await fetch(url);if(!response.ok)return;
-    var payload=await response.json();Object.values(payload.query?.pages||{}).forEach(addCommonsImage);
-   });
-   await Promise.all(tasks);appendGalleryImages();
-  }catch(e){/* Existing editorial photos remain visible offline. */}
- }
- if('IntersectionObserver' in window){
-  var galleryLoader=new IntersectionObserver(function(entries){if(entries.some(function(entry){return entry.isIntersecting})){galleryLoader.disconnect();expandFanGallery()}},{rootMargin:'600px'});
-  galleryLoader.observe(fans);
- }else expandFanGallery();
 
- if('IntersectionObserver' in window){
-  var fanObserver=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('vz-fans-visible');fanObserver.unobserve(entry.target)}})},{threshold:.17});
-  fansGrid.querySelectorAll('.vz-fans-card').forEach(function(card){fanObserver.observe(card)});
- }else fansGrid.querySelectorAll('.vz-fans-card').forEach(function(card){card.classList.add('vz-fans-visible')});
+ // 30 curated archive photographs: 3 previous national-team celebrations plus 27 club images.
+ // Teams, competitions and dates are captioned accurately. Each image links to its Commons file and licence.
+ var featuredGallery=[{"file":"AC Milan team celebrate.jpg","label":"Milan · Champions 2007","credit":"Antigoni · CC BY-SA 3.0"},{"file":"Final Milan.jpg","label":"Milan · Tifosi a Milano, 2007","credit":"Kieran Lynam · CC BY 2.0"},{"file":"A.C. Milan lifting the European Cup after winning the 2002–03 UEFA Champions League - 20030528.jpg","label":"Milan · Champions 2003","credit":"Autore e licenza"},{"file":"AC Milan fans, scudetto 2021–22.jpg","label":"Milan · Scudetto 2022","credit":"Autore e licenza"},{"file":"Forza Inter!.jpg","label":"Inter · Finale Champions 2010","credit":"Johnny Vulkan · CC"},{"file":"Striscione finale madrid 2010 2.jpg","label":"Inter · Finale Champions 2010","credit":"Pubblico dominio"},{"file":"Festejando el título (4634922863).jpg","label":"Inter · Festeggiamenti 2010","credit":"Autore e licenza"},{"file":"Empieza la celebración (4635522750).jpg","label":"Inter · Madrid 2010","credit":"Autore e licenza"},{"file":"La nord al Bernabeu (4639882760).jpg","label":"Inter · Tifosi a Madrid 2010","credit":"Autore e licenza"},{"file":"Barça Party - Champions League Final 2015 , Barcelona-Juventus, Berlin.JPG","label":"Barcellona · Tifosi a Berlino 2015","credit":"Ferran Cornellà · CC BY-SA 4.0"},{"file":"Barça fans - Champions league 2015 Berlin.JPG","label":"Barcellona · Finale 2015","credit":"Ferran Cornellà · CC BY-SA 4.0"},{"file":"Culés de festa - Champions league 2015 Berlin.JPG","label":"Barcellona · Festa a Berlino 2015","credit":"Ferran Cornellà · CC BY-SA 4.0"},{"file":"Festa culé, Barcelona-Juventus. Champions league 2015, Berlin.JPG","label":"Barcellona · Tifosi 2015","credit":"Ferran Cornellà · CC BY-SA 4.0"},{"file":"Champions League 2010-11 celebration at La Rambla.JPG","label":"Barcellona · Festa sulla Rambla 2011","credit":"Autore e licenza"},{"file":"Real Madrid celebration after winning the 2018 UEFA Champions League Final DSC 0298 (41501694505).jpg","label":"Real Madrid · Champions 2018","credit":"Autore e licenza"},{"file":"Real Madrid celebration after winning the 2018 UEFA Champions League Final DSC 0320 (41501691085).jpg","label":"Real Madrid · Festa Champions 2018","credit":"Autore e licenza"},{"file":"Real Madrid celebration after winning the 2018 UEFA Champions League Final DSC 0354 (28530720898).jpg","label":"Real Madrid · Festa Champions 2018","credit":"Autore e licenza"},{"file":"Real Madrid celebration after winning the 2018 UEFA Champions League Final DSC 0369 (28530717938).jpg","label":"Real Madrid · Tifosi e giocatori 2018","credit":"Autore e licenza"},{"file":"Ofrenda de la Liga y la Champions-45-L.Millán (52109279151).jpg","label":"Real Madrid · Champions 2022","credit":"L. Millán · licenza"},{"file":"Ederson 2023.jpg","label":"Manchester City · Champions 2023","credit":"Monerals · licenza"},{"file":"Mancini, Kompany, Clichy - Premier League 11-12 parade.jpg","label":"Manchester City · Festa Premier 2012","credit":"Stuart Grout · CC BY 2.0"},{"file":"Aguero sending photos - Premier League parade 2011-12.jpg","label":"Manchester City · Parata 2012","credit":"Stuart Grout · CC BY 2.0"},{"file":"Vincent Kompany holds up the Premier League trophy 2012.jpg","label":"Manchester City · Trofeo 2012","credit":"Autore e licenza"},{"file":"Festa PSG - panoramio (1).jpg","label":"PSG · Tifosi in festa","credit":"Autore e licenza"},{"file":"Festa PSG - panoramio (3).jpg","label":"PSG · Festa dei tifosi","credit":"Autore e licenza"},{"file":"Exibição da final da Final da Liga dos Campeões da UEFA de 2024–25 na Praça Pedro Magalhães Junior, Cambuí, Campinas, São Paulo - 31.05.2025.1.jpg","label":"PSG-Inter · Finale 2025 in piazza","credit":"Mtvdanilo · CC BY 4.0"},{"file":"Finale de la LDC 2025 PSG-Inter (5-0).jpg","label":"PSG · Finale Champions 2025","credit":"CC0"}];
+ var galleryControls=make('div','vz-fans-controls');
+ var galleryStatus=make('span','vz-fans-status','01 / '+String(featuredGallery.length+crowdPhotos.length).padStart(2,'0'));
+ galleryStatus.setAttribute('aria-live','off');
+ var prevFan=make('button','vz-fans-arrow','←'),nextFan=make('button','vz-fans-arrow','→');
+ prevFan.type=nextFan.type='button';
+ prevFan.setAttribute('aria-label','Previous photo');nextFan.setAttribute('aria-label','Next photo');
+ galleryControls.append(prevFan,galleryStatus,nextFan);
+ fans.append(galleryControls);
+ function commonsFilePath(file){
+  return 'https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(file).replace(/%2F/g,'/')+'?width=780';
+ }
+ function commonsInfoPath(file){
+  return 'https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(file).replace(/%20/g,'_');
+ }
+ featuredGallery.forEach(function(scene){
+  var figure=make('figure','vz-fans-card vz-fans-visible');
+  figure.dataset.vzTitle=scene.label;
+  var image=make('img','vz-fans-photo');
+  image.src=commonsFilePath(scene.file);
+  image.loading='lazy';image.decoding='async';image.width=780;image.height=600;
+  image.alt=scene.label;
+  image.addEventListener('error',function(){figure.remove();updateGalleryCount()},{once:true});
+  var overlay=make('div','vz-fans-shade');overlay.setAttribute('aria-hidden','true');
+  var caption=make('figcaption','vz-fans-caption');
+  caption.append(make('strong','',scene.label));
+  var source=make('a','vz-fans-credit',scene.credit+' ↗');
+  source.href=commonsInfoPath(scene.file);source.target='_blank';source.rel='noopener noreferrer';
+  source.setAttribute('aria-label',scene.label+' · '+scene.credit+' · Wikimedia Commons');
+  caption.append(source);
+  figure.append(image,overlay,caption);fansGrid.append(figure);
+ });
+ fansGrid.classList.add('vz-fans-ready');
+ // Automatic slow gallery with touch/swipe and keyboard controls.
+ var fanIndex=0,lastManual=0;
+ function galleryItems(){return Array.from(fansGrid.querySelectorAll('.vz-fans-card'))}
+ function updateGalleryCount(){
+  var cards=galleryItems();fanIndex=Math.min(fanIndex,Math.max(0,cards.length-1));
+  galleryStatus.textContent=String(fanIndex+1).padStart(2,'0')+' / '+String(cards.length).padStart(2,'0');
+ }
+ function showFan(i,manual){
+  var cards=galleryItems();if(!cards.length)return;
+  fanIndex=(i+cards.length)%cards.length;
+  if(manual)lastManual=Date.now();
+  var target=cards[fanIndex];
+  fansGrid.scrollTo({left:target.offsetLeft-cards[0].offsetLeft,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  updateGalleryCount();
+ }
+ prevFan.addEventListener('click',function(){showFan(fanIndex-1,true)});
+ nextFan.addEventListener('click',function(){showFan(fanIndex+1,true)});
+ fansGrid.addEventListener('touchstart',function(){lastManual=Date.now()},{passive:true});
+ fansGrid.addEventListener('pointerdown',function(){lastManual=Date.now()},{passive:true});
+ fansGrid.addEventListener('scroll',function(){
+  var cards=galleryItems();if(!cards.length)return;
+  var left=fansGrid.scrollLeft;var index=0,dist=Infinity;
+  cards.forEach(function(card,i){var d=Math.abs(card.offsetLeft-cards[0].offsetLeft-left);if(d<dist){dist=d;index=i}});
+  fanIndex=index;updateGalleryCount();
+ },{passive:true});
+ updateGalleryCount();
+ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  window.setInterval(function(){
+   if(document.hidden||Date.now()-lastManual<11000||fans.matches(':hover')||fans.contains(document.activeElement))return;
+   showFan(fanIndex+1,false);
+  },4700);
+ }
 
 // A concise emotional gift message, without crowding the product selector.
 var giftTx={
