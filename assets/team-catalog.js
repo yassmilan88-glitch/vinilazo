@@ -212,14 +212,114 @@ var pressTx={
  de:['TORE SCHREIBEN GESCHICHTE','Manche Tore vergisst man nie.','Erlebe die Schlagzeilen, die Stimme und den Moment noch einmal.','Dieses Team entdecken','Vorherige Zeitung','Nächste Zeitung','Historische Zeitungsseiten und Fußballerinnerungen','Damals Titelseite. Heute Schallplatte.']
 }[locale]||[];
 var pressStories=[
- {id:'argentina',goal:5,paper:'eg-3481-1986.webp',place:'México · 1986'},
- {id:'argentina',goal:7,paper:'la-nacion-2022.webp',place:'Qatar · 2022'},
- {id:'barcelona',goal:1,paper:'mundo-deportivo-2007.webp',place:'Barcelona · 2007'},
- {id:'argentina',goal:6,paper:'eg-3065-1978.webp',place:'Buenos Aires · 1978'},
- {id:'argentina',goal:5,paper:'eg-3481-1986.webp',place:'Maradona · 1986'},
- {id:'barcelona',goal:1,paper:'mundo-deportivo-2007.webp',place:'Messi · 2007'},
- {id:'argentina',goal:7,paper:'la-nacion-2022.webp',place:'Messi · 2022'},
- {id:'argentina',goal:6,paper:'eg-3065-1978.webp',place:'Argentina · 1978'}
+ {
+  "id": "argentina",
+  "goal": 5,
+  "paper": "eg-3481-1986.webp",
+  "place": "México · 1986"
+ },
+ {
+  "id": "argentina",
+  "goal": 7,
+  "paper": "la-nacion-2022.webp",
+  "place": "Qatar · 2022"
+ },
+ {
+  "id": "barcelona",
+  "goal": 1,
+  "paper": "mundo-deportivo-2007.webp",
+  "place": "Barcelona · 2007"
+ },
+ {
+  "id": "argentina",
+  "goal": 6,
+  "paper": "eg-3065-1978.webp",
+  "place": "Buenos Aires · 1978"
+ },
+ {
+  "id": "real-madrid",
+  "goal": 0,
+  "cover": true,
+  "place": "Glasgow · 2002"
+ },
+ {
+  "id": "inter",
+  "goal": 0,
+  "cover": true,
+  "place": "Madrid · 2010"
+ },
+ {
+  "id": "milan",
+  "goal": 3,
+  "cover": true,
+  "place": "Atene · 2007"
+ },
+ {
+  "id": "bayern",
+  "goal": 0,
+  "cover": true,
+  "place": "Londra · 2013"
+ },
+ {
+  "id": "psg",
+  "goal": 2,
+  "cover": true,
+  "place": "Monaco · 2025"
+ },
+ {
+  "id": "manchester-city",
+  "goal": 1,
+  "cover": true,
+  "place": "Istanbul · 2023"
+ },
+ {
+  "id": "barcelona",
+  "goal": 2,
+  "cover": true,
+  "place": "Roma · 2009"
+ },
+ {
+  "id": "francia",
+  "goal": 0,
+  "cover": true,
+  "place": "Saint-Denis · 1998"
+ },
+ {
+  "id": "spagna",
+  "goal": 2,
+  "cover": true,
+  "place": "Johannesburg · 2010"
+ },
+ {
+  "id": "italia",
+  "goal": 2,
+  "cover": true,
+  "place": "Berlino · 2006"
+ },
+ {
+  "id": "brasile",
+  "goal": 1,
+  "cover": true,
+  "place": "México · 1970"
+ },
+ {
+  "id": "inghilterra",
+  "goal": 0,
+  "cover": true,
+  "place": "Londra · 1966"
+ },
+ {
+  "id": "portogallo",
+  "goal": 3,
+  "cover": true,
+  "place": "Parigi · 2016"
+ },
+ {
+  "id": "olanda",
+  "goal": 1,
+  "cover": true,
+  "place": "Monaco · 1988"
+ }
 ];
 var press=make('section','vz-press-section');press.id='vz-press';
 var pressIntro=make('div','vz-press-intro');
@@ -253,10 +353,14 @@ var pressCount=make('span','vz-press-count');
 var pressNext=make('button','vz-press-arrow','→');pressNext.type='button';pressNext.setAttribute('aria-label',pressTx[5]);
 pressControls.append(pressPrev,pressCount,pressNext);
 var pressStrip=make('div','vz-press-strip');pressStrip.setAttribute('aria-label',pressTx[6]);
+function pressImage(st){
+ var cover=st.cover&&D.covers&&D.covers[st.id]&&D.covers[st.id][0];
+ return cover&&cover.src?cover.src:'../assets/img/press/'+(st.paper||'eg-3481-1986.webp');
+}
 var pressButtons=[];
 pressStories.forEach(function(st,i){
  var thumb=make('button','vz-press-thumb');thumb.type='button';thumb.setAttribute('aria-label',(D.teams||[]).find(function(t){return t.id===st.id})?.name+' · '+st.place);
- var im=make('img','');im.src='../assets/img/press/'+st.paper;im.alt='';im.loading='lazy';
+ var im=make('img','');im.src=pressImage(st);im.alt='';im.loading='lazy';im.decoding='async';
  thumb.append(im,make('span','',st.place));thumb.addEventListener('click',function(){renderPress(i)});
  pressStrip.append(thumb);pressButtons.push(thumb);
 });
@@ -268,7 +372,7 @@ function renderPress(i){
  pressStage.style.setProperty('--press-a',colors[0]);
  pressStage.style.setProperty('--press-b',colors[1]);
  pressStage.style.setProperty('--press-c',colors[2]);
- pressCover.src='../assets/img/press/'+st.paper;pressCover.alt=st.place+' — '+team.name;
+ pressCover.src=pressImage(st);pressCover.alt=st.place+' — '+team.name;
  pressCenter.replaceChildren(teamMark(team,'vz-press-crest'));
  pressTeam.textContent=team.name;
  var goal=team.goals?.[st.goal]||[];
@@ -290,7 +394,7 @@ pressNext.addEventListener('click',function(){renderPress(pressIndex+1)});
 press.append(pressIntro,pressStage,pressControls,pressStrip);main.append(press);
 renderPress(0);
 if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
- window.setInterval(function(){if(!document.hidden&&!press.contains(document.activeElement))renderPress(pressIndex+1)},5800);
+ window.setInterval(function(){if(!document.hidden)renderPress(pressIndex+1)},6300);
 }
 
 
