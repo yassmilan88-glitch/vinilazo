@@ -5,7 +5,7 @@ function init(){
  const nav=document.getElementById('vz-quick-nav');if(!nav)return;
  const toggle=nav.querySelector('.vz-nav-toggle'),links=nav.querySelector('.vz-nav-links');
  const how=document.querySelector('section.how');if(how&&!how.id)how.id='come-funziona';
- let open=false,scrollTimer,lastY=window.scrollY;
+ let open=false,scrollTimer,lastY=window.scrollY, glideTimer;
  function setOpen(value){open=value;nav.classList.toggle('vz-open',open);links.hidden=!open;toggle.setAttribute('aria-expanded',String(open));toggle.firstChild.textContent=open?'× ':'☰ ';}
  toggle.addEventListener('click',()=>setOpen(!open));
  document.addEventListener('pointerdown',e=>{if(open&&!nav.contains(e.target))setOpen(false)});
@@ -24,6 +24,7 @@ function init(){
   nav.classList.toggle('vz-compact',y>160&&!open);
   if(open&&Math.abs(y-lastY)>45)setOpen(false);
   lastY=y;
+  nav.classList.add('vz-glide');clearTimeout(glideTimer);glideTimer=setTimeout(()=>nav.classList.remove('vz-glide'),450);
   clearTimeout(scrollTimer);scrollTimer=setTimeout(()=>{nav.classList.toggle('vz-compact',window.scrollY>160&&!open)},160);
  }
  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
