@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 160"><defs>
+<linearGradient id="silver" x1="0" y1="0" x2="1" y2=".15"><stop stop-color="#596879"/><stop offset=".17" stop-color="#eff9ff"/><stop offset=".29" stop-color="#91a6bb"/><stop offset=".51" stop-color="#fff"/><stop offset=".71" stop-color="#b4c5d4"/><stop offset="1" stop-color="#56718a"/></linearGradient>
+<linearGradient id="deep" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#0d233d"/><stop offset=".26" stop-color="#849caf"/><stop offset=".53" stop-color="#172f47"/><stop offset=".78" stop-color="#dbeaf6"/><stop offset="1" stop-color="#385373"/></linearGradient></defs>
+<path d="M42 43C27 35 25 20 36 11c10-9 20-3 22 7 1 7-3 10-8 10-6 0-6-6-3-9 4-3 2-6-2-6-8 0-13 7-11 15 1 8 6 12 14 16" fill="none" stroke="url(#silver)" stroke-width="7" stroke-linecap="round"/>
+<path d="M98 43c15-8 17-23 6-32-10-9-20-3-22 7-1 7 3 10 8 10 6 0 6-6 3-9-4-3-2-6 2-6 8 0 13 7 11 15-1 8-6 12-14 16" fill="none" stroke="url(#silver)" stroke-width="7" stroke-linecap="round"/>
+<path d="M39 42c3-4 12-8 31-8s28 4 31 8c-4 21-9 42-13 56-3 11-12 17-18 17s-15-6-18-17C48 84 43 63 39 42Z" fill="url(#silver)" stroke="#f7fbff" stroke-width="1.5"/>
+<path d="M48 49c2 13 7 30 11 47 2 7 7 12 11 14-10-7-16-31-22-61Z" fill="#425c77" opacity=".75"/>
+<path d="M88 48c-3 14-7 34-13 54 12-8 16-29 21-53Z" fill="#e1f3ff" opacity=".8"/>
+<ellipse cx="70" cy="42" rx="31.4" ry="8.6" fill="url(#deep)" stroke="#eff9ff" stroke-width="3"/><ellipse cx="70" cy="41" rx="24" ry="4" fill="#41566e" stroke="#d6e8f8" stroke-width="1.2"/>
+<path d="M54 56q16 7 32 0" fill="none" stroke="#fff" stroke-width="2" opacity=".8"/>
+<path d="M61 114h18l-2 13h-14Z" fill="url(#silver)"/><ellipse cx="70" cy="129" rx="20" ry="4.5" fill="url(#deep)" stroke="#eef7ff" stroke-width="2"/>
+<path d="M53 128h34l9 17H44Z" fill="url(#silver)" stroke="#e8f7ff" stroke-width="1.5"/><ellipse cx="70" cy="146" rx="27" ry="5" fill="url(#deep)" stroke="#e8f6ff" stroke-width="3"/>
+<path d="M51 49c4-1 8-2 12-2" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".9"/></svg>
