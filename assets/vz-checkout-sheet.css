@@ -1,0 +1,126 @@
+/* VINILAZO v1 — product-only focused checkout and order-tracking sheets. */
+body.vz-checkout-shell:not(.vz-modal-open) #ordina,
+body.vz-checkout-shell:not(.vz-modal-open) #il-mio-ordine {display:none!important}
+body.vz-checkout-shell.vz-order-open #il-mio-ordine,
+body.vz-checkout-shell.vz-status-open #ordina {display:none!important}
+body.vz-checkout-shell.vz-order-open #ordina,
+body.vz-checkout-shell.vz-status-open #il-mio-ordine{
+ display:block!important; position:fixed!important;inset:0!important;
+ width:100%!important;height:100dvh!important;min-height:0!important;
+ overflow-y:auto!important;overflow-x:hidden!important;
+ overscroll-behavior:contain;z-index:20002!important;
+ scroll-margin-top:0!important;padding:clamp(54px,6vw,80px) 15px 50px!important;
+ background:transparent!important;
+}
+body.vz-modal-open{overflow:hidden!important}
+body.vz-modal-open .vz-quick-nav,body.vz-modal-open .wa,body.vz-modal-open .sticky {visibility:hidden!important;pointer-events:none!important}
+.vz-modal-backdrop{position:fixed;inset:0;z-index:20001;background:rgba(3,10,25,.87);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:none}
+body.vz-modal-open .vz-modal-backdrop{display:block}
+body.vz-checkout-shell .ticket{
+ --tp:clamp(19px,3.7vw,35px);width:min(100%,650px);max-width:650px;
+ background:#fcfdff;color:#142038;padding:var(--tp)!important;border-radius:20px;
+ box-shadow:0 25px 85px #000a,0 0 0 1px rgba(188,213,249,.24);
+ font:400 15px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+body.vz-checkout-shell .ticket:before{left:22px;right:22px;height:4px;background:linear-gradient(90deg,#b7d9ff,#f4d283,#b7d9ff)}
+body.vz-checkout-shell .ticket h2{
+ font:800 clamp(25px,4vw,35px)/1.16 system-ui,-apple-system,sans-serif;
+ letter-spacing:-.035em;padding:4px 40px 15px 0;margin:0 0 18px;
+ border:0;color:#142238;text-wrap:balance;
+}
+body.vz-checkout-shell .ticket h2:before,body.vz-checkout-shell .ticket h2:after{display:none}
+body.vz-checkout-shell .ticket fieldset{margin:0 0 19px;border-bottom:1px solid #e4e9f1;padding:0 0 15px}
+body.vz-checkout-shell .ticket fieldset:last-of-type{border-bottom:0;margin-bottom:11px}
+body.vz-checkout-shell .ticket legend{
+ width:100%;display:flex;align-items:center;gap:10px;
+ font:750 clamp(16px,2.4vw,19px)/1.35 system-ui,-apple-system,sans-serif;
+ letter-spacing:normal;color:#192a43;margin:0 0 11px;padding:0;
+}
+body.vz-checkout-shell .ticket legend .step-n{font:750 13px/1 system-ui,sans-serif;width:29px;height:29px;min-width:29px;background:#183b68;color:#fff;border-radius:50%}
+body.vz-checkout-shell .ticket p,
+body.vz-checkout-shell .ticket .fine,
+body.vz-checkout-shell .ticket .hint {font-family:system-ui,-apple-system,sans-serif;line-height:1.45;letter-spacing:normal}
+body.vz-checkout-shell .ticket .field{gap:5px;margin-bottom:11px;max-width:none}
+body.vz-checkout-shell .ticket .field label{font:650 14px/1.35 system-ui,-apple-system,sans-serif;color:#24354f;letter-spacing:normal}
+body.vz-checkout-shell .ticket .field input,
+body.vz-checkout-shell .ticket .field select,
+body.vz-checkout-shell .ticket textarea{
+ font:500 16px/1.35 system-ui,-apple-system,sans-serif!important;
+ letter-spacing:normal!important;min-height:48px;padding:10px 12px;
+ border:1.5px solid #acbacc;border-radius:10px;background:#fff;color:#102038!important;
+ box-shadow:none;text-transform:none;
+}
+body.vz-checkout-shell .ticket .field input:focus,
+body.vz-checkout-shell .ticket .field select:focus{border-color:#2763a4;outline:2px solid #99caf9;outline-offset:0}
+body.vz-checkout-shell .ticket .chosen{padding:9px 11px;border:1px solid #cbd6e3;gap:10px}
+body.vz-checkout-shell .ticket .chosen .mini-disc{width:40px;height:40px}
+body.vz-checkout-shell .ticket .chosen strong{
+ font:750 18px/1.2 system-ui,-apple-system,sans-serif;letter-spacing:normal}
+body.vz-checkout-shell .ticket .qty{margin-top:10px}
+body.vz-checkout-shell .ticket .eta{font:500 13px/1.45 system-ui,sans-serif;margin-top:8px}
+body.vz-checkout-shell .ticket .gift-choice{font:650 15px/1.4 system-ui,sans-serif;min-height:40px;margin:10px 0 4px}
+body.vz-checkout-shell .ticket .gift-choice input{width:19px;height:19px}
+body.vz-checkout-shell .ticket .checkout-intro,
+body.vz-checkout-shell .ticket .checkout-next {display:none!important}
+body.vz-checkout-shell .ticket .order-summary{padding:13px 15px;border:1px solid #d7e1ec;background:#f4f7fb}
+body.vz-checkout-shell .ticket .summary-product{font:750 19px/1.3 system-ui,sans-serif}
+body.vz-checkout-shell .ticket .summary-lines>div{font:500 14px/1.4 system-ui,sans-serif;padding:8px 0;gap:12px}
+body.vz-checkout-shell .ticket .summary-lines .summary-total{font-size:20px;font-weight:800;border-top:1px solid #ccd7e7}
+body.vz-checkout-shell .ticket .summary-contents{font-size:13px;margin:5px 0 10px}
+body.vz-checkout-shell .ticket .customs-note{font-size:12px;margin:10px 0}
+body.vz-checkout-shell .ticket .checkout-privacy{font-size:12px;margin:12px 0}
+body.vz-checkout-shell .ticket .pay-note{font-size:13px;color:#42546e;margin:12px auto 0;max-width:430px}
+body.vz-checkout-shell .ticket #submit{font:750 18px/1.25 system-ui,sans-serif!important;min-height:54px;box-shadow:none;white-space:normal}
+body.vz-checkout-shell .ticket .checkout-support{font:650 13px/1.4 system-ui,sans-serif;margin-top:10px}
+body.vz-checkout-shell .ticket .bundle-offer{padding:14px;margin:13px 0;border-width:1px}
+body.vz-checkout-shell .ticket .bundle-offer strong{font:750 18px/1.2 system-ui,sans-serif}
+body.vz-checkout-shell .ticket .bundle-offer p{font-size:13px}
+body.vz-checkout-shell .ticket .checkout-review{padding-bottom:0;margin-bottom:12px}
+.vz-checkout-privacy-details{margin:7px 0 8px;padding:10px 12px;border-radius:9px;background:#f3f6fa;font:400 13px/1.5 system-ui,sans-serif}
+.vz-checkout-privacy-details summary{cursor:pointer;font-weight:700}
+.vz-checkout-privacy-details p{margin:6px 0 0}
+.vz-modal-close{
+ position:fixed;z-index:20004;top:max(10px,env(safe-area-inset-top));right:max(12px,calc((100vw - 720px)/2));
+ display:grid;place-items:center;min-width:42px;min-height:42px;padding:0;
+ border:1px solid #7ea7d0;border-radius:50%;background:#15335b;
+ color:#fff;font:700 27px/1 system-ui,sans-serif;cursor:pointer;
+ box-shadow:0 4px 22px #0006;
+}
+.vz-modal-close:hover,.vz-modal-close:focus-visible{background:#276299;outline:2px solid white;outline-offset:2px}
+body.vz-checkout-shell.vz-status-open #il-mio-ordine>div{
+ max-width:570px;margin:0 auto;padding:clamp(22px,4vw,36px)!important;
+ background:#f9fbff;color:#18304b;border-radius:20px;
+ box-shadow:0 22px 80px #0009;
+}
+body.vz-checkout-shell.vz-status-open #il-mio-ordine h2{
+ font:800 clamp(24px,4vw,34px)/1.2 system-ui,sans-serif;color:#132d4b;
+ margin:0 35px 12px 0;
+}
+body.vz-checkout-shell.vz-status-open #il-mio-ordine p{
+ font:400 15px/1.5 system-ui,sans-serif;color:#334d68;margin:11px 0;
+}
+body.vz-checkout-shell.vz-status-open #il-mio-ordine .field{margin:14px 0;max-width:none}
+body.vz-checkout-shell.vz-status-open #il-mio-ordine .field label{font:700 14px/1.3 system-ui,sans-serif;color:#1c3a59}
+body.vz-checkout-shell.vz-status-open #il-mio-ordine .field input{
+ color:#172d49;background:#fff;border:1px solid #b9cadc;
+ font:500 16px/1.3 system-ui,sans-serif;min-height:48px}
+body.vz-checkout-shell.vz-status-open #il-mio-ordine .btn{
+ width:100%;display:grid;place-items:center;min-height:48px;
+ font:750 15px/1.3 system-ui,sans-serif;border-radius:12px;padding:11px 16px;
+}
+@media(max-width:600px){
+ body.vz-checkout-shell.vz-order-open #ordina,
+ body.vz-checkout-shell.vz-status-open #il-mio-ordine{padding:calc(55px + env(safe-area-inset-top)) 10px calc(22px + env(safe-area-inset-bottom))!important}
+ body.vz-checkout-shell .ticket{--tp:17px;border-radius:15px}
+ body.vz-checkout-shell .ticket .row2{gap:10px}
+ body.vz-checkout-shell .ticket .field label{font-size:14px}
+ body.vz-checkout-shell .ticket .chosen .change{min-height:32px;width:auto}
+ .vz-modal-close{right:13px;top:calc(9px + env(safe-area-inset-top));width:42px;height:42px}
+}
+@media(prefers-reduced-motion:reduce){.vz-modal-backdrop{backdrop-filter:none;-webkit-backdrop-filter:none}}
+/* The user-supplied World Cup and UCL trophies are represented by new transparent vector artwork. */
+.vz-choice-orb-mark .vz-trophy-asset{display:block;width:auto;max-width:100%;height:94%;max-height:100%;aspect-ratio:3/4;object-fit:contain;object-position:center;filter:drop-shadow(0 4px 3px #0005)}
+.vz-choice-orb-mark{width:79%!important;height:79%!important;display:grid!important;place-items:center!important;border-radius:50%;overflow:visible!important}
+.vz-choice-orb-mark .vz-trophy-asset{clip-path:none!important;-webkit-mask:none!important;mask:none!important}
+.vz-choice[data-group="nat"] .vz-choice-orb{background:radial-gradient(circle at 30% 20%,#ffecb9,#916218 85%)}
+.vz-choice[data-group="club"] .vz-choice-orb{background:radial-gradient(circle at 30% 20%,#eaf5ff,#274b77 85%)}
