@@ -39,7 +39,7 @@ function refreshCue(){
 function placeCue(){
  const anchor=document.getElementById('discs-cap');if(!anchor)return;
  let cue=document.getElementById('vz-audio-cue');
- if(!cue){cue=document.createElement('div');cue.id='vz-audio-cue';cue.className='vz-audio-cue';cue.innerHTML='<strong class="vz-audio-label"></strong><span class="vz-audio-status" role="status" aria-live="polite"></span><a class="vz-audio-story" href="argentina/#dischi"></a>';cue.querySelector('a').textContent=tx.story;anchor.after(cue);}
+ if(!cue){cue=document.createElement('div');cue.id='vz-audio-cue';cue.className='vz-audio-cue';cue.innerHTML='<strong class="vz-audio-label"></strong><span class="vz-audio-status" role="status" aria-live="polite"></span><a class="vz-audio-story" href="argentina/#dischi"></a>';cue.querySelector('a').textContent=tx.story;const grid=document.getElementById('discs');if(grid)grid.before(cue);else anchor.before(cue);}
  refreshCue();
 }
 function play(i,link){
@@ -69,7 +69,7 @@ function init(){
   if(i<0)return;e.preventDefault();play(i,link);
  });
  player.addEventListener('ended',()=>{active=-1;update()});player.addEventListener('pause',update);player.addEventListener('play',update);player.addEventListener('error',()=>{let e=document.querySelector('#vz-audio-cue .vz-audio-status');if(e)e.textContent=tx.err});
- const button=document.getElementById('team-pick');if(button)button.addEventListener('click',()=>setTimeout(refreshCue,200));
+ const teamName=document.querySelector('#team-pick [data-team-name]');if(teamName)new MutationObserver(refreshCue).observe(teamName,{childList:true,characterData:true,subtree:true});
  document.addEventListener('click',e=>{if(e.target.closest('[data-team]'))setTimeout(refreshCue,950)});
  window.addEventListener('pagehide',()=>player.pause());
 }
