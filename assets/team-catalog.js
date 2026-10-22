@@ -161,6 +161,7 @@ function displayEdition(team){
  document.documentElement.style.setProperty('--c0',pat[0]);
  document.documentElement.style.setProperty('--c1',pat[1]);
  document.documentElement.style.setProperty('--c2',pat[2]);
+ document.documentElement.style.setProperty('--stripe','linear-gradient(90deg,'+pat[0]+' 0 33.3%,'+pat[1]+' 33.3% 66.6%,'+pat[2]+' 66.6%)');
  document.documentElement.style.setProperty('--acc',col[0]);
  product.style.setProperty('--edition-color',col[0]);
  product.style.setProperty('--art-a',pat[0]);product.style.setProperty('--art-b',pat[1]);product.style.setProperty('--art-c',pat[2]);product.style.setProperty('--art-angle',pat[3]+'deg');
