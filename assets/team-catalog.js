@@ -309,8 +309,8 @@ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
  }[locale]||[];
  var crowdPhotos=[
  {file:'Festejos en el Obelisco de Buenos Aires por la obtención de la Copa del Mundo de Fútbol 2022.jpg',credit:'Gobierno de Buenos Aires · CC BY 2.5 AR',label:3},
- {file:'FIFA world cup 2006 - Rome street party piazza venezia.jpg',credit:'Alessio Damato · CC BY-SA',label:4},
- {file:'2010 0711 Sol Madrid.jpg',credit:'Takeaway · Creative Commons',label:5}];
+ {file:'FIFA world cup 2006 - Rome street party piazza venezia.jpg',credit:'Alessio Damato · CC BY-SA 3.0',label:4},
+ {file:'2010 0711 Sol Madrid.jpg',credit:'Takeaway · CC BY-SA 3.0',label:5}];
  var fans=make('section','vz-fans');fans.id='vz-fans';
  fans.append(make('p','vz-section-eyebrow',crowdsText[0]),make('h2','vz-section-title vz-fans-title',crowdsText[1]),make('p','vz-section-sub vz-fans-intro',crowdsText[2]));
  var fansGrid=make('div','vz-fans-grid');
@@ -321,7 +321,7 @@ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
   var shade=make('div','vz-fans-shade');shade.setAttribute('aria-hidden','true');
   var figcaption=make('figcaption','vz-fans-caption');figcaption.append(make('strong','',crowdsText[scene.label]));
   var source=make('a','vz-fans-credit',crowdsText[6]+' ↗');source.href='https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(scene.file).replace(/%20/g,'_');source.target='_blank';source.rel='noopener noreferrer';source.title=scene.credit;
-  figcaption.append(source);figure.append(photo,shade,figcaption);fansGrid.append(figure);
+  source.textContent=scene.credit+' ↗';figcaption.append(source);figure.append(photo,shade,figcaption);fansGrid.append(figure);
  });
  fans.append(fansGrid);main.append(fans);
  if('IntersectionObserver' in window){
