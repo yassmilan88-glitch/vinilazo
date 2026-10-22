@@ -308,15 +308,15 @@ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
  de:['WENN EINE STADT JUBELT','Nicht nur ein Tor. Eine ganze Stadt feiert.','Die Zeitungen zeigen das Ergebnis. Die Straßen zeigen das Gefühl.','Buenos Aires · WM 2022','Rom · WM 2006','Madrid · WM 2010','Originalfoto und Lizenz']
  }[locale]||[];
  var crowdPhotos=[
- {file:'Festejos en el Obelisco de Buenos Aires por la obtención de la Copa del Mundo de Fútbol 2022.jpg',credit:'Gobierno de Buenos Aires · CC BY 2.5 AR',label:3},
- {file:'FIFA world cup 2006 - Rome street party piazza venezia.jpg',credit:'Alessio Damato · CC BY-SA 3.0',label:4},
- {file:'2010 0711 Sol Madrid.jpg',credit:'Takeaway · CC BY-SA 3.0',label:5}];
+ {file:'Festejos en el Obelisco de Buenos Aires por la obtención de la Copa del Mundo de Fútbol 2022.jpg',image:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Festejos_en_el_Obelisco_de_Buenos_Aires_por_la_obtenci%C3%B3n_de_la_Copa_del_Mundo_de_F%C3%BAtbol_2022.jpg/800px-Festejos_en_el_Obelisco_de_Buenos_Aires_por_la_obtenci%C3%B3n_de_la_Copa_del_Mundo_de_F%C3%BAtbol_2022.jpg',credit:'Gobierno de Buenos Aires · CC BY 2.5 AR',label:3},
+ {file:'FIFA world cup 2006 - Rome street party piazza venezia.jpg',image:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/FIFA_world_cup_2006_-_Rome_street_party_piazza_venezia.jpg/960px-FIFA_world_cup_2006_-_Rome_street_party_piazza_venezia.jpg',credit:'Alessio Damato · CC BY-SA 3.0',label:4},
+ {file:'2010 0711 Sol Madrid.jpg',image:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/2010_0711_Sol_Madrid.jpg/960px-2010_0711_Sol_Madrid.jpg',credit:'Takeaway · CC BY-SA 3.0',label:5}];
  var fans=make('section','vz-fans');fans.id='vz-fans';
  fans.append(make('p','vz-section-eyebrow',crowdsText[0]),make('h2','vz-section-title vz-fans-title',crowdsText[1]),make('p','vz-section-sub vz-fans-intro',crowdsText[2]));
  var fansGrid=make('div','vz-fans-grid');
  crowdPhotos.forEach(function(scene){
   var figure=make('figure','vz-fans-card'),photo=make('img','vz-fans-photo');
-  photo.src='https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(scene.file)+'?width=900';
+  photo.src=scene.image;
   photo.loading='lazy';photo.decoding='async';photo.alt=crowdsText[scene.label];photo.width=900;photo.height=660;
   var shade=make('div','vz-fans-shade');shade.setAttribute('aria-hidden','true');
   var figcaption=make('figcaption','vz-fans-caption');figcaption.append(make('strong','',crowdsText[scene.label]));
