@@ -40,3 +40,10 @@
 .vz-copy-line.vz-in.hit{animation-duration:1.2s!important}
 @keyframes vz-score-line{from{transform:scaleX(.04);opacity:0}to{transform:scaleX(1);opacity:1}}
 @media(prefers-reduced-motion:reduce){.vz-quick-nav{transition:none}.moment h2::after,.poem p.hit::after{animation:none}}
+
+/* Glass-clear shortcut tab; preserve readability over photos */
+.vz-nav-toggle{background:rgba(8,20,42,.22);border-color:rgba(255,255,255,.32);box-shadow:0 4px 17px rgba(0,0,0,.12);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);color:#fff;text-shadow:0 1px 5px rgba(0,0,0,.65)}
+.vz-quick-nav.vz-compact .vz-nav-toggle{opacity:.48;background:rgba(8,20,42,.12)}
+.vz-nav-toggle:hover,.vz-nav-toggle:focus-visible{background:rgba(8,20,42,.52);opacity:1}
+.vz-nav-links{background:rgba(8,20,42,.52);border-color:rgba(255,255,255,.22);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.vz-quick-nav.vz-open .vz-nav-toggle{background:rgba(8,20,42,.62);color:#fff;text-shadow:none}
