@@ -189,7 +189,7 @@ function displayEdition(team){
  var currentMark=teamMark(team,'vz-edition-crest');
  if(currentMark.classList.contains('vz-crest-fallback'))emblem.classList.add('vz-crest-fallback');
  emblem.append(currentMark);
- labelName.textContent=team.name;
+ labelName.textContent='';
  tag.textContent=team.name+' · 9';
  product.setAttribute('aria-label','VINILAZO: '+team.name+', nove dischi intercambiabili');
 }
@@ -199,7 +199,7 @@ if(featured.length>1&&!window.matchMedia('(prefers-reduced-motion: reduce)').mat
  window.setInterval(function(){
   if(document.hidden)return;
   editionIndex=(editionIndex+1)%featured.length;
-  displayEdition(featured[editionIndex]);updateNine(featured[editionIndex]);
+  displayEdition(featured[editionIndex]);
  },4300);
 }
 hero.append(left,product,choose);main.append(hero);
@@ -215,68 +215,94 @@ var stageSubtitle=make('p','vz-stage-sub','');
 stageHead.append(stageBack,stageTitle,stageSubtitle);stage.append(stageHead);
 var grid=make('div','vz-flag-grid');stage.append(grid);main.append(stage);
 
-// Nine individual, interchangeable records: each edition has its own nine goal stories.
-var nine=make('section','vz-nine-section');nine.id='vz-nine';
-var nineCopy={
- it:['LA COLLEZIONE','Non uno. Nove dischi.','Un quadro. Nove gol leggendari da scegliere, cambiare e ascoltare.','Scopri le nove emozioni'],
- es:['LA COLECCIÓN','No uno. Nueve discos.','Un cuadro. Nueve goles inolvidables para elegir, cambiar y escuchar.','Descubrí las nueve emociones'],
- fr:['LA COLLECTION','Pas un. Neuf disques.','Un cadre. Neuf buts de légende à choisir, échanger et écouter.','Découvrez les neuf émotions'],
- en:['THE COLLECTION','Not one. Nine records.','One frame. Nine legendary goals to choose, swap and listen to.','Explore the nine moments'],
- de:['DIE KOLLEKTION','Nicht eine. Neun Platten.','Ein Rahmen. Neun legendäre Tore zum Auswählen, Wechseln und Anhören.','Neun Momente entdecken']
-}[locale]||['LA COLLEZIONE','Non uno. Nove dischi.','Un quadro. Nove gol leggendari da scegliere, cambiare e ascoltare.','Scopri le nove emozioni'];
-var nineText=make('div','vz-nine-text');
-nineText.append(make('p','vz-section-eyebrow',nineCopy[0]),make('h2','vz-section-title',nineCopy[1]),make('p','vz-section-sub',nineCopy[2]));
-var nineGrid=make('div','vz-nine-grid');
-var discItems=[];
-for(var i=0;i<9;i++){
- var cell=make('div','vz-nine-item');cell.style.setProperty('--i',i);
- var record=make('div','vz-nine-record');
- var core=make('span','vz-nine-core');
- var idx=make('span','vz-nine-number',String(i+1).padStart(2,'0'));
- core.append(idx);record.append(core);
- var name=make('strong','vz-nine-name');
- var moment=make('small','vz-nine-moment');
- cell.append(record,name,moment);nineGrid.append(cell);
- discItems.push({name:name,moment:moment,core:core});
-}
-var nineAction=make('button','vz-nine-action',nineCopy[3]+' →');nineAction.type='button';
-nineAction.addEventListener('click',function(){openGroup('nat')});
-nine.append(nineText,nineGrid,nineAction);main.append(nine);
-function updateNine(team){
- var goals=team.goals||[];
- nine.style.setProperty('--nine-color',(team.cols||[])[0]||'#74acdf');
- discItems.forEach(function(item,i){
-  var goal=goals[i]||[];
-  item.name.textContent=goal[0]||('Gol '+(i+1));
-  item.moment.textContent=goal[1]||'';
-  item.core.style.background='linear-gradient(135deg,'+(team.cols?.[0]||'#74acdf')+','+(team.cols?.[1]||'#ffffff')+','+(team.cols?.[2]||'#74acdf')+')';
- });
-}
-updateNine(featured[0]);
-
-// Recovered VINILAZO kitchen scenes. Product close-ups above remain the purchase reference.
-var lifeCopy={
- it:['NELLA VITA DI TUTTI I GIORNI','Dove vivono i ricordi.','La cucina, il frigorifero, una telecronaca che ti riporta a quel momento.','Un angolo di Buenos Aires','Un ricordo di Parigi','Ambientazioni illustrative del prodotto'],
- es:['EN LA VIDA COTIDIANA','Donde viven los recuerdos.','La cocina, la heladera, un relato que te devuelve a aquel momento.','Un rincón de Buenos Aires','Un recuerdo de París','Escenas ilustrativas del producto'],
- fr:['DANS LA VIE DE TOUS LES JOURS','Là où vivent les souvenirs.','La cuisine, le réfrigérateur, une voix qui vous ramène à cet instant.','Un coin de Buenos Aires','Un souvenir de Paris','Mises en scène illustratives du produit'],
- en:['IN EVERYDAY LIFE','Where memories live.','The kitchen, the fridge, the commentary that takes you right back.','A corner of Buenos Aires','A Parisian memory','Illustrative product lifestyle scenes'],
- de:['MITTEN IM ALLTAG','Wo Erinnerungen leben.','Die Küche, der Kühlschrank, die Stimme, die dich zurückversetzt.','Ein Stück Buenos Aires','Eine Erinnerung an Paris','Illustrative Produktdarstellungen']
+// Editorial newspaper carousel: the press memory becomes a VINILAZO record.
+var pressTx={
+ it:['IL GOL FA STORIA','Prima era una prima pagina. Ora è un disco.','Sfoglia i ricordi, ritrova la voce, rivivi quel momento.','Scopri questa squadra','Articolo precedente','Articolo successivo','Giornali d’epoca e ricordi calcistici'],
+ es:['EL GOL HACE HISTORIA','Antes era una portada. Hoy es un disco.','Volvé a esas portadas, escuchá aquella voz, reviví ese momento.','Descubrí este equipo','Anterior portada','Siguiente portada','Portadas históricas y recuerdos del fútbol'],
+ fr:['LE BUT ENTRE DANS L’HISTOIRE','Hier en une. Aujourd’hui sur un disque.','Retrouvez les unes, la voix du match et cette émotion intacte.','Découvrir cette équipe','Une précédente','Une suivante','Archives de presse et souvenirs de football'],
+ en:['WHEN GOALS MAKE HISTORY','Once a front page. Now a record.','See the headlines, hear the voice and relive that instant.','Explore this team','Previous newspaper','Next newspaper','Historic newspaper covers and football memories'],
+ de:['TORE SCHREIBEN GESCHICHTE','Damals Titelseite. Heute Schallplatte.','Erlebe die Schlagzeilen, die Stimme und den Moment noch einmal.','Dieses Team entdecken','Vorherige Zeitung','Nächste Zeitung','Historische Zeitungsseiten und Fußballerinnerungen']
 }[locale]||[];
-var life=make('section','vz-life-section');life.id='vz-life';
-var lifeHead=make('div','vz-life-heading');
-lifeHead.append(make('p','vz-section-eyebrow',lifeCopy[0]),make('h2','vz-section-title',lifeCopy[1]),make('p','vz-section-sub',lifeCopy[2]));
-var lifePhotos=make('div','vz-life-photos');
-[['argentina-kitchen.jpg',lifeCopy[3]],['france-kitchen.jpg',lifeCopy[4]]].forEach(function(entry){
- var figure=make('figure','vz-life-card');
- var img=make('img','vz-life-image');img.src='../assets/img/lifestyle/'+entry[0];img.alt=entry[1]+' — VINILAZO sul frigorifero';img.loading='lazy';img.decoding='async';img.width=800;img.height=1067;
- figure.append(img,make('figcaption','vz-life-caption',entry[1]));lifePhotos.append(figure);
+var pressStories=[
+ {id:'argentina',goal:5,paper:'eg-3481-1986.webp',place:'México · 1986'},
+ {id:'argentina',goal:7,paper:'la-nacion-2022.webp',place:'Qatar · 2022'},
+ {id:'barcelona',goal:1,paper:'mundo-deportivo-2007.webp',place:'Barcelona · 2007'},
+ {id:'argentina',goal:6,paper:'eg-3065-1978.webp',place:'Buenos Aires · 1978'}
+];
+var press=make('section','vz-press-section');press.id='vz-press';
+var pressIntro=make('div','vz-press-intro');
+pressIntro.append(make('p','vz-section-eyebrow',pressTx[0]),make('h2','vz-section-title',pressTx[1]),make('p','vz-section-sub',pressTx[2]));
+var pressStage=make('div','vz-press-stage');
+var pressPaper=make('div','vz-press-paper');
+var pressCover=make('img','vz-press-cover');pressCover.alt='';pressCover.loading='lazy';pressCover.decoding='async';pressCover.width=640;pressCover.height=850;
+pressPaper.append(pressCover);
+var pressArtwork=make('div','vz-press-artwork');
+var pressDisc=make('div','vz-press-vinyl');
+var pressCenter=make('span','vz-press-vinyl-center');
+pressDisc.append(pressCenter);
+var pressMeta=make('div','vz-press-meta');
+var pressTeam=make('span','vz-press-team');
+var pressGoal=make('strong','vz-press-goal');
+var pressPlace=make('small','vz-press-place');
+var pressLink=make('a','vz-press-link',pressTx[3]+' ↗');
+pressMeta.append(pressTeam,pressGoal,pressPlace,pressLink);
+pressArtwork.append(pressDisc,pressMeta);
+pressStage.append(pressPaper,pressArtwork);
+var pressControls=make('div','vz-press-controls');
+var pressPrev=make('button','vz-press-arrow','←');pressPrev.type='button';pressPrev.setAttribute('aria-label',pressTx[4]);
+var pressCount=make('span','vz-press-count');
+var pressNext=make('button','vz-press-arrow','→');pressNext.type='button';pressNext.setAttribute('aria-label',pressTx[5]);
+pressControls.append(pressPrev,pressCount,pressNext);
+var pressStrip=make('div','vz-press-strip');pressStrip.setAttribute('aria-label',pressTx[6]);
+var pressButtons=[];
+pressStories.forEach(function(st,i){
+ var thumb=make('button','vz-press-thumb');thumb.type='button';thumb.setAttribute('aria-label',(D.teams||[]).find(function(t){return t.id===st.id})?.name+' · '+st.place);
+ var im=make('img','');im.src='../assets/img/press/'+st.paper;im.alt='';im.loading='lazy';
+ thumb.append(im,make('span','',st.place));thumb.addEventListener('click',function(){renderPress(i)});
+ pressStrip.append(thumb);pressButtons.push(thumb);
 });
-life.append(lifeHead,lifePhotos,make('p','vz-life-note',lifeCopy[5]));main.append(life);
-if('IntersectionObserver' in window&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
- var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('vz-visible');observer.unobserve(entry.target)}})},{threshold:.13});
- nineGrid.querySelectorAll('.vz-nine-item').forEach(function(el){observer.observe(el)});
- lifePhotos.querySelectorAll('.vz-life-card').forEach(function(el){observer.observe(el)});
-}else{nineGrid.querySelectorAll('.vz-nine-item').forEach(function(el){el.classList.add('vz-visible')});lifePhotos.querySelectorAll('.vz-life-card').forEach(function(el){el.classList.add('vz-visible')})}
+var pressIndex=0;
+function renderPress(i){
+ pressIndex=(i+pressStories.length)%pressStories.length;
+ var st=pressStories[pressIndex];var team=(D.teams||[]).find(function(x){return x.id===st.id});
+ var colors=team?.cols||['#74ACDF','#FFFFFF','#F6B40E'];
+ pressStage.style.setProperty('--press-a',colors[0]);
+ pressStage.style.setProperty('--press-b',colors[1]);
+ pressStage.style.setProperty('--press-c',colors[2]);
+ pressCover.src='../assets/img/press/'+st.paper;pressCover.alt=st.place+' — '+team.name;
+ pressCenter.replaceChildren(teamMark(team,'vz-press-crest'));
+ pressTeam.textContent=team.name;
+ var goal=team.goals?.[st.goal]||[];
+ pressGoal.textContent=goal[0]||team.name;
+ pressPlace.textContent=st.place+' · '+(goal[1]||'');
+ pressLink.href='?team='+encodeURIComponent(st.id);
+ pressCount.textContent=String(pressIndex+1).padStart(2,'0')+' / '+String(pressStories.length).padStart(2,'0');
+ pressButtons.forEach(function(el,n){el.classList.toggle('vz-selected',n===pressIndex);el.setAttribute('aria-pressed',String(n===pressIndex))});
+ pressPaper.classList.remove('vz-press-enter');pressDisc.classList.remove('vz-press-enter');
+ void pressStage.offsetWidth;
+ pressPaper.classList.add('vz-press-enter');pressDisc.classList.add('vz-press-enter');
+ var active=pressButtons[pressIndex];if(active&&active.scrollIntoView&&pressIndex>1){pressStrip.scrollTo({left:active.offsetLeft-pressStrip.offsetLeft-80,behavior:'smooth'})}
+}
+pressPrev.addEventListener('click',function(){renderPress(pressIndex-1)});
+pressNext.addEventListener('click',function(){renderPress(pressIndex+1)});
+press.append(pressIntro,pressStage,pressControls,pressStrip);main.append(press);
+renderPress(0);
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+ window.setInterval(function(){if(!document.hidden&&!press.matches(':hover')&&!press.contains(document.activeElement))renderPress(pressIndex+1)},5800);
+}
+
+// A concise emotional gift message, without crowding the product selector.
+var giftTx={
+ it:['UN REGALO CHE FA CENTRO','Per chi dice che non vuole niente. Ma vive per quei colori.','Per tuo padre, il tuo compagno o quell’amico che conosce ancora ogni telecronaca a memoria. Non un oggetto qualsiasi: il suo gol, la sua voce, la sua squadra.','Scegli la squadra del regalo'],
+ es:['UN REGALO QUE EMOCIONA','Para quien dice que no necesita nada. Salvo volver a sentir ese gol.','Para tu papá, tu pareja o ese amigo que todavía recita cada relato. Su gol. Su voz. Sus colores.','Elegí el equipo del regalo'],
+ fr:['UN CADEAU QUI TOUCHE','Pour celui qui dit ne vouloir rien. Sauf revivre ce but.','Pour un père, un compagnon ou cet ami qui connaît chaque commentaire par cœur. Son but, sa voix, ses couleurs.','Choisir son équipe'],
+ en:['THE GIFT THEY REMEMBER','For the man who says he wants nothing. Except that goal again.','For dad, your partner or the friend who still knows every word of the commentary. His team, his voice, his moment.','Choose his team'],
+ de:['EIN GESCHENK MIT GEFÜHL','Für den Mann, der sagt, er braucht nichts. Außer dieses Tor noch einmal.','Für Papa, deinen Partner oder den Freund, der jeden Kommentar auswendig kennt. Sein Verein. Seine Stimme. Sein Moment.','Seine Mannschaft wählen']
+}[locale]||[];
+var gift=make('section','vz-gift-home');gift.id='vz-gift-home';
+gift.append(make('p','vz-section-eyebrow',giftTx[0]),make('h2','vz-section-title',giftTx[1]),make('p','vz-section-sub',giftTx[2]));
+var giftButton=make('button','vz-gift-button',giftTx[3]+' →');giftButton.type='button';giftButton.addEventListener('click',function(){openGroup('club')});
+gift.append(giftButton);main.append(gift);
 function openGroup(group){
  natButton.setAttribute('aria-expanded',group==='nat'?'true':'false');
  clubButton.setAttribute('aria-expanded',group==='club'?'true':'false');
@@ -285,7 +311,11 @@ function openGroup(group){
  stageTitle.textContent=group==='nat'?t.selectNat:t.selectClub;
  stageSubtitle.textContent=group==='nat'?t.tap:t.tapClub;
  grid.replaceChildren();
- (D.teams||[]).filter(function(x){return x.g===group}).forEach(function(team){
+ var priority=group==='nat'?['argentina','francia','spagna','brasile','inghilterra']:['inter','real-madrid','barcelona','bayern','psg'];
+ (D.teams||[]).filter(function(x){return x.g===group}).sort(function(a,b){
+  var ai=priority.indexOf(a.id),bi=priority.indexOf(b.id);
+  return (ai<0?999:ai)-(bi<0?999:bi);
+ }).forEach(function(team){
    var a=make('a','vz-flag-card');a.href='?team='+encodeURIComponent(team.id);
    a.setAttribute('aria-label',t.discover+': '+team.name);
    var colours=team.cols||['#74acdf','#fff','#f3c134'];
@@ -293,8 +323,29 @@ function openGroup(group){
    var mark=teamMark(team,'vz-team-logo');
    a.append(mark,make('strong','vz-flag-name',team.name),make('small','vz-flag-action','→'));
    if(team.id==='argentina')a.append(make('span','vz-flag-ready',t.ready));
+   if(priority.indexOf(team.id)>=0)a.classList.add('vz-featured-team');
    grid.append(a);
  });
+ var customWords={
+  it:['Su richiesta','Non trovi la tua squadra?','Realizziamo anche edizioni personalizzate. Raccontaci cosa vorresti.','Richiedi su WhatsApp'],
+  es:['A pedido','¿No encontrás tu equipo?','Consultanos por equipos y discos personalizados.','Pedilo por WhatsApp'],
+  fr:['Sur demande','Votre équipe manque ?','Demandez une édition personnalisée.','Nous écrire sur WhatsApp'],
+  en:['By request','Can’t find your team?','Ask us about customised teams and discs.','Request on WhatsApp'],
+  de:['Auf Anfrage','Dein Team fehlt?','Frage nach individuell gestalteten Teams und Platten.','Per WhatsApp anfragen']
+ }[locale]||[];
+ var customName=group==='nat'?'Marocco':'Arsenal';
+ var customIcon=group==='nat'?'🇲🇦':'ARS';
+ var customPrompt=encodeURIComponent('Ciao VINILAZO! Vorrei sapere se è possibile personalizzare un’edizione '+customName+' con 9 dischi e audio.');
+ var customCard=make('a','vz-flag-card vz-custom-card');
+ customCard.href='https://wa.me/393295865883?text='+customPrompt;customCard.target='_blank';customCard.rel='noopener noreferrer';
+ customCard.append(make('span','vz-custom-symbol',customIcon),make('strong','vz-flag-name',customName),make('small','vz-custom-hint',customWords[0]+' ↗'));
+ grid.append(customCard);
+ var req=document.getElementById('vz-request-other');
+ if(!req){req=make('div','vz-request-other');req.id='vz-request-other';stage.append(req);}
+ req.replaceChildren(make('h3','',customWords[1]),make('p','',customWords[2]));
+ var wa=make('a','vz-request-button',customWords[3]+' →');
+ wa.href='https://wa.me/393295865883?text='+encodeURIComponent('Ciao VINILAZO! Vorrei una squadra non presente sul sito oppure dischi personalizzati. Mi date informazioni?');
+ wa.target='_blank';wa.rel='noopener noreferrer';req.append(wa);
  stage.hidden=false;
  requestAnimationFrame(function(){stage.scrollIntoView({behavior:'smooth',block:'start'})});
 }
@@ -313,11 +364,11 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 var navLinks=document.getElementById('vz-nav-links');
 if(navLinks){
  var menus={
-  it:[['Inizio','#vz-catalog-main'],['9 dischi','#vz-nine'],['Nazionali','#vz-nazionali'],['Club','#vz-club'],['Chi siamo','#chi-siamo']],
-  es:[['Inicio','#vz-catalog-main'],['9 discos','#vz-nine'],['Selecciones','#vz-nazionali'],['Clubes','#vz-club'],['Quiénes somos','#chi-siamo']],
-  fr:[['Accueil','#vz-catalog-main'],['9 disques','#vz-nine'],['Sélections','#vz-nazionali'],['Clubs','#vz-club'],['Qui sommes-nous ?','#chi-siamo']],
-  en:[['Home','#vz-catalog-main'],['9 records','#vz-nine'],['National teams','#vz-nazionali'],['Clubs','#vz-club'],['About us','#chi-siamo']],
-  de:[['Start','#vz-catalog-main'],['9 Platten','#vz-nine'],['Nationalteams','#vz-nazionali'],['Vereine','#vz-club'],['Über uns','#chi-siamo']]
+  it:[['Inizio','#vz-catalog-main'],['Giornali','#vz-press'],['Nazionali','#vz-nazionali'],['Club','#vz-club'],['Chi siamo','#chi-siamo']],
+  es:[['Inicio','#vz-catalog-main'],['Periódicos','#vz-press'],['Selecciones','#vz-nazionali'],['Clubes','#vz-club'],['Quiénes somos','#chi-siamo']],
+  fr:[['Accueil','#vz-catalog-main'],['Journaux','#vz-press'],['Sélections','#vz-nazionali'],['Clubs','#vz-club'],['Qui sommes-nous ?','#chi-siamo']],
+  en:[['Home','#vz-catalog-main'],['Press','#vz-press'],['National teams','#vz-nazionali'],['Clubs','#vz-club'],['About us','#chi-siamo']],
+  de:[['Start','#vz-catalog-main'],['Zeitungen','#vz-press'],['Nationalteams','#vz-nazionali'],['Vereine','#vz-club'],['Über uns','#chi-siamo']]
  };
  navLinks.replaceChildren();
  (menus[locale]||menus.it).forEach(function(item){
