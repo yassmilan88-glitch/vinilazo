@@ -440,3 +440,69 @@ body:not(.vz-catalog-mode) .hero-copy .vz-sub-extra[hidden]{display:none!importa
  .vz-gift-home>.vz-section-title{animation:none!important;filter:none!important}
  .vz-catalog .vz-catalog-title::after,.hero-copy .quote::after{opacity:1}
 }
+
+
+/* VINILAZO editorial polish — clean spherical team emblems, separated motion and real street celebrations */
+.vz-choice-orb{display:grid;place-items:center;overflow:hidden;isolation:isolate}
+.vz-choice-orb-mark{width:77%!important;height:77%!important;overflow:hidden!important;border-radius:50%;display:grid;place-items:center;filter:none!important}
+.vz-choice-orb-mark .vz-orb-crest{width:100%;height:100%;display:grid;place-items:center;overflow:hidden;border-radius:50%;transform:translateZ(0)}
+.vz-orb-crest .vz-crest-image,.vz-choice-orb-mark .vz-crest-image{
+ display:block;width:100%;height:100%;max-width:100%;max-height:100%;
+ object-fit:contain;object-position:50% 50%;border-radius:50%;
+ -webkit-mask-image:radial-gradient(circle at center,#000 47%,#000d 61%,transparent 79%);
+ mask-image:radial-gradient(circle at center,#000 47%,#000d 61%,transparent 79%);
+ transform:scale(.88);filter:contrast(1.13) saturate(1.16)
+}
+.vz-choice-orb-mark.vz-orb-enter{animation:vz-icon-focus .65s cubic-bezier(.18,.8,.22,1) both!important}
+@keyframes vz-icon-focus{from{opacity:0;transform:scale(.84)}to{opacity:1;transform:scale(1)}}
+.vz-press-stage{grid-template-columns:minmax(0,1.23fr) minmax(0,.77fr);gap:clamp(10px,2.5vw,42px);isolation:isolate}
+.vz-press-paper{min-height:470px}
+.vz-press-cover{height:clamp(370px,38vw,530px);max-width:100%;filter:saturate(.93) contrast(1.04)}
+.vz-press-vinyl{width:min(72%,242px);animation:vz-press-disc-spin 17s linear infinite;will-change:transform}
+.vz-press-vinyl.vz-press-enter{animation:vz-press-disc-spin 17s linear infinite}
+.vz-press-artwork.vz-press-enter{animation:vz-record-arrive-separated .88s cubic-bezier(.16,.9,.24,1) both}
+@keyframes vz-record-arrive-separated{
+ from{opacity:0;transform:translateX(36px) translateY(12px) scale(.9)}
+ to{opacity:1;transform:translateX(0) translateY(0) scale(1)}
+}
+.vz-press-paper::after{content:"";position:absolute;inset:14% 4%;pointer-events:none;z-index:-1;background:radial-gradient(circle,color-mix(in srgb,var(--press-a) 22%,transparent),transparent 65%);filter:blur(30px);animation:vz-press-aura 6s ease-in-out infinite}
+@keyframes vz-press-aura{50%{opacity:.38;transform:scale(1.12)}}
+.vz-fans{position:relative;padding:clamp(66px,8vw,115px) clamp(16px,5vw,76px) clamp(70px,8vw,112px);background:radial-gradient(ellipse at 50% 0%,#193451,#09172f 62%,#071329);color:#f7fbff;overflow:hidden;border-top:1px solid #ffffff18}
+.vz-fans>.vz-section-eyebrow,.vz-fans>.vz-section-title,.vz-fans>.vz-section-sub{text-align:center;margin-left:auto;margin-right:auto}
+.vz-fans-title{max-width:920px}
+.vz-fans-intro{max-width:700px;margin-bottom:38px!important}
+.vz-fans-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2.2vw,26px);max-width:1190px;margin:auto}
+.vz-fans-card{position:relative;margin:0;min-width:0;aspect-ratio:3/4;overflow:hidden;border-radius:19px;border:1px solid #ffffff26;background:linear-gradient(150deg,#183756,#091a35);box-shadow:0 19px 42px #0007;opacity:0;transform:translateY(28px);transition:opacity .85s ease,transform .85s cubic-bezier(.16,.85,.22,1)}
+.vz-fans-card:nth-child(2){transition-delay:.13s}
+.vz-fans-card:nth-child(3){transition-delay:.26s}
+.vz-fans-card.vz-fans-visible{opacity:1;transform:translateY(0)}
+.vz-fans-photo{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%;filter:saturate(.93) contrast(1.08);transition:transform 7s ease}
+.vz-fans-card:hover .vz-fans-photo{transform:scale(1.08)}
+.vz-fans-shade{position:absolute;inset:0;background:linear-gradient(0deg,#040d1fee 0%,#061326bb 24%,transparent 61%),linear-gradient(180deg,#d1eaff15,transparent 32%);pointer-events:none}
+.vz-fans-caption{position:absolute;bottom:0;left:0;right:0;padding:22px 19px 18px;display:flex;flex-direction:column;gap:11px}
+.vz-fans-caption strong{font:900 clamp(23px,2.5vw,34px)/1.08 var(--display),Impact,sans-serif;text-shadow:0 2px 12px #0008}
+.vz-fans-credit{font:600 11px/1.4 system-ui,sans-serif;color:#c5e4ff;text-decoration:underline;text-underline-offset:3px;align-self:flex-start}
+.vz-fans-credit:hover{color:#fff}
+@media(max-width:800px){
+ .vz-press-stage{grid-template-columns:1fr;gap:8px}
+ .vz-press-cover{height:clamp(290px,66vw,445px);max-width:95%}
+ .vz-press-paper{min-height:0}
+ .vz-press-vinyl{width:min(54%,185px)}
+ .vz-fans-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding:6px 3px 18px;scrollbar-width:thin}
+ .vz-fans-card{flex:0 0 min(78vw,305px);aspect-ratio:3/4;scroll-snap-align:center}
+ .vz-fans-intro{margin-bottom:23px!important}
+}
+@media(max-width:500px){
+ .vz-choice-orb-mark{width:73%!important;height:73%!important}
+ .vz-press-vinyl{width:min(50%,168px)}
+ .vz-press-cover{height:clamp(285px,76vw,390px)}
+ .vz-press-stage{padding:21px 12px 27px}
+ .vz-press-artwork{margin-top:9px}
+ .vz-fans{padding:62px 14px 72px}
+ .vz-fans-card{flex-basis:80vw}
+}
+@media(prefers-reduced-motion:reduce){
+ .vz-choice-orb-mark.vz-orb-enter,.vz-press-artwork.vz-press-enter,.vz-press-paper::after,.vz-press-vinyl{animation:none!important}
+ .vz-fans-card{opacity:1;transform:none;transition:none}
+ .vz-fans-photo{transition:none}
+}
