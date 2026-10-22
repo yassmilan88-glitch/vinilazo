@@ -133,6 +133,7 @@ function startBadgeCarousel(button,group,delay){
   button.style.setProperty('--orb-b',palette[1]);
   button.style.setProperty('--orb-c',palette[2]||palette[0]);
   mark.replaceChildren(teamMark(team,'vz-orb-crest'));
+   mark.setAttribute('aria-label',team.name);
   mark.classList.remove('vz-orb-enter');
   void mark.offsetWidth;
   mark.classList.add('vz-orb-enter');
@@ -286,6 +287,9 @@ function renderPress(i){
  pressCount.textContent=String(pressIndex+1).padStart(2,'0')+' / '+String(pressStories.length).padStart(2,'0');
  pressButtons.forEach(function(el,n){el.classList.toggle('vz-selected',n===pressIndex);el.setAttribute('aria-pressed',String(n===pressIndex))});
  pressPaper.classList.remove('vz-press-enter');pressArtwork.classList.remove('vz-press-enter');
+ pressDisc.style.animation='none';
+ void pressDisc.offsetWidth;
+ pressDisc.style.animation='';
  void pressStage.offsetWidth;
  pressPaper.classList.add('vz-press-enter');pressArtwork.classList.add('vz-press-enter');
  var active=pressButtons[pressIndex];if(active&&active.scrollIntoView&&pressIndex>1){pressStrip.scrollTo({left:active.offsetLeft-pressStrip.offsetLeft-80,behavior:'smooth'})}
@@ -295,7 +299,7 @@ pressNext.addEventListener('click',function(){renderPress(pressIndex+1)});
 press.append(pressIntro,pressStage,pressControls,pressStrip);main.append(press);
 renderPress(0);
 if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
- window.setInterval(function(){if(!document.hidden&&!press.matches(':hover')&&!press.contains(document.activeElement))renderPress(pressIndex+1)},5800);
+ window.setInterval(function(){if(!document.hidden&&!press.contains(document.activeElement))renderPress(pressIndex+1)},5800);
 }
 
 
@@ -324,6 +328,59 @@ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
   source.textContent=scene.credit+' ↗';figcaption.append(source);figure.append(photo,shade,figcaption);fansGrid.append(figure);
  });
  fans.append(fansGrid);main.append(fans);
+
+ // Populate the moving supporters gallery from Wikimedia Commons' openly licensed photo catalogue.
+ // Search is scoped to historical celebrations; filter by file licence and image dimensions.
+ var gallerySearches=[
+  'Argentina 2022 World Cup fans Buenos Aires celebration',
+  'Argentina 2022 World Cup celebration Obelisco',
+  'France 2018 World Cup fans celebration Paris',
+  'Spain 2010 World Cup fans celebration Madrid',
+  'Italy 2006 World Cup fans celebration Rome',
+  'Brazil World Cup football fans celebration',
+  'Morocco 2022 World Cup supporters celebration',
+  'football supporters trophy celebrations'
+ ];
+ var gallerySeen=new Set(crowdPhotos.map(function(scene){return scene.file.toLowerCase()}));
+ var galleryCandidates=[];
+ function addCommonsImage(page){
+  if(!page||!page.title||!/^File:/i.test(page.title)||!page.imageinfo?.[0])return;
+  var info=page.imageinfo[0],meta=info.extmetadata||{},license=(meta.LicenseShortName?.value||'').toLowerCase();
+  var filename=page.title.slice(5),key=filename.toLowerCase();
+  if(gallerySeen.has(key)||!/cc by|public domain|cc0/.test(license)||!info.thumburl||info.width<650||info.height<400)return;
+  if(!/\.(jpg|jpeg|png|webp)$/i.test(filename))return;
+  gallerySeen.add(key);
+  galleryCandidates.push({filename:filename,url:info.thumburl,licence:meta.LicenseShortName?.value||'Creative Commons',description:filename.replace(/\.(jpg|jpeg|png|webp)$/i,'').replace(/[_-]/g,' ')});
+ }
+ function appendGalleryImages(){
+  galleryCandidates.slice(0,27).forEach(function(scene){
+   var figure=make('figure','vz-fans-card vz-fans-visible');
+   var photo=make('img','vz-fans-photo');photo.src=scene.url;photo.loading='lazy';photo.decoding='async';photo.alt=scene.description;
+   var shade=make('div','vz-fans-shade');shade.setAttribute('aria-hidden','true');
+   var caption=make('figcaption','vz-fans-caption');
+   var title=make('strong','',scene.description.length>58?scene.description.slice(0,55)+'…':scene.description);
+   var source=make('a','vz-fans-credit',scene.licence+' · Wikimedia Commons ↗');
+   source.href='https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(scene.filename).replace(/%20/g,'_');source.target='_blank';source.rel='noopener noreferrer';
+   caption.append(title,source);figure.append(photo,shade,caption);fansGrid.append(figure);
+  });
+  fansGrid.classList.add('vz-fans-ready');
+ }
+ // Fetch only while the gallery is on screen, and preserve the existing photos if the service is unavailable.
+ async function expandFanGallery(){
+  try{
+   var tasks=gallerySearches.map(async function(q){
+    var url='https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch='+encodeURIComponent(q)+'&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url|size|extmetadata&iiurlwidth=900&format=json&origin=*';
+    var response=await fetch(url);if(!response.ok)return;
+    var payload=await response.json();Object.values(payload.query?.pages||{}).forEach(addCommonsImage);
+   });
+   await Promise.all(tasks);appendGalleryImages();
+  }catch(e){/* Existing editorial photos remain visible offline. */}
+ }
+ if('IntersectionObserver' in window){
+  var galleryLoader=new IntersectionObserver(function(entries){if(entries.some(function(entry){return entry.isIntersecting})){galleryLoader.disconnect();expandFanGallery()}},{rootMargin:'600px'});
+  galleryLoader.observe(fans);
+ }else expandFanGallery();
+
  if('IntersectionObserver' in window){
   var fanObserver=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('vz-fans-visible');fanObserver.unobserve(entry.target)}})},{threshold:.17});
   fansGrid.querySelectorAll('.vz-fans-card').forEach(function(card){fanObserver.observe(card)});
