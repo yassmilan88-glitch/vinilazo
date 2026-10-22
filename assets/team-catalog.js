@@ -20,7 +20,7 @@ var legacy=location.hash&&/^#(ordina|storie|come-funziona|cosa|idea-regalo|il-mi
 function make(tag,cls,content){var e=document.createElement(tag);if(cls)e.className=cls;if(content!==undefined)e.textContent=content;return e}
 var flags={argentina:'🇦🇷',brasile:'🇧🇷',francia:'🇫🇷',spagna:'🇪🇸',italia:'🇮🇹',germania:'🇩🇪',inghilterra:'🇬🇧',portogallo:'🇵🇹',olanda:'🇳🇱',messico:'🇲🇽'};
 var crestSlugs={
- argentina:'argentina-national-team',brasile:'brazil-national-team',francia:'france-national-team',spagna:'spain-national-team',italia:'italy-national-team',germania:'germany-national-team',inghilterra:'england-national-team',portogallo:'portugal-national-team',olanda:'netherlands-national-team',messico:'mexico-national-team',
+ argentina:'argentina-national-team',brasile:'brazil-national-team',francia:'france-national-team',spagna:'spain-national-team',italia:'italy-national-team',germania:'germany-national-team',inghilterra:'england-national-team',portogallo:'portugal-national-team',olanda:'netherlands-national-team-dutch',messico:'mexico-national-team',
  'real-madrid':'real-madrid',barcelona:'fc-barcelona','manchester-united':'manchester-united',liverpool:'liverpool-fc',bayern:'bayern-munich',juventus:'juventus',milan:'ac-milan',inter:'inter-milan',psg:'paris-saint-germain-psg','manchester-city':'manchester-city'
 };
 function crestUrl(team){var slug=crestSlugs[team.id];return slug?'https://assets.footylogos.com/logos/'+slug+'/'+slug+'-logo-footylogos.svg':''}
