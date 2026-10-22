@@ -1,0 +1,14 @@
+/* Isolated scroll prototype. No changes to existing player/cart/audio. */
+.vz-unboxing-demo{--progress:0;position:relative;height:175svh;background:radial-gradient(ellipse at 50% 45%,#162c51,#08142a 70%)}
+.vz-ub-sticky{height:100svh;position:sticky;top:0;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:20px}
+.vz-ub-heading{position:absolute;top:clamp(30px,6vh,70px);text-align:center;z-index:5;width:95%}
+.vz-ub-heading p{color:var(--acc);font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:800}
+.vz-ub-heading h2{font-size:clamp(42px,6.5vw,85px);line-height:1.03;margin-top:12px}
+.vz-ub-stage{position:relative;width:min(95vw,800px);height:min(62vh,490px);min-height:300px;perspective:950px}
+.vz-ub-base,.vz-ub-lid{position:absolute;left:50%;top:50%;width:clamp(170px,30vw,260px);height:clamp(150px,26vw,235px);border:2px solid #fff8;border-radius:12px;background:linear-gradient(135deg,#f5f4f0,#cad4e3);box-shadow:inset 0 0 0 7px #fff8,0 20px 32px #0006}
+.vz-ub-base{z-index:1;transform:translate(-50%,-50%);}.vz-ub-lid{z-index:4;display:grid;place-items:center;backface-visibility:hidden;font:900 clamp(28px,4vw,42px) system-ui;color:#12223f;letter-spacing:.05em;transform-style:preserve-3d}
+.vz-ub-player{position:absolute;left:50%;top:50%;height:clamp(175px,33vw,260px);width:auto;object-fit:contain;z-index:2;filter:drop-shadow(0 12px 12px #0009);opacity:0}
+.vz-ub-vinyls{position:absolute;inset:0;z-index:3;pointer-events:none}.vz-ub-vinyl{position:absolute;left:50%;top:50%;width:clamp(37px,7.5vw,62px);aspect-ratio:1;opacity:0;filter:drop-shadow(0 4px 6px #0008)}.vz-ub-vinyl svg{width:100%;height:100%}
+.vz-ub-prompt{position:absolute;bottom:clamp(30px,6vh,80px);color:var(--acc);text-align:center;font-size:17px;opacity:clamp(0,calc(1 - var(--progress) * 3),1)}
+@media(max-width:650px){.vz-unboxing-demo{height:160svh}.vz-ub-stage{height:43vh;min-height:285px}.vz-ub-lid,.vz-ub-base{width:175px;height:165px}.vz-ub-player{height:185px}.vz-ub-vinyl{width:clamp(33px,9vw,45px)}}
+@media(prefers-reduced-motion:reduce){.vz-unboxing-demo{height:90svh}.vz-ub-sticky{position:relative;height:90svh}.vz-ub-base,.vz-ub-lid{display:none}.vz-ub-prompt{display:none}}
