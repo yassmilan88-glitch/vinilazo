@@ -29,10 +29,15 @@ function init(){
  }
  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
  // Taglines: animate only as lines enter the viewport, no looping or disruptive flashing.
+ const headline=document.querySelector('#moment-h');
+ if(headline && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const ho=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vz-head-play');ho.unobserve(e.target)}}),{threshold:.4});
+  ho.observe(headline);
+ }
  const lines=document.querySelectorAll('.poem p, .moment-after, .moment-cta');
  lines.forEach(p=>{p.classList.add('vz-copy-line');if(p.classList.contains('hit'))p.classList.add('vz-emphasis')});
  if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
-  const obs=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('vz-in');obs.unobserve(entry.target)}}),{threshold:.24,rootMargin:'0px 0px -30px 0px'});
+  const obs=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('vz-in');obs.unobserve(entry.target)}}),{threshold:.48,rootMargin:'0px 0px -75px 0px'});
   lines.forEach(p=>obs.observe(p));
  }
 }
