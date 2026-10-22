@@ -101,13 +101,18 @@ var choose=make('div','vz-choose');choose.id='vz-choose';
 choose.append(make('h2','vz-choose-heading',t.choose));
 var choices=make('div','vz-choices');
 function categorySymbol(group){
- var ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
- svg.setAttribute('viewBox','0 0 64 64');svg.setAttribute('aria-hidden','true');svg.classList.add('vz-choice-symbol');
- svg.setAttribute('fill','none');svg.setAttribute('stroke','currentColor');svg.setAttribute('stroke-width','3');svg.setAttribute('stroke-linecap','round');svg.setAttribute('stroke-linejoin','round');
- svg.innerHTML=group==='nat'
-  ? '<path d="M23 12h18v13c0 9-4 16-9 16s-9-7-9-16V12Z"/><path d="M23 18H13v5c0 7 4 11 12 11M41 18h10v5c0 7-4 11-12 11"/><path d="M32 41v8m-11 5h22m-18-5h14"/><path d="m32 18 2.1 4.5 4.9.7-3.5 3.4.8 4.8L32 29l-4.3 2.4.8-4.8-3.5-3.4 4.9-.7Z" fill="currentColor" stroke="none"/>'
-  : '<path d="M32 7 51 15v16c0 13-9 21-19 26-10-5-19-13-19-26V15L32 7Z"/><path d="m32 16 4.2 9.3 10 .9-7.6 6.8 2.2 10-8.8-5.2-8.8 5.2 2.2-10-7.6-6.8 10-.9Z" fill="currentColor" stroke="none"/>';
- return svg;
+ var badges=make('span','vz-category-badges vz-category-'+group);
+ var ids=group==='nat'?['argentina','brasile','italia']:['milan','inter','real-madrid'];
+ ids.forEach(function(id){
+  var team=(D.teams||[]).find(function(x){return x.id===id});
+  if(!team)return;
+  var slot=make('span','vz-category-badge');
+  if(group==='nat'){slot.textContent=flags[id];slot.setAttribute('aria-hidden','true')}
+  else slot.append(teamMark(team,'vz-category-club-mark'));
+  badges.append(slot);
+ });
+ badges.setAttribute('aria-hidden','true');
+ return badges;
 }
 function vinylChoice(group,label,subtitle){
  var button=make('button','vz-choice');button.type='button';button.setAttribute('aria-expanded','false');button.setAttribute('aria-controls','vz-teams-stage');button.dataset.group=group;
@@ -153,6 +158,10 @@ if(!featured.length)featured=(D.teams||[]).slice(0,8);
 function displayEdition(team){
  var col=team.cols||['#74ACDF','#FFFFFF','#F6B40E'];
  var pat=team.g==='nat'?(flagPatterns[team.id]||[col[0],col[1],col[0],90]):[col[0],col[1],col[0],90];
+ document.documentElement.style.setProperty('--c0',pat[0]);
+ document.documentElement.style.setProperty('--c1',pat[1]);
+ document.documentElement.style.setProperty('--c2',pat[2]);
+ document.documentElement.style.setProperty('--acc',col[0]);
  product.style.setProperty('--edition-color',col[0]);
  product.style.setProperty('--art-a',pat[0]);product.style.setProperty('--art-b',pat[1]);product.style.setProperty('--art-c',pat[2]);product.style.setProperty('--art-angle',pat[3]+'deg');
  art.dataset.kind=team.g;
@@ -171,7 +180,7 @@ if(featured.length>1&&!window.matchMedia('(prefers-reduced-motion: reduce)').mat
  window.setInterval(function(){
   if(document.hidden)return;
   editionIndex=(editionIndex+1)%featured.length;
-  displayEdition(featured[editionIndex]);
+  displayEdition(featured[editionIndex]);updateNine(featured[editionIndex]);
  },4300);
 }
 hero.append(left,product,choose);main.append(hero);
@@ -186,6 +195,69 @@ var stageTitle=make('h2','vz-stage-title','');stageTitle.tabIndex=-1;
 var stageSubtitle=make('p','vz-stage-sub','');
 stageHead.append(stageBack,stageTitle,stageSubtitle);stage.append(stageHead);
 var grid=make('div','vz-flag-grid');stage.append(grid);main.append(stage);
+
+// Nine individual, interchangeable records: each edition has its own nine goal stories.
+var nine=make('section','vz-nine-section');nine.id='vz-nine';
+var nineCopy={
+ it:['LA COLLEZIONE','Non uno. Nove dischi.','Un quadro. Nove gol leggendari da scegliere, cambiare e ascoltare.','Scopri le nove emozioni'],
+ es:['LA COLECCIÓN','No uno. Nueve discos.','Un cuadro. Nueve goles inolvidables para elegir, cambiar y escuchar.','Descubrí las nueve emociones'],
+ fr:['LA COLLECTION','Pas un. Neuf disques.','Un cadre. Neuf buts de légende à choisir, échanger et écouter.','Découvrez les neuf émotions'],
+ en:['THE COLLECTION','Not one. Nine records.','One frame. Nine legendary goals to choose, swap and listen to.','Explore the nine moments'],
+ de:['DIE KOLLEKTION','Nicht eine. Neun Platten.','Ein Rahmen. Neun legendäre Tore zum Auswählen, Wechseln und Anhören.','Neun Momente entdecken']
+}[locale]||['LA COLLEZIONE','Non uno. Nove dischi.','Un quadro. Nove gol leggendari da scegliere, cambiare e ascoltare.','Scopri le nove emozioni'];
+var nineText=make('div','vz-nine-text');
+nineText.append(make('p','vz-section-eyebrow',nineCopy[0]),make('h2','vz-section-title',nineCopy[1]),make('p','vz-section-sub',nineCopy[2]));
+var nineGrid=make('div','vz-nine-grid');
+var discItems=[];
+for(var i=0;i<9;i++){
+ var cell=make('div','vz-nine-item');cell.style.setProperty('--i',i);
+ var record=make('div','vz-nine-record');
+ var core=make('span','vz-nine-core');
+ var idx=make('span','vz-nine-number',String(i+1).padStart(2,'0'));
+ core.append(idx);record.append(core);
+ var name=make('strong','vz-nine-name');
+ var moment=make('small','vz-nine-moment');
+ cell.append(record,name,moment);nineGrid.append(cell);
+ discItems.push({name:name,moment:moment,core:core});
+}
+var nineAction=make('button','vz-nine-action',nineCopy[3]+' →');nineAction.type='button';
+nineAction.addEventListener('click',function(){openGroup('nat')});
+nine.append(nineText,nineGrid,nineAction);main.append(nine);
+function updateNine(team){
+ var goals=team.goals||[];
+ nine.style.setProperty('--nine-color',(team.cols||[])[0]||'#74acdf');
+ discItems.forEach(function(item,i){
+  var goal=goals[i]||[];
+  item.name.textContent=goal[0]||('Gol '+(i+1));
+  item.moment.textContent=goal[1]||'';
+  item.core.style.background='linear-gradient(135deg,'+(team.cols?.[0]||'#74acdf')+','+(team.cols?.[1]||'#ffffff')+','+(team.cols?.[2]||'#74acdf')+')';
+ });
+}
+updateNine(featured[0]);
+
+// Recovered VINILAZO kitchen scenes. Product close-ups above remain the purchase reference.
+var lifeCopy={
+ it:['NELLA VITA DI TUTTI I GIORNI','Dove vivono i ricordi.','La cucina, il frigorifero, una telecronaca che ti riporta a quel momento.','Un angolo di Buenos Aires','Un ricordo di Parigi','Ambientazioni illustrative del prodotto'],
+ es:['EN LA VIDA COTIDIANA','Donde viven los recuerdos.','La cocina, la heladera, un relato que te devuelve a aquel momento.','Un rincón de Buenos Aires','Un recuerdo de París','Escenas ilustrativas del producto'],
+ fr:['DANS LA VIE DE TOUS LES JOURS','Là où vivent les souvenirs.','La cuisine, le réfrigérateur, une voix qui vous ramène à cet instant.','Un coin de Buenos Aires','Un souvenir de Paris','Mises en scène illustratives du produit'],
+ en:['IN EVERYDAY LIFE','Where memories live.','The kitchen, the fridge, the commentary that takes you right back.','A corner of Buenos Aires','A Parisian memory','Illustrative product lifestyle scenes'],
+ de:['MITTEN IM ALLTAG','Wo Erinnerungen leben.','Die Küche, der Kühlschrank, die Stimme, die dich zurückversetzt.','Ein Stück Buenos Aires','Eine Erinnerung an Paris','Illustrative Produktdarstellungen']
+}[locale]||[];
+var life=make('section','vz-life-section');life.id='vz-life';
+var lifeHead=make('div','vz-life-heading');
+lifeHead.append(make('p','vz-section-eyebrow',lifeCopy[0]),make('h2','vz-section-title',lifeCopy[1]),make('p','vz-section-sub',lifeCopy[2]));
+var lifePhotos=make('div','vz-life-photos');
+[['argentina-kitchen.jpg',lifeCopy[3]],['france-kitchen.jpg',lifeCopy[4]]].forEach(function(entry){
+ var figure=make('figure','vz-life-card');
+ var img=make('img','vz-life-image');img.src='../assets/img/lifestyle/'+entry[0];img.alt=entry[1]+' — VINILAZO sul frigorifero';img.loading='lazy';img.decoding='async';img.width=800;img.height=1067;
+ figure.append(img,make('figcaption','vz-life-caption',entry[1]));lifePhotos.append(figure);
+});
+life.append(lifeHead,lifePhotos,make('p','vz-life-note',lifeCopy[5]));main.append(life);
+if('IntersectionObserver' in window&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+ var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('vz-visible');observer.unobserve(entry.target)}})},{threshold:.13});
+ nineGrid.querySelectorAll('.vz-nine-item').forEach(function(el){observer.observe(el)});
+ lifePhotos.querySelectorAll('.vz-life-card').forEach(function(el){observer.observe(el)});
+}else{nineGrid.querySelectorAll('.vz-nine-item').forEach(function(el){el.classList.add('vz-visible')});lifePhotos.querySelectorAll('.vz-life-card').forEach(function(el){el.classList.add('vz-visible')})}
 function openGroup(group){
  natButton.setAttribute('aria-expanded',group==='nat'?'true':'false');
  clubButton.setAttribute('aria-expanded',group==='club'?'true':'false');
@@ -207,7 +279,7 @@ function openGroup(group){
  stage.hidden=false;
  requestAnimationFrame(function(){stage.scrollIntoView({behavior:'smooth',block:'start'})});
 }
-var ending=make('div','vz-catalog-end');ending.append(make('p','',t.about));
+var ending=make('div','vz-catalog-end');
 var source=make('small','vz-crest-source');
 source.append(document.createTextNode('Team crest images: '));
 var footy=make('a','','FootyLogos.com');footy.href='https://www.footylogos.com/';footy.target='_blank';footy.rel='noopener noreferrer';source.append(footy);
@@ -222,11 +294,11 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 var navLinks=document.getElementById('vz-nav-links');
 if(navLinks){
  var menus={
-  it:[['Inizio','#vz-catalog-main'],['Nazionali','#vz-nazionali'],['Club','#vz-club'],['Chi siamo','#chi-siamo']],
-  es:[['Inicio','#vz-catalog-main'],['Selecciones','#vz-nazionali'],['Clubes','#vz-club'],['Quiénes somos','#chi-siamo']],
-  fr:[['Accueil','#vz-catalog-main'],['Sélections','#vz-nazionali'],['Clubs','#vz-club'],['Qui sommes-nous ?','#chi-siamo']],
-  en:[['Home','#vz-catalog-main'],['National teams','#vz-nazionali'],['Clubs','#vz-club'],['About us','#chi-siamo']],
-  de:[['Start','#vz-catalog-main'],['Nationalteams','#vz-nazionali'],['Vereine','#vz-club'],['Über uns','#chi-siamo']]
+  it:[['Inizio','#vz-catalog-main'],['9 dischi','#vz-nine'],['Nazionali','#vz-nazionali'],['Club','#vz-club'],['Chi siamo','#chi-siamo']],
+  es:[['Inicio','#vz-catalog-main'],['9 discos','#vz-nine'],['Selecciones','#vz-nazionali'],['Clubes','#vz-club'],['Quiénes somos','#chi-siamo']],
+  fr:[['Accueil','#vz-catalog-main'],['9 disques','#vz-nine'],['Sélections','#vz-nazionali'],['Clubs','#vz-club'],['Qui sommes-nous ?','#chi-siamo']],
+  en:[['Home','#vz-catalog-main'],['9 records','#vz-nine'],['National teams','#vz-nazionali'],['Clubs','#vz-club'],['About us','#chi-siamo']],
+  de:[['Start','#vz-catalog-main'],['9 Platten','#vz-nine'],['Nationalteams','#vz-nazionali'],['Vereine','#vz-club'],['Über uns','#chi-siamo']]
  };
  navLinks.replaceChildren();
  (menus[locale]||menus.it).forEach(function(item){
