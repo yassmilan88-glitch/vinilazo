@@ -325,7 +325,25 @@
     f.elements.dischi_storici.value = t.goals.map(function (g) { return g[0] + " (" + g[1] + ")"; }).join("; ");
     $$(".team").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.team === t.id)); });
     var pf = $(".pick-flag"); if (pf) pf.innerHTML = flagSVG(t);
-    var mh = $("[data-moment]"); if (mh && T.moment_h) mh.textContent = fill(T.moment_h, { scorer: t.goals[0][0] });
+    var mh = $("[data-moment]");
+    if (mh) {
+      var lang = DATA.lang || "it", scorer = t.goals[0][0];
+      var headlines = {
+        it: { argentina:"Messico 1986. Maradona danza tra gli inglesi. Il mondo trattiene il fiato.", italia:"Madrid 1982. Rossi accende una nazione. L'Italia esplode di gioia.", francia:"Saint-Denis 1998. Zidane vola più in alto di tutti. La Francia entra nella storia." },
+        es: { argentina:"México 1986. Maradona deja rivales atrás. El mundo contiene la respiración.", italia:"Madrid 1982. Italia estalla de emoción.", francia:"Saint-Denis 1998. Zidane hace historia." },
+        fr: { argentina:"Mexico 1986. Maradona traverse la défense. Le monde retient son souffle.", francia:"Saint-Denis 1998. Zidane s'élève. La France entre dans l'histoire." },
+        en: { argentina:"Mexico 1986. Maradona glides past defenders. The world holds its breath.", italia:"Madrid 1982. Italy erupts in joy.", francia:"Saint-Denis 1998. Zidane rises. History is made." },
+        de: { argentina:"Mexiko 1986. Maradona tanzt durch die Abwehr. Die Welt hält den Atem an.", italia:"Madrid 1982. Italien jubelt.", francia:"Saint-Denis 1998. Zidane schreibt Geschichte." }
+      };
+      var fallbacks = {
+        it:"Il gol di {scorer}. Un istante che entra nella storia.",
+        es:"El gol de {scorer}. Un instante que ya es historia.",
+        fr:"Le but de {scorer}. Un instant entré dans l'histoire.",
+        en:"{scorer}'s goal. One moment that became history.",
+        de:"Das Tor von {scorer}. Ein Moment für die Ewigkeit."
+      };
+      mh.textContent = fill((headlines[lang] && headlines[lang][t.id]) || fallbacks[lang] || fallbacks.it, {scorer:scorer});
+    }
     $("#wa").href = "https://wa.me/" + (CFG.WHATSAPP || "") + "?text=" + encodeURIComponent(fill(T.wa, { team: t.name }));
     $$("[data-checkout-wa]").forEach(function (a) { a.href = $("#wa").href; });
     updateSummary();
