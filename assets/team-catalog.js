@@ -1,90 +1,105 @@
-/* VINILAZO: category-first storefront and team detail navigation. */
-(function () {
-  'use strict';
-  var root=document.getElementById('data');
-  if(!root)return;
-  var D;try{D=JSON.parse(root.textContent)}catch(e){return}
-  var lang=D.lang||'it';
-  var words={
-    it:{eyebrow:'IL TUO CALCIO. I TUOI RICORDI.',title:'Ogni squadra ha un gol che non si dimentica.',intro:'Scegli i tuoi colori. Scopri il quadro-giradischi VINILAZO con 9 dischi intercambiabili e rivivi le telecronache che ti hanno fatto urlare.',national:'Nazionali',clubs:'Club',pick:'Scegli la tua squadra',explore:'Scopri i 9 dischi',ready:'Pronta consegna',info:'Un quadro luminoso. Nove dischi. Nove emozioni.',how:'Scegli una squadra per vedere i gol, ascoltare le anteprime disponibili e ordinare il tuo VINILAZO.',about:'Non vendiamo soltanto dischi. Custodiamo emozioni.',back:'Tutte le squadre'},
-    es:{eyebrow:'TU FÚTBOL. TUS RECUERDOS.',title:'Cada equipo tiene un gol imposible de olvidar.',intro:'Elige tus colores. Descubre el cuadro-tocadiscos VINILAZO con 9 discos intercambiables y revive las narraciones que te hicieron gritar.',national:'Selecciones',clubs:'Clubes',pick:'Elige tu equipo',explore:'Descubre los 9 discos',ready:'Entrega inmediata',info:'Un cuadro luminoso. Nueve discos. Nueve emociones.',how:'Elige un equipo para ver los goles, escuchar las muestras disponibles y pedir tu VINILAZO.',about:'No son solo discos. Son recuerdos que siguen vivos.',back:'Todos los equipos'},
-    fr:{eyebrow:'VOTRE FOOT. VOS SOUVENIRS.',title:'Chaque équipe a un but inoubliable.',intro:'Choisissez vos couleurs. Découvrez le cadre-platine VINILAZO avec 9 disques interchangeables et revivez les commentaires qui vous ont fait vibrer.',national:'Équipes nationales',clubs:'Clubs',pick:'Choisissez votre équipe',explore:'Découvrir les 9 disques',ready:'Expédition immédiate',info:'Un cadre lumineux. Neuf disques. Neuf émotions.',how:'Choisissez une équipe pour découvrir ses buts, écouter les extraits disponibles et commander VINILAZO.',about:'Bien plus que des disques : des émotions à transmettre.',back:'Toutes les équipes'},
-    en:{eyebrow:'YOUR FOOTBALL. YOUR MEMORIES.',title:'Every team has a goal you never forget.',intro:'Choose your colours. Discover the VINILAZO light-up record-player frame with 9 interchangeable discs and relive the commentaries that made you roar.',national:'National teams',clubs:'Clubs',pick:'Choose your team',explore:'Explore the 9 discs',ready:'Ready to ship',info:'One glowing frame. Nine discs. Nine emotions.',how:'Pick a team to discover its goals, hear available previews and order your VINILAZO.',about:'More than records. Memories worth keeping.',back:'All teams'},
-    de:{eyebrow:'DEIN FUSSBALL. DEINE ERINNERUNGEN.',title:'Jedes Team hat ein unvergessliches Tor.',intro:'Wähle deine Farben. Entdecke den leuchtenden VINILAZO-Plattenspieler-Rahmen mit 9 austauschbaren Platten und erlebe legendäre Kommentare neu.',national:'Nationalmannschaften',clubs:'Vereine',pick:'Wähle dein Team',explore:'Alle 9 Platten entdecken',ready:'Sofort lieferbar',info:'Ein leuchtender Rahmen. Neun Platten. Neun Emotionen.',how:'Wähle ein Team, entdecke seine Tore, höre verfügbare Hörproben und bestelle VINILAZO.',about:'Mehr als Schallplatten. Erinnerungen fürs Leben.',back:'Alle Teams'}
-  };
-  var t=words[lang]||words.it;
-  var brand=document.querySelector('.top .wordmark');
-  if(brand)brand.href='./';
-  var params=new URLSearchParams(location.search);
-  var chosen=params.get('team');
-  var valid=Array.isArray(D.teams)&&D.teams.some(function(team){return team.id===chosen});
-  var legacy=location.hash&&/^#(ordina|storie|come-funziona|cosa|idea-regalo|il-mio-ordine|chi-siamo|come-si-usa|storia-\d+)$/.test(location.hash);
-  if(valid||params.has('demo')||legacy){
-    var copy=document.querySelector('.hero-copy');
-    if(copy&&!copy.querySelector('.vz-back-teams')){
-      var back=document.createElement('a');back.className='vz-back-teams';back.href='./';back.textContent='← '+t.back;
-      copy.insertBefore(back,copy.firstChild);
-    }
-    return;
-  }
-  document.body.classList.add('vz-catalog-mode');
-  var skip=document.querySelector('a[href="#main"]');if(skip)skip.href='#vz-catalog-main';
-  if(brand)brand.href='#vz-catalog-main';
-  var picker=document.getElementById('team-pick');if(picker)picker.setAttribute('aria-hidden','true');
-  var langSelect=document.getElementById('lang-select');
-  if(langSelect){
-    langSelect.addEventListener('change',function(e){
-      e.stopImmediatePropagation();
-      var target=langSelect.value;
-      if(/^(it|es|fr|en|de)$/.test(target))location.href='../'+target+'/';
-    },true);
-  }
-  function make(tag,cls,txt){
-    var el=document.createElement(tag);if(cls)el.className=cls;if(txt!==undefined)el.textContent=txt;return el;
-  }
-  function anchor(cls,txt,href){var a=make('a',cls,txt);a.href=href;return a}
-  var main=make('main','vz-catalog');main.id='vz-catalog-main';
-  var hero=make('section','vz-shop-hero');
-  var intro=make('div','vz-shop-intro');
-  intro.append(make('p','vz-shop-eyebrow',t.eyebrow),make('h1','vz-shop-title',t.title),make('p','vz-shop-lead',t.intro));
-  var actions=make('div','vz-shop-actions');
-  actions.append(anchor('vz-shop-action',t.national+' ↓','#vz-nazionali'),anchor('vz-shop-action vz-outline',t.clubs+' ↓','#vz-club'));
-  intro.append(actions);
-  var featured=make('div','vz-shop-featured');
-  var pic=make('img','vz-shop-main-photo');pic.src='../assets/img/quadro.webp';pic.alt='VINILAZO';pic.width=576;pic.height=658;
-  featured.append(pic,make('div','vz-shop-featured-halo'));
-  hero.append(intro,featured);main.append(hero);
-  function section(group,id,title){
-    var teams=D.teams.filter(function(team){return team.g===group});
-    var sec=make('section','vz-team-section');sec.id=id;
-    var heading=make('div','vz-team-section-head');
-    heading.append(make('p','vz-shop-eyebrow',t.pick),make('h2','vz-team-section-title',title),make('p','vz-team-section-sub',t.how));
-    sec.append(heading);
-    var grid=make('div','vz-team-grid');
-    teams.forEach(function(team){
-      var a=anchor('vz-team-card','', '?team='+encodeURIComponent(team.id));
-      a.setAttribute('aria-label',t.explore+': '+team.name);
-      var colors=team.cols||['#74ACDF','#FFFFFF','#C9A227'];
-      a.style.setProperty('--team-one',colors[0]);a.style.setProperty('--team-two',colors[1]);a.style.setProperty('--team-three',colors[2]);
-      var visual=make('div','vz-team-visual');
-      var frame=make('img','vz-team-frame');frame.src='../assets/img/quadro.webp';frame.alt='';frame.loading='lazy';frame.width=576;frame.height=658;
-      var record=make('div','vz-team-record');
-      var label=make('div','vz-team-record-label');
-      label.append(make('small','', 'VINILAZO'),make('strong','',team.code||team.name));
-      record.append(label);visual.append(frame,record);
-      var info=make('div','vz-team-info');
-      info.append(make('h3','',team.name),make('span','vz-team-cta',t.explore+' →'));
-      if(team.id==='argentina')info.append(make('span','vz-team-ready',t.ready));
-      a.append(visual,info);grid.append(a);
-    });
-    sec.append(grid);main.append(sec);
-  }
-  section('nat','vz-nazionali',t.national);
-  section('club','vz-club',t.clubs);
-  var ending=make('section','vz-shop-end');
-  ending.append(make('h2','',t.info),make('p','',t.about),anchor('vz-shop-action',t.national+' ↑','#vz-nazionali'));
-  main.append(ending);
-  var header=document.querySelector('header.top');
-  if(header)header.insertAdjacentElement('afterend',main);
-  else document.body.insertBefore(main,document.body.firstChild);
+/* VINILAZO — two-step storefront with animated product and vinyl category choices. */
+(function(){
+'use strict';
+var dataNode=document.getElementById('data');if(!dataNode)return;
+var D;try{D=JSON.parse(dataNode.textContent)}catch(e){return}
+var locale=D.lang||'it';
+var words={
+it:{eyebrow:'RIVIVI I BRIVIDI DI QUEL GOL',title:'Quel gol. Quella voce. Di nuovo a casa.',intro:'Un quadro-giradischi luminoso, nove dischi intercambiabili e tutte le emozioni della tua squadra.',choose:'Da dove cominciamo?',nat:'Nazionali',club:'Club',natSub:'Le grandi emozioni delle nazionali',clubSub:'La storia dei tuoi colori',selectNat:'Scegli la tua nazionale',selectClub:'Scegli il tuo club',tap:'Tocca una bandiera e rivivi i suoi gol',tapClub:'Scegli i colori del tuo club e scopri i suoi dischi',back:'Torna alla scelta',discover:'Scopri la collezione',ready:'Pronta consegna',tag:'9 dischi. 9 emozioni.',about:'Non vendiamo soltanto dischi. Custodiamo emozioni.',all:'Tutte le squadre'},
+es:{eyebrow:'REVIVE LA EMOCIÓN DE AQUEL GOL',title:'Ese gol. Esa voz. De nuevo en casa.',intro:'Un cuadro-tocadiscos luminoso, nueve discos intercambiables y toda la emoción de tu equipo.',choose:'¿Por dónde empezamos?',nat:'Selecciones',club:'Clubes',natSub:'Las grandes emociones de las selecciones',clubSub:'La historia de tus colores',selectNat:'Elige tu selección',selectClub:'Elige tu club',tap:'Toca una bandera y revive sus goles',tapClub:'Elige los colores de tu club y descubre sus discos',back:'Volver a elegir',discover:'Descubre la colección',ready:'Entrega inmediata',tag:'9 discos. 9 emociones.',about:'No son solo discos. Son recuerdos que siguen vivos.',all:'Todos los equipos'},
+fr:{eyebrow:'REVIVEZ LE FRISSON DE CE BUT',title:'Ce but. Cette voix. De retour chez vous.',intro:'Un cadre-platine lumineux, neuf disques interchangeables et toute l’émotion de votre équipe.',choose:'Par où commencer ?',nat:'Sélections',club:'Clubs',natSub:'Les grandes émotions des sélections',clubSub:'L’histoire de vos couleurs',selectNat:'Choisissez votre sélection',selectClub:'Choisissez votre club',tap:'Touchez un drapeau pour revivre ses buts',tapClub:'Choisissez les couleurs de votre club',back:'Retour au choix',discover:'Découvrir la collection',ready:'Expédition immédiate',tag:'9 disques. 9 émotions.',about:'Bien plus que des disques : des émotions à transmettre.',all:'Toutes les équipes'},
+en:{eyebrow:'RELIVE THE THRILL OF THAT GOAL',title:'That goal. That voice. Back at home.',intro:'One glowing record-player frame, nine interchangeable discs and all the emotion of your team.',choose:'Where shall we start?',nat:'National teams',club:'Clubs',natSub:'The unforgettable national-team moments',clubSub:'The story behind your colours',selectNat:'Choose your national team',selectClub:'Choose your club',tap:'Tap a flag to relive its goals',tapClub:'Pick your club colours and explore its discs',back:'Back to choices',discover:'Explore the collection',ready:'Ready to ship',tag:'9 discs. 9 emotions.',about:'More than records. Memories worth keeping.',all:'All teams'},
+de:{eyebrow:'ERLEBE DIESES TOR NOCH EINMAL',title:'Dieses Tor. Diese Stimme. Wieder zu Hause.',intro:'Ein leuchtender Plattenspieler-Rahmen, neun austauschbare Platten und die Emotionen deines Teams.',choose:'Womit fangen wir an?',nat:'Nationalteams',club:'Vereine',natSub:'Die großen Momente der Nationalteams',clubSub:'Die Geschichte deiner Farben',selectNat:'Wähle dein Nationalteam',selectClub:'Wähle deinen Verein',tap:'Tippe auf eine Flagge und erlebe die Tore neu',tapClub:'Wähle deine Vereinsfarben und entdecke die Platten',back:'Zurück zur Auswahl',discover:'Kollektion entdecken',ready:'Sofort lieferbar',tag:'9 Platten. 9 Emotionen.',about:'Mehr als Schallplatten. Erinnerungen fürs Leben.',all:'Alle Teams'}
+};
+var t=words[locale]||words.it;
+var brand=document.querySelector('.top .wordmark');if(brand)brand.href='./';
+var params=new URLSearchParams(location.search);
+var teamParam=params.get('team');
+var teamValid=D.teams&&D.teams.some(function(x){return x.id===teamParam});
+var legacy=location.hash&&/^#(ordina|storie|come-funziona|cosa|idea-regalo|il-mio-ordine|chi-siamo|come-si-usa|storia-\d+)$/.test(location.hash);
+function make(tag,cls,content){var e=document.createElement(tag);if(cls)e.className=cls;if(content!==undefined)e.textContent=content;return e}
+if(teamValid||params.has('demo')||legacy){
+ var copy=document.querySelector('.hero-copy');
+ if(copy&&!copy.querySelector('.vz-back-teams')){var back=make('a','vz-back-teams','← '+t.all);back.href='./';copy.insertBefore(back,copy.firstChild)}
+ return;
+}
+document.body.classList.add('vz-catalog-mode');
+var skip=document.querySelector('a[href="#main"]');if(skip)skip.href='#vz-catalog-main';
+if(brand)brand.href='#vz-catalog-main';
+var langSelect=document.getElementById('lang-select');
+if(langSelect)langSelect.addEventListener('change',function(ev){
+ ev.stopImmediatePropagation();var v=langSelect.value;
+ if(/^(it|es|fr|en|de)$/.test(v))location.href='../'+v+'/';
+},true);
+var main=make('main','vz-catalog');main.id='vz-catalog-main';
+var hero=make('section','vz-catalog-hero');
+var left=make('div','vz-hero-left');
+left.append(make('p','vz-kicker',t.eyebrow),make('h1','vz-catalog-title',t.title),make('p','vz-catalog-description',t.intro));
+var choose=make('div','vz-choose');choose.id='vz-choose';
+choose.append(make('h2','vz-choose-heading',t.choose));
+var choices=make('div','vz-choices');
+function vinylChoice(group,label,subtitle,icon){
+ var button=make('button','vz-choice');button.type='button';button.setAttribute('aria-expanded','false');button.setAttribute('aria-controls','vz-teams-stage');button.dataset.group=group;
+ var face=make('span','vz-choice-vinyl');
+ var centre=make('span','vz-choice-centre');centre.append(make('span','vz-choice-symbol',icon),make('strong','',label));
+ face.append(centre);
+ button.append(face,make('span','vz-choice-caption',subtitle));
+ button.addEventListener('click',function(){openGroup(group)});
+ return button;
+}
+var natButton=vinylChoice('nat',t.nat,t.natSub,'🌍');
+var clubButton=vinylChoice('club',t.club,t.clubSub,'★');
+choices.append(natButton,clubButton);choose.append(choices);
+var product=make('div','vz-hero-product');
+var aura=make('div','vz-product-aura');
+var backHalo=make('div','vz-product-halo');
+var frame=make('img','vz-product-frame');frame.src='../assets/img/quadro.webp';frame.width=576;frame.height=658;frame.alt='VINILAZO — quadro-giradischi luminoso';
+var ring=make('div','vz-product-led');
+var disc=make('div','vz-product-disc');
+var label=make('div','vz-product-label');
+label.append(make('span','vz-product-mini','VINILAZO'),make('strong','', '9 GOL'));
+disc.append(label);
+var gloss=make('div','vz-product-gloss');
+product.append(aura,backHalo,frame,ring,disc,gloss,make('p','vz-product-tag',t.tag));
+hero.append(left,product,choose);main.append(hero);
+var stage=make('section','vz-teams-stage');stage.id='vz-teams-stage';stage.hidden=true;stage.setAttribute('aria-live','polite');
+var stageHead=make('div','vz-stage-head');
+var stageBack=make('button','vz-stage-back','← '+t.back);stageBack.type='button';
+stageBack.addEventListener('click',function(){
+ stage.hidden=true;choices.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-expanded','false');b.classList.remove('vz-active')});
+ choose.scrollIntoView({behavior:'smooth',block:'center'});
+});
+var stageTitle=make('h2','vz-stage-title','');stageTitle.tabIndex=-1;
+var stageSubtitle=make('p','vz-stage-sub','');
+stageHead.append(stageBack,stageTitle,stageSubtitle);stage.append(stageHead);
+var grid=make('div','vz-flag-grid');stage.append(grid);main.append(stage);
+function openGroup(group){
+ natButton.setAttribute('aria-expanded',group==='nat'?'true':'false');
+ clubButton.setAttribute('aria-expanded',group==='club'?'true':'false');
+ natButton.classList.toggle('vz-active',group==='nat');
+ clubButton.classList.toggle('vz-active',group==='club');
+ stageTitle.textContent=group==='nat'?t.selectNat:t.selectClub;
+ stageSubtitle.textContent=group==='nat'?t.tap:t.tapClub;
+ grid.replaceChildren();
+ (D.teams||[]).filter(function(x){return x.g===group}).forEach(function(team){
+   var a=make('a','vz-flag-card');a.href='?team='+encodeURIComponent(team.id);
+   a.setAttribute('aria-label',t.discover+': '+team.name);
+   var colours=team.cols||['#74acdf','#fff','#f3c134'];
+   a.style.setProperty('--team-one',colours[0]);a.style.setProperty('--team-two',colours[1]);a.style.setProperty('--team-three',colours[2]);
+   var mark=make('span',group==='nat'?'vz-flag-icon':'vz-club-icon');
+   if(group==='nat')mark.textContent=({
+     argentina:'🇦🇷',brasile:'🇧🇷',francia:'🇫🇷',spagna:'🇪🇸',italia:'🇮🇹',germania:'🇩🇪',inghilterra:'🇬🇧',portogallo:'🇵🇹',olanda:'🇳🇱',messico:'🇲🇽'
+   })[team.id]||'🏳️';
+   else mark.textContent=team.code||team.name.slice(0,3).toUpperCase();
+   a.append(mark,make('strong','vz-flag-name',team.name),make('small','vz-flag-action','→'));
+   if(team.id==='argentina')a.append(make('span','vz-flag-ready',t.ready));
+   grid.append(a);
+ });
+ stage.hidden=false;
+ requestAnimationFrame(function(){stage.scrollIntoView({behavior:'smooth',block:'start'})});
+}
+var ending=make('div','vz-catalog-end');ending.append(make('p','',t.about));main.append(ending);
+var header=document.querySelector('header.top');if(header)header.insertAdjacentElement('afterend',main);else document.body.prepend(main);
+if(location.hash==='#vz-nazionali')openGroup('nat');
+if(location.hash==='#vz-club')openGroup('club');
 })();
