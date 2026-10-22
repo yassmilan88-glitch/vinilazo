@@ -171,3 +171,70 @@ body:not(.vz-catalog-mode) .hero-copy .vz-sub-extra[hidden]{display:none!importa
 .vz-header-crest .vz-crest-image{position:absolute;inset:0;width:100%;height:100%;min-width:0;min-height:0;object-fit:contain}
 #squadre .team[data-team="juventus"] .vz-detail-crest,.team-pick:has(.vz-header-crest[data-team-id="juventus"]) .vz-header-crest{background:#f1f3f5;border-radius:8px}
 @media(max-width:720px){.pk-grid .vz-detail-crest{flex-basis:54px;width:54px;height:39px}}
+
+
+/* 2026 VINILAZO refresh — unmistakable team categories, nine records, kitchen imagery. */
+.vz-choice-centre{width:66%;height:66%;gap:5px}
+.vz-category-badges{display:flex;align-items:center;justify-content:center;width:95%;min-height:38px;position:relative}
+.vz-category-badge{display:grid;place-items:center;width:34%;aspect-ratio:1;flex:none;margin:0 -3px;font:25px/1 system-ui,sans-serif;filter:drop-shadow(0 2px 4px #001a3699);transition:transform .3s}
+.vz-category-badge:nth-child(2){width:39%;z-index:1;transform:translateY(-5px)}
+.vz-category-badge .vz-category-club-mark{display:grid;place-items:center;width:100%;height:100%}
+.vz-category-badge .vz-crest-image{display:block;width:100%;height:100%;object-fit:contain}
+.vz-choice:hover .vz-category-badge:nth-child(2){transform:translateY(-9px) scale(1.08)}
+.vz-choice-centre strong{font-size:clamp(14px,1.45vw,19px);text-wrap:balance}
+.vz-choice[data-group="club"] .vz-choice-centre{background:radial-gradient(circle at 26% 13%,#fef0e6,#c63e64 54%,#4e143d 100%)}
+.vz-catalog-title::after{background:linear-gradient(90deg,var(--c0),var(--c1),var(--c2),var(--c0));background-size:230% 100%}
+.vz-product-label{background:linear-gradient(135deg,var(--art-a),var(--art-b) 63%,var(--art-c))}
+.vz-section-eyebrow{margin:0 0 13px;color:#83c4ff;letter-spacing:.22em;font:850 12px/1.4 system-ui,sans-serif}
+.vz-section-title{font:900 clamp(43px,5.6vw,76px)/1.02 var(--display),Impact,sans-serif;letter-spacing:-.014em;text-wrap:balance;margin:0 0 17px}
+.vz-section-sub{color:#c7dcf0;font:500 clamp(16px,1.7vw,21px)/1.55 system-ui,sans-serif;max-width:680px;margin:0 auto}
+.vz-nine-section{padding:clamp(70px,8vw,115px) clamp(17px,5vw,74px) clamp(65px,8vw,110px);background:radial-gradient(ellipse at 50% -20%,#233c5c 0%,#0b1b34 46%,#071329 90%);text-align:center;border-top:1px solid #ffffff20}
+.vz-nine-text{max-width:880px;margin:0 auto 42px}
+.vz-nine-grid{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:clamp(6px,1vw,16px);max-width:1410px;margin:0 auto 34px}
+.vz-nine-item{min-width:0;opacity:0;transform:translateY(25px) scale(.96);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--i)*65ms)}
+.vz-nine-item.vz-visible{opacity:1;transform:translateY(0) scale(1)}
+.vz-nine-record{position:relative;width:100%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:repeating-radial-gradient(circle,#090c13 0 2px,#26313c 2px 3px,#0e131d 3px 7px);box-shadow:0 8px 18px #0008,inset 0 0 0 2px #39495b,0 0 0 1px #a8d0ef27;overflow:hidden;transition:transform .35s,box-shadow .35s}
+.vz-nine-record::after{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 12deg,transparent,#ffffff18,transparent 32%,#ffffff12,transparent 70%);pointer-events:none}
+.vz-nine-item:hover .vz-nine-record{transform:rotate(15deg) scale(1.045);box-shadow:0 12px 23px #0009,0 0 14px color-mix(in srgb,var(--nine-color) 40%,transparent)}
+.vz-nine-core{z-index:1;display:grid;place-items:center;width:53%;aspect-ratio:1;border-radius:50%;border:2px solid #eaf1f3b8;box-shadow:0 0 0 2px #080e18;position:relative}
+.vz-nine-core::after{content:"";width:8px;height:8px;background:#182230;border-radius:50%;position:absolute}
+.vz-nine-number{font:900 clamp(13px,1.6vw,23px)/1 var(--display),Impact,sans-serif;color:#071126;transform:translateY(-13px);text-shadow:0 1px #fff9}
+.vz-nine-name{display:block;margin:13px 0 4px;color:#fff;font:800 clamp(12px,1.2vw,17px)/1.22 system-ui,sans-serif;overflow-wrap:anywhere}
+.vz-nine-moment{display:block;font:500 clamp(10px,1vw,12px)/1.4 system-ui,sans-serif;color:#9eb5d1;overflow-wrap:anywhere}
+.vz-nine-action{border:1px solid #8cc8ff99;background:#122c4f;color:#f4faff;border-radius:99px;padding:14px 23px;font:800 14px/1.2 system-ui,sans-serif;cursor:pointer;transition:background .2s,transform .2s}
+.vz-nine-action:hover,.vz-nine-action:focus-visible{background:#254d77;transform:translateY(-3px)}
+.vz-life-section{padding:clamp(63px,8vw,115px) clamp(18px,5vw,74px) clamp(65px,7vw,100px);background:linear-gradient(180deg,#071329,#112847 58%,#07192e);border-top:1px solid #ffffff1e}
+.vz-life-heading{text-align:center;max-width:880px;margin:0 auto 42px}
+.vz-life-photos{max-width:1120px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(13px,2.7vw,35px);margin:0 auto}
+.vz-life-card{position:relative;isolation:isolate;overflow:hidden;border-radius:24px;aspect-ratio:4/5;margin:0;background:#1d344c;box-shadow:0 25px 55px #0006;border:1px solid #ffffff2e;opacity:0;transform:translateY(25px);transition:opacity .65s,transform .65s}
+.vz-life-card.vz-visible{opacity:1;transform:translateY(0)}
+.vz-life-card:nth-child(2){transition-delay:.18s}
+.vz-life-image{display:block;width:100%;height:100%;object-fit:cover;transition:transform .7s ease}
+.vz-life-card:hover .vz-life-image{transform:scale(1.04)}
+.vz-life-card::after{content:"";position:absolute;inset:48% 0 0;background:linear-gradient(transparent,#071329b8);pointer-events:none}
+.vz-life-caption{position:absolute;z-index:1;bottom:25px;left:25px;right:15px;color:#fff;font:900 clamp(22px,3vw,37px)/1.04 var(--display),Impact,sans-serif;text-shadow:0 3px 13px #000b}
+.vz-life-note{font:500 11px/1.4 system-ui,sans-serif;color:#8ba7c3;text-align:center;margin:16px 0 0}
+.vz-catalog-end{padding:16px 20px 20px}
+.vz-crest-source{margin:0 auto}
+@media(max-width:1100px){
+ .vz-nine-grid{grid-template-columns:repeat(5,minmax(0,1fr));max-width:760px;gap:22px}
+}
+@media(max-width:720px){
+ .vz-choice-centre{gap:1px}
+ .vz-category-badges{min-height:30px}
+ .vz-category-badge{font-size:20px}
+ .vz-choice-centre strong{font-size:15px}
+ .vz-nine-section{padding:62px 20px 68px}
+ .vz-nine-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 12px;max-width:480px;margin-bottom:36px}
+ .vz-nine-text{margin-bottom:29px}
+ .vz-nine-name{font-size:12px;margin-top:9px}
+ .vz-nine-moment{font-size:10px}
+ .vz-nine-number{font-size:15px;transform:translateY(-9px)}
+ .vz-nine-core::after{width:5px;height:5px}
+ .vz-life-section{padding:62px 16px 64px}
+ .vz-life-heading{margin-bottom:30px;padding:0 5px}
+ .vz-life-photos{grid-template-columns:1fr;max-width:480px;gap:19px}
+ .vz-life-card{aspect-ratio:4/5;border-radius:19px}
+ .vz-life-caption{font-size:31px;bottom:19px;left:20px}
+}
+@media(prefers-reduced-motion:reduce){.vz-nine-item,.vz-life-card{transition:none;transform:none;opacity:1}.vz-nine-record,.vz-life-image{transition:none}}
