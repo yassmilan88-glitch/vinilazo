@@ -506,3 +506,24 @@ body:not(.vz-catalog-mode) .hero-copy .vz-sub-extra[hidden]{display:none!importa
  .vz-fans-card{opacity:1;transform:none;transition:none}
  .vz-fans-photo{transition:none}
 }
+
+/* Fix team crests: no rectangular badge or clipped white square inside the vinyl. */
+.vz-choice-orb{width:clamp(49px,6vw,67px);height:clamp(49px,6vw,67px);border:1px solid #ffffff9c}
+.vz-choice-orb-mark{width:73%!important;height:73%!important;overflow:visible!important;filter:none!important}
+.vz-choice-orb-mark .vz-orb-crest{width:100%;height:100%;overflow:visible!important;border-radius:0;display:grid;place-items:center}
+.vz-orb-crest .vz-crest-image,.vz-choice-orb-mark .vz-crest-image{
+ width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;
+ border-radius:0;transform:none;filter:drop-shadow(0 2px 3px #0008);
+ -webkit-mask-image:none;mask-image:none
+}
+/* Hide the original crest's rectangular backing by presenting it as a circular cutout,
+   then let the spherical centre provide the surrounding colours. */
+.vz-choice-orb-mark .vz-crest-image{clip-path:circle(49% at 50% 50%);object-position:center}
+.vz-choice-orb-mark{border-radius:50%;overflow:hidden!important}
+.vz-choice-orb-mark .vz-orb-crest{overflow:hidden!important;border-radius:50%}
+.vz-choice-orb-mark .vz-crest-image{transform:scale(.92)}
+.vz-fans-grid.vz-fans-ready{display:flex;max-width:none;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;gap:16px;padding:12px max(18px,calc((100vw - 1190px)/2)) 22px;scrollbar-width:thin}
+.vz-fans-grid.vz-fans-ready .vz-fans-card{flex:0 0 clamp(220px,24vw,320px);scroll-snap-align:center}
+.vz-fans-grid.vz-fans-ready .vz-fans-card:nth-child(n+4){transition-delay:0s}
+@media(max-width:800px){.vz-fans-grid.vz-fans-ready{padding:10px 5px 20px}.vz-fans-grid.vz-fans-ready .vz-fans-card{flex-basis:min(77vw,310px)}}
+@media(prefers-reduced-motion:reduce){.vz-fans-grid.vz-fans-ready{scroll-behavior:auto}}
