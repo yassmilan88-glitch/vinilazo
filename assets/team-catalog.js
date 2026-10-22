@@ -101,18 +101,11 @@ var choose=make('div','vz-choose');choose.id='vz-choose';
 choose.append(make('h2','vz-choose-heading',t.choose));
 var choices=make('div','vz-choices');
 function categorySymbol(group){
- var badges=make('span','vz-category-badges vz-category-'+group);
- var ids=group==='nat'?['argentina','brasile','italia']:['milan','inter','real-madrid'];
- ids.forEach(function(id){
-  var team=(D.teams||[]).find(function(x){return x.id===id});
-  if(!team)return;
-  var slot=make('span','vz-category-badge');
-  if(group==='nat'){slot.textContent=flags[id];slot.setAttribute('aria-hidden','true')}
-  else slot.append(teamMark(team,'vz-category-club-mark'));
-  badges.append(slot);
- });
- badges.setAttribute('aria-hidden','true');
- return badges;
+ var orb=make('span','vz-choice-orb');
+ orb.setAttribute('aria-hidden','true');
+ orb.dataset.group=group;
+ orb.append(make('span','vz-choice-orb-mark'));
+ return orb;
 }
 function vinylChoice(group,label,subtitle){
  var button=make('button','vz-choice');button.type='button';button.setAttribute('aria-expanded','false');button.setAttribute('aria-controls','vz-teams-stage');button.dataset.group=group;
@@ -126,6 +119,31 @@ function vinylChoice(group,label,subtitle){
 var natButton=vinylChoice('nat',t.nat,t.natSub);
 var clubButton=vinylChoice('club',t.club,t.clubSub);
 choices.append(natButton,clubButton);choose.append(choices);
+// Each selector is a luminous sphere showcasing actual federation and club crests.
+// One badge at a time means the animation stays legible on small screens.
+function startBadgeCarousel(button,group,delay){
+ var pool=(D.teams||[]).filter(function(team){return team.g===group});
+ if(!pool.length)return;
+ var mark=button.querySelector('.vz-choice-orb-mark');
+ var index=0;
+ function changeBadge(){
+  var team=pool[index%pool.length];index++;
+  var palette=team.cols||['#74ACDF','#FFFFFF','#C9A227'];
+  button.style.setProperty('--orb-a',palette[0]);
+  button.style.setProperty('--orb-b',palette[1]);
+  button.style.setProperty('--orb-c',palette[2]||palette[0]);
+  mark.replaceChildren(teamMark(team,'vz-orb-crest'));
+  mark.classList.remove('vz-orb-enter');
+  void mark.offsetWidth;
+  mark.classList.add('vz-orb-enter');
+ }
+ changeBadge();
+ if(pool.length>1&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  window.setInterval(function(){if(!document.hidden)changeBadge()},delay);
+ }
+}
+startBadgeCarousel(natButton,'nat',3200);
+startBadgeCarousel(clubButton,'club',3700);
 var product=make('div','vz-hero-product');
 var aura=make('div','vz-product-aura');
 var backHalo=make('div','vz-product-halo');
