@@ -119,32 +119,19 @@ function vinylChoice(group,label,subtitle){
 var natButton=vinylChoice('nat',t.nat,t.natSub);
 var clubButton=vinylChoice('club',t.club,t.clubSub);
 choices.append(natButton,clubButton);choose.append(choices);
-// Each selector is a luminous sphere showcasing actual federation and club crests.
-// One badge at a time means the animation stays legible on small screens.
-function startBadgeCarousel(button,group,delay){
- var pool=(D.teams||[]).filter(function(team){return team.g===group});
- if(!pool.length)return;
- var mark=button.querySelector('.vz-choice-orb-mark');
- var index=0;
- function changeBadge(){
-  var team=pool[index%pool.length];index++;
-  var palette=team.cols||['#74ACDF','#FFFFFF','#C9A227'];
-  button.style.setProperty('--orb-a',palette[0]);
-  button.style.setProperty('--orb-b',palette[1]);
-  button.style.setProperty('--orb-c',palette[2]||palette[0]);
-  mark.replaceChildren(teamMark(team,'vz-orb-crest'));
-   mark.setAttribute('aria-label',team.name);
-  mark.classList.remove('vz-orb-enter');
-  void mark.offsetWidth;
-  mark.classList.add('vz-orb-enter');
- }
- changeBadge();
- if(pool.length>1&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-  window.setInterval(function(){if(!document.hidden)changeBadge()},delay);
- }
+// Simple, permanent trophy pictograms instead of rotating team crests.
+function setTrophy(button,group){
+ var mark=button.querySelector('.vz-choice-orb-mark');if(!mark)return;
+ var icon=make('span','vz-trophy-icon');icon.setAttribute('aria-hidden','true');
+ icon.innerHTML=group==='nat'
+ ? '<svg viewBox="0 0 80 100" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="wc-gold" x2="1" y2="1"><stop stop-color="#fff2b2"/><stop offset=".5" stop-color="#c79a34"/><stop offset="1" stop-color="#80591b"/></linearGradient></defs><path d="M38 6C26 3 19 12 23 23 13 27 11 39 18 47c7 8 15 8 19 17l-3 13H23v9h35v-9H47l-3-13c11-7 18-17 17-29-1-10-7-16-14-18C47 11 43 7 38 6Z" fill="url(#wc-gold)" stroke="#ffe8a0" stroke-width="2"/><path d="M27 26c11 7 21 7 29 3M28 41c11 4 20 1 28-4" stroke="#fff0ae" stroke-width="3" fill="none"/></svg>'
+ : '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ucl-silver" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".5" stop-color="#b6c9df"/><stop offset="1" stop-color="#6e87a6"/></linearGradient></defs><path d="M25 17h50l-5 40c-2 13-9 20-20 20s-18-7-20-20l-5-40ZM25 24H10v11c0 17 10 26 25 27l-3-9c-9-3-13-10-13-19v-2h7Zm50 0h15v11c0 17-10 26-25 27l3-9c9-3 13-10 13-19v-2h-7ZM45 76h10v9h16v8H29v-8h16Z" fill="url(#ucl-silver)" stroke="#f2f8ff" stroke-width="2"/><path d="m50 29 5 10 11 1-8 8 2 11-10-5-10 5 2-11-8-8 11-1Z" fill="#fff"/></svg>';
+ mark.replaceChildren(icon);
+ button.style.setProperty('--orb-a',group==='nat'?'#b99743':'#7c9ac8');
+ button.style.setProperty('--orb-b',group==='nat'?'#ffe7a4':'#f3f8ff');
+ button.style.setProperty('--orb-c',group==='nat'?'#8c6628':'#244b88');
 }
-startBadgeCarousel(natButton,'nat',3200);
-startBadgeCarousel(clubButton,'club',3700);
+setTrophy(natButton,'nat');setTrophy(clubButton,'club');
 var product=make('div','vz-hero-product');
 var aura=make('div','vz-product-aura');
 var backHalo=make('div','vz-product-halo');
@@ -228,7 +215,11 @@ var pressStories=[
  {id:'argentina',goal:5,paper:'eg-3481-1986.webp',place:'México · 1986'},
  {id:'argentina',goal:7,paper:'la-nacion-2022.webp',place:'Qatar · 2022'},
  {id:'barcelona',goal:1,paper:'mundo-deportivo-2007.webp',place:'Barcelona · 2007'},
- {id:'argentina',goal:6,paper:'eg-3065-1978.webp',place:'Buenos Aires · 1978'}
+ {id:'argentina',goal:6,paper:'eg-3065-1978.webp',place:'Buenos Aires · 1978'},
+ {id:'argentina',goal:5,paper:'eg-3481-1986.webp',place:'Maradona · 1986'},
+ {id:'barcelona',goal:1,paper:'mundo-deportivo-2007.webp',place:'Messi · 2007'},
+ {id:'argentina',goal:7,paper:'la-nacion-2022.webp',place:'Messi · 2022'},
+ {id:'argentina',goal:6,paper:'eg-3065-1978.webp',place:'Argentina · 1978'}
 ];
 var press=make('section','vz-press-section');press.id='vz-press';
 var pressIntro=make('div','vz-press-intro');
