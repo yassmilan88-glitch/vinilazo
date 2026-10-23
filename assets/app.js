@@ -450,7 +450,7 @@
     if (opts.animate) transition(t, opts); else swapTo(t);
     if (opts.save) remember(t);
     var lr = $("#live"); if (lr && opts.animate) lr.textContent = T.edition + " " + t.name;
-    track("ViewContent", { content_name: t.name, content_ids: [t.id], value: PRICE, currency: "EUR" });
+    window.VINILAZO_CURRENT_PRODUCT = { content_name: t.name, content_ids: [t.id], content_type: "product", value: PRICE, currency: "EUR" };
   }
 
   /* ---------- "Cambia bandiera": porta alla fila delle bandiere, con la propria già in vista ---------- */
@@ -693,7 +693,6 @@
     });
   });
   $("#f-country").addEventListener("change", function () { if ($("#f-cap").value) check($("#f-cap")); });
-  $$("[data-cta]").forEach(function (a) { a.addEventListener("click", function () { track("InitiateCheckout", { value: PRICE, currency: "EUR", content_name: current && current.name }); }); });
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -755,7 +754,7 @@
         submitting = false; $("#lang-select").disabled = false; pickBtn.disabled = false;
         d.hidden = false; d.focus();
         d.scrollIntoView({ block: "center", behavior: reduce ? "instant" : "smooth" });
-        track("Lead", { value: order.total, currency: "EUR", content_name: order.team });
+        track("InitiateCheckout", { value: order.total, currency: "EUR", content_ids: order.qty === 2 ? [order.teamId, order.secondTeamId] : [order.teamId], content_type: "product", num_items: order.qty });
         var link = order.paymentUrl || ((order.custom && CFG.STRIPE_LINK_CUSTOM) ? CFG.STRIPE_LINK_CUSTOM : CFG.STRIPE_LINK);
         if (link) {
           var paymentUrl = new URL(link);
@@ -789,20 +788,7 @@
   }
 
   /* ---------- Pixel Meta ---------- */
-  function track(ev, params) { try { if (window.VINILAZO_MARKETING_CONSENT === true && window.fbq) window.fbq("track", ev, params || {}); } catch (e) {} }
-  function initPixel() {
-    if (!CFG.META_PIXEL_ID || window.VINILAZO_MARKETING_CONSENT !== true) return;
-    if (window.fbq) { window.fbq("consent", "grant"); return; }
-    !function (f, b, e, v, n, t, s) { if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
-      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = "2.0"; n.queue = []; t = b.createElement(e); t.async = !0; t.src = v;
-      s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s); }(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
-    window.fbq("init", CFG.META_PIXEL_ID); window.fbq("track", "PageView");
-  }
-  window.addEventListener("vinilazo:consent", function () {
-    if (window.VINILAZO_MARKETING_CONSENT === true) initPixel();
-    else if (window.fbq) window.fbq("consent", "revoke");
-  });
-  initPixel();
+  function track(ev, params) { if (window.vzTrack) window.vzTrack(ev, params); }
 
 
   /* L'anteprima in home è interattiva: scambio disco e telecronaca Argentina. */
