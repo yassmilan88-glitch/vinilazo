@@ -42,7 +42,7 @@ html body .hero p.sub{font-size:clamp(15px,.3vw + 14px,17px)!important}
 .vz-head-cta{display:none;align-items:center;min-height:40px;padding:8px 16px;border-radius:999px;background:var(--acc,#74acdf);color:var(--onAcc,#08142a);font:800 15px/1 var(--text,system-ui);text-decoration:none;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.25)}
 .vz-head-cta:hover{filter:brightness(1.08)}
 .vz-head-cta:focus-visible{outline:3px solid #fff;outline-offset:2px}
-@media(min-width:701px){.vz-show-head-cta .vz-head-cta{display:inline-flex}}
+@media(min-width:901px){.vz-show-head-cta .vz-head-cta{display:inline-flex}}
 
 /* Telefono: l'intestazione si nasconde scorrendo verso il basso e torna scorrendo verso l'alto */
 @media(max-width:700px){
