@@ -538,9 +538,10 @@ function openGroup(group){
   en:['By request','Can’t find your team?','Ask us about customised teams and discs.','Request on WhatsApp'],
   de:['Auf Anfrage','Dein Team fehlt?','Frage nach individuell gestalteten Teams und Platten.','Per WhatsApp anfragen']
  }[locale]||[];
- var customName=group==='nat'?'Marocco':'Arsenal';
+ var customName=group==='nat'?({it:'Marocco',es:'Marruecos',fr:'Maroc',en:'Morocco',de:'Marokko'}[locale]||'Marocco'):'Arsenal';
  var customIcon=group==='nat'?'🇲🇦':'ARS';
- var customPrompt=encodeURIComponent('Ciao VINILAZO! Vorrei sapere se è possibile personalizzare un’edizione '+customName+' con 9 dischi e audio.');
+ var waText={it:['Ciao VINILAZO! Vorrei sapere se è possibile personalizzare un’edizione '+customName+' con 9 dischi e audio.','Ciao VINILAZO! Vorrei una squadra non presente sul sito oppure dischi personalizzati. Mi date informazioni?'],es:['¡Hola VINILAZO! Quisiera saber si es posible personalizar una edición '+customName+' con 9 discos y audio.','¡Hola VINILAZO! Quiero un equipo que no está en la web o discos personalizados. ¿Me pasan información?'],fr:['Bonjour VINILAZO ! Est-il possible de personnaliser une édition '+customName+' avec 9 disques et l’audio ?','Bonjour VINILAZO ! Je voudrais une équipe absente du site ou des disques personnalisés. Pouvez-vous me renseigner ?'],en:['Hi VINILAZO! Is it possible to customise a '+customName+' edition with 9 discs and audio?','Hi VINILAZO! I’d like a team that isn’t on the site, or custom discs. Can you tell me more?'],de:['Hallo VINILAZO! Ist eine individuelle '+customName+'-Edition mit 9 Platten und Audio möglich?','Hallo VINILAZO! Ich hätte gern ein Team, das nicht auf der Seite ist, oder individuelle Platten. Könnt ihr mir mehr dazu sagen?']}[locale]||[];
+ var customPrompt=encodeURIComponent(waText[0]||'');
  var customCard=make('a','vz-flag-card vz-custom-card');
  customCard.href='https://wa.me/393295865883?text='+customPrompt;customCard.target='_blank';customCard.rel='noopener noreferrer';
  customCard.append(make('span','vz-custom-symbol',customIcon),make('strong','vz-flag-name',customName),make('small','vz-custom-hint',customWords[0]+' ↗'));
@@ -549,7 +550,7 @@ function openGroup(group){
  if(!req){req=make('div','vz-request-other');req.id='vz-request-other';stage.append(req);}
  req.replaceChildren(make('h3','',customWords[1]),make('p','',customWords[2]));
  var wa=make('a','vz-request-button',customWords[3]+' →');
- wa.href='https://wa.me/393295865883?text='+encodeURIComponent('Ciao VINILAZO! Vorrei una squadra non presente sul sito oppure dischi personalizzati. Mi date informazioni?');
+ wa.href='https://wa.me/393295865883?text='+encodeURIComponent(waText[1]||'');
  wa.target='_blank';wa.rel='noopener noreferrer';req.append(wa);
  stage.hidden=false;
  requestAnimationFrame(function(){stage.scrollIntoView({behavior:'smooth',block:'start'})});

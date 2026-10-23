@@ -32,9 +32,13 @@ export default async function handler(request) {
     params.set(`line_items[${i}][price_data][product_data][description]`,qty===2?'Pacchetto da 2: sconto 10% già incluso. Spedizione inclusa.':'Spedizione inclusa.');
   });
   params.set('payment_intent_data[metadata][order_reference]',reference);
-  const idempotency = createHash('sha256').update(params.toString()).digest('hex');
+  // Email already typed on the site: prefill it in Stripe (optional, never blocks the payment).
+  const email = typeof order.email === 'string' ? order.email.trim() : '';
+  if (email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) params.set('customer_email', email);
+  const createSession = (body) => fetch('https://api.stripe.com/v1/checkout/sessions',{method:'POST',headers:{Authorization:`Bearer ${key}`,'Content-Type':'application/x-www-form-urlencoded','Idempotency-Key':createHash('sha256').update(body.toString()).digest('hex')},body,signal:AbortSignal.timeout(15000)});
   try {
-    const response=await fetch('https://api.stripe.com/v1/checkout/sessions',{method:'POST',headers:{Authorization:`Bearer ${key}`,'Content-Type':'application/x-www-form-urlencoded','Idempotency-Key':idempotency},body:params,signal:AbortSignal.timeout(15000)});
+    let response=await createSession(params);
+    if (!response.ok && params.has('customer_email')) { params.delete('customer_email'); response=await createSession(params); }
     const session=await response.json();
     if (!response.ok || session.livemode !== true || session.amount_total !== unit*qty || !/^https:\/\/checkout\.stripe\.com\//.test(session.url || '')) return json({error:'checkout_unavailable'},502);
     return json({url:session.url});

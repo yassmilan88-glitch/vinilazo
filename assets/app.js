@@ -731,7 +731,7 @@
       .then(function (r) { if (!r.ok) throw new Error(r.status); })
       .then(async function () {
         if (!checkoutReady) return;
-        var response = await fetch(CFG.CHECKOUT_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({qty:order.qty,teamId:order.teamId,secondTeamId:order.secondTeamId,reference:order.reference,lang:DATA.lang,gift:order.gift}),signal:controller.signal});
+        var response = await fetch(CFG.CHECKOUT_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({qty:order.qty,teamId:order.teamId,secondTeamId:order.secondTeamId,reference:order.reference,lang:DATA.lang,gift:order.gift,email:order.email}),signal:controller.signal});
         if (!response.ok) throw new Error("payment_unavailable");
         var session = await response.json();
         if (!/^https:\/\/checkout\.stripe\.com\//.test(session.url || "")) throw new Error("invalid_payment_url");
