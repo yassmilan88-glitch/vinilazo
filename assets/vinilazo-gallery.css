@@ -1,0 +1,29 @@
+/* VINILAZO — team-specific lifestyle gallery; illustrations, not customer reviews. */
+.vz-lifestyle-gallery{color:#f3f6fb;background:linear-gradient(145deg,#09172f,#0c2140);border-top:1px solid rgba(255,255,255,.11);border-bottom:1px solid rgba(255,255,255,.11);overflow:hidden}
+.vz-lifestyle-gallery[hidden]{display:none!important}
+.vz-lifestyle-catalog{padding:clamp(50px,7vw,95px) clamp(16px,5vw,70px)}
+.vz-lifestyle-heading{max-width:890px;margin:0 auto 30px;text-align:center}
+.vz-lifestyle-eyebrow{color:#82b7e8;font:800 12px/1.5 system-ui,sans-serif;letter-spacing:.18em}
+.vz-lifestyle-title{font-family:var(--display,"Arial Narrow",sans-serif);font-size:clamp(40px,6vw,78px);line-height:1.03;letter-spacing:.005em;margin:8px 0 16px}
+.vz-lifestyle-intro{max-width:610px;margin:0 auto;color:#c1d0e4;line-height:1.52;font-size:clamp(16px,1.5vw,19px)}
+.vz-lifestyle-rail{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#5d7a9e #112b49;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;padding:5px 3px 15px}
+.vz-lifestyle-cards{display:flex;gap:clamp(12px,1.7vw,23px);width:max-content}
+.vz-lifestyle-card{display:flex;flex-direction:column;width:clamp(230px,26vw,350px);scroll-snap-align:start;border:1px solid rgba(255,255,255,.16);border-radius:15px;overflow:hidden;background:#142941;text-decoration:none;color:inherit;transition:transform .2s ease,border-color .2s ease}
+.vz-lifestyle-card:hover,.vz-lifestyle-card:focus-visible{transform:translateY(-3px);border-color:var(--vz-photo-accent,#74acdf);outline:none}
+.vz-lifestyle-photo{display:block;width:100%;height:auto;aspect-ratio:1 / 1.08;object-fit:contain;background:#e5d7c0}
+.vz-lifestyle-card-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 17px;border-top:3px solid var(--vz-photo-accent,#74acdf);font-size:16px}
+.vz-lifestyle-card-footer strong{font-weight:850}.vz-lifestyle-card-footer span{font-size:22px;color:#b0cdea}
+.vz-lifestyle-controls{display:flex;gap:10px;justify-content:center;margin-top:15px}
+.vz-lifestyle-arrow{width:45px;height:45px;cursor:pointer;border-radius:50%;background:#162f4e;border:1px solid #466584;color:#f3f6fb;font:25px/1 system-ui,sans-serif}
+.vz-lifestyle-arrow:focus-visible{outline:2px solid #74acdf;outline-offset:3px}
+.vz-lifestyle-disclaimer{color:#95a9c4;font-size:12px;line-height:1.5;text-align:center;margin:15px 0 0}
+.vz-lifestyle-detail{--vz-photo-accent:#74acdf;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center;gap:clamp(24px,6vw,92px);padding:clamp(42px,7vw,105px) clamp(16px,7vw,100px)}
+.vz-lifestyle-detail-photo{position:relative;display:block;background:#f0e6d4;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.14);box-shadow:0 25px 70px rgba(0,0,0,.22);max-width:620px;justify-self:center;width:100%}
+.vz-lifestyle-feature{display:block;width:100%;height:auto;max-height:600px;object-fit:contain}
+.vz-lifestyle-zoom{position:absolute;bottom:15px;right:15px;border-radius:100px;padding:8px 13px;color:#111e31;background:rgba(255,255,255,.92);font:20px/1 system-ui,sans-serif}
+.vz-lifestyle-detail-copy{max-width:550px}.vz-lifestyle-detail-copy .vz-lifestyle-intro{text-align:left;margin:0}
+.vz-lifestyle-team-name{display:block;margin-top:23px;font-size:clamp(23px,3vw,36px)}
+.vz-lifestyle-cta{display:inline-block;margin-top:22px;padding:13px 24px;border-radius:999px;background:var(--acc,#74acdf);color:var(--onAcc,#08142a);text-decoration:none;font-size:16px;font-weight:800}
+.vz-lifestyle-detail-copy .vz-lifestyle-disclaimer{text-align:left;margin-top:15px}
+@media(max-width:760px){.vz-lifestyle-catalog{padding:50px 15px}.vz-lifestyle-card{width:min(77vw,320px)}.vz-lifestyle-card-footer{padding:12px 14px}.vz-lifestyle-detail{grid-template-columns:1fr;gap:26px;padding:47px 17px}.vz-lifestyle-detail-photo{max-width:540px}.vz-lifestyle-detail-copy{text-align:center;margin:0 auto}.vz-lifestyle-detail-copy .vz-lifestyle-intro,.vz-lifestyle-detail-copy .vz-lifestyle-disclaimer{text-align:center}}
+@media(prefers-reduced-motion:reduce){.vz-lifestyle-card{transition:none}.vz-lifestyle-rail{scroll-behavior:auto}}
