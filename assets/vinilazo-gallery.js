@@ -7,13 +7,26 @@
   try { data = JSON.parse(node.textContent); } catch (e) { return; }
   var lang = data.lang || 'it';
   var tr = {
-    it: {eyebrow:'VINILAZO A CASA',title:'Quei gol, proprio lì sul tuo frigo.',intro:'Dieci edizioni da vedere da vicino: sul frigorifero, sul tavolo e nel set completo.',illustrative:'Immagini illustrative delle personalizzazioni.',detailTitle:'Ecco come sta a casa tua.',detailIntro:'Il tuo VINILAZO con i colori e i gol della squadra che hai scelto.',detailLink:'Scegli questa edizione',open:'Apri la foto a grandezza naturale',prev:'Foto precedenti',next:'Foto successive',view:'Scopri l’edizione'},
-    es: {eyebrow:'VINILAZO EN CASA',title:'Ese gol, ahí mismo en tu nevera.',intro:'Diez ediciones para ver de cerca: en la nevera, sobre la mesa y en el set completo.',illustrative:'Imágenes ilustrativas de las personalizaciones.',detailTitle:'Así queda en tu casa.',detailIntro:'Tu VINILAZO con los colores y goles de tu equipo.',detailLink:'Elegí esta edición',open:'Abrir imagen a tamaño completo',prev:'Fotos anteriores',next:'Fotos siguientes',view:'Descubrí la edición'},
-    fr: {eyebrow:'VINILAZO CHEZ VOUS',title:'Ces buts, juste là sur votre frigo.',intro:'Dix éditions à découvrir : sur le réfrigérateur, sur une table et en coffret complet.',illustrative:'Visuels illustratifs des personnalisations.',detailTitle:'Imaginez-le chez vous.',detailIntro:'Votre VINILAZO aux couleurs et aux buts de votre équipe.',detailLink:'Choisir cette édition',open:'Ouvrir la photo en plein format',prev:'Photos précédentes',next:'Photos suivantes',view:'Découvrir l’édition'},
-    en: {eyebrow:'VINILAZO AT HOME',title:'That goal, right there on your fridge.',intro:'Ten team editions, seen up close: on the fridge, on a tabletop and as a complete set.',illustrative:'Illustrative images of the custom designs.',detailTitle:'Picture it at home.',detailIntro:'Your VINILAZO in your team’s colours, with its unforgettable goals.',detailLink:'Choose this edition',open:'Open full-size photo',prev:'Previous photos',next:'Next photos',view:'Explore this edition'},
-    de: {eyebrow:'VINILAZO ZU HAUSE',title:'Dieses Tor, direkt an deinem Kühlschrank.',intro:'Zehn Editionen zum Entdecken: am Kühlschrank, auf dem Tisch und als komplettes Set.',illustrative:'Beispielbilder der individuellen Gestaltungen.',detailTitle:'So sieht es bei dir aus.',detailIntro:'Dein VINILAZO mit den Farben und Toren deiner Mannschaft.',detailLink:'Diese Edition wählen',open:'Foto in voller Größe öffnen',prev:'Vorherige Fotos',next:'Nächste Fotos',view:'Edition ansehen'}
+    it: {eyebrow:'VINILAZO A CASA',title:'Quei gol, proprio lì sul tuo frigo.',intro:'Dieci edizioni da vedere da vicino: sul frigorifero, sul tavolo e nel set completo.',illustrative:'Le altre edizioni sono anteprime illustrative. Argentina: fotografie del campione reale.',detailTitle:'Ecco come sta a casa tua.',detailIntro:'Il tuo VINILAZO con i colori e i gol della squadra che hai scelto.',detailLink:'Scegli questa edizione',open:'Apri la foto a grandezza naturale',prev:'Foto precedenti',next:'Foto successive',view:'Scopri l’edizione'},
+    es: {eyebrow:'VINILAZO EN CASA',title:'Ese gol, ahí mismo en tu nevera.',intro:'Diez ediciones para ver de cerca: en la nevera, sobre la mesa y en el set completo.',illustrative:'Las demás ediciones son imágenes ilustrativas. Argentina: fotos del producto de muestra real.',detailTitle:'Así queda en tu casa.',detailIntro:'Tu VINILAZO con los colores y goles de tu equipo.',detailLink:'Elegí esta edición',open:'Abrir imagen a tamaño completo',prev:'Fotos anteriores',next:'Fotos siguientes',view:'Descubrí la edición'},
+    fr: {eyebrow:'VINILAZO CHEZ VOUS',title:'Ces buts, juste là sur votre frigo.',intro:'Dix éditions à découvrir : sur le réfrigérateur, sur une table et en coffret complet.',illustrative:'Les autres éditions sont des aperçus illustratifs. Argentine : photos du modèle réel.',detailTitle:'Imaginez-le chez vous.',detailIntro:'Votre VINILAZO aux couleurs et aux buts de votre équipe.',detailLink:'Choisir cette édition',open:'Ouvrir la photo en plein format',prev:'Photos précédentes',next:'Photos suivantes',view:'Découvrir l’édition'},
+    en: {eyebrow:'VINILAZO AT HOME',title:'That goal, right there on your fridge.',intro:'Ten team editions, seen up close: on the fridge, on a tabletop and as a complete set.',illustrative:'Other editions use illustrative mockups. Argentina: photos of the physical sample.',detailTitle:'Picture it at home.',detailIntro:'Your VINILAZO in your team’s colours, with its unforgettable goals.',detailLink:'Choose this edition',open:'Open full-size photo',prev:'Previous photos',next:'Next photos',view:'Explore this edition'},
+    de: {eyebrow:'VINILAZO ZU HAUSE',title:'Dieses Tor, direkt an deinem Kühlschrank.',intro:'Zehn Editionen zum Entdecken: am Kühlschrank, auf dem Tisch und als komplettes Set.',illustrative:'Die anderen Editionen sind Illustrationen. Argentinien: Fotos des echten Musters.',detailTitle:'So sieht es bei dir aus.',detailIntro:'Dein VINILAZO mit den Farben und Toren deiner Mannschaft.',detailLink:'Diese Edition wählen',open:'Foto in voller Größe öffnen',prev:'Vorherige Fotos',next:'Nächste Fotos',view:'Edition ansehen'}
   }[lang] || null;
   if (!tr) return;
+  var realLabels = {
+    it: {badge:'FOTO REALE',intro:'Il campione fisico Argentina: dischi magnetici, disco di Maradona e lettore acceso.',sample:'Foto del campione reale. La scritta sul lettore può differire dalla personalizzazione finale.'},
+    es: {badge:'FOTO REAL',intro:'La muestra física de Argentina: discos magnéticos, disco de Maradona y reproductor encendido.',sample:'Fotos del producto de muestra. El texto en el reproductor puede variar en la versión final.'},
+    fr: {badge:'PHOTO RÉELLE',intro:'Le modèle physique Argentine : disques aimantés, disque Maradona et platine allumée.',sample:'Photos du modèle réel. Le texte imprimé sur le lecteur peut différer de la version finale.'},
+    en: {badge:'REAL PHOTO',intro:'The physical Argentina sample: magnetic records, Maradona disc and illuminated player.',sample:'Photos of the physical sample. The printed player branding may differ from the finished version.'},
+    de: {badge:'ECHTES FOTO',intro:'Das echte Argentinien-Muster: Magnetplatten, Maradona-Platte und beleuchteter Spieler.',sample:'Fotos des echten Musters. Der Aufdruck kann von der finalen Version abweichen.'}
+  }[lang];
+  var realArg = (data.assets || '../assets/') + 'loops/argentina/';
+  var realPhotos = [
+    {file:'scegli.jpg',label:'Dischi sul frigorifero'},
+    {file:'appoggia.jpg',label:'Disco di Maradona sul lettore'},
+    {file:'gol.jpg',label:'Vinile e luce in funzione'}
+  ];
 
   // Keys match the site's real team IDs. Images use actual player / goal labels from the catalogue.
   var visuals = [
@@ -39,15 +52,15 @@
     if (txt !== undefined) n.textContent = txt;
     return n;
   }
-  function imageSrc(item) { return assetBase + 'vinilazo_' + item[1] + '.webp'; }
+  function imageSrc(item) { return item[0] === 'argentina' ? realArg + 'scegli.jpg' : assetBase + 'vinilazo_' + item[1] + '.webp'; }
   function productImage(item, team, className) {
     var img = el('img', className);
     img.src = imageSrc(item);
     img.alt = 'VINILAZO – ' + (team ? team.name : item[0]) + ' – ' + item[2];
     img.loading = 'lazy';
     img.decoding = 'async';
-    img.width = 850;
-    img.height = (item[2] === 'tavolo' ? 1135 : item[2] === 'frigo-8' ? 887 : 851);
+    img.width = item[0] === 'argentina' ? 480 : 850;
+    img.height = item[0] === 'argentina' ? 640 : (item[2] === 'tavolo' ? 1135 : item[2] === 'frigo-8' ? 887 : 851);
     return img;
   }
   function titleBlock() {
@@ -73,6 +86,10 @@
       card.setAttribute('aria-label', tr.view + ': ' + team.name);
       card.style.setProperty('--vz-photo-accent', team.cols && team.cols[0] || '#74acdf');
       card.append(productImage(item, team, 'vz-lifestyle-photo'));
+      if (item[0] === 'argentina') {
+        card.classList.add('vz-lifestyle-real');
+        card.append(el('span', 'vz-lifestyle-real-tag', realLabels.badge));
+      }
       var label = el('span', 'vz-lifestyle-card-footer');
       label.append(el('strong', '', team.name), el('span', '', '↗'));
       card.append(label);
@@ -113,14 +130,37 @@
     var teamName = el('strong', 'vz-lifestyle-team-name');
     var cta = el('a', 'vz-lifestyle-cta', tr.detailLink + ' →');
     cta.href = '#ordina';
-    copy.append(teamName, cta, el('p', 'vz-lifestyle-disclaimer', tr.illustrative));
+    var note = el('p', 'vz-lifestyle-disclaimer', tr.illustrative);
+    copy.append(teamName, cta, note);
     var photoLink = el('a', 'vz-lifestyle-detail-photo');
     photoLink.target = '_blank'; photoLink.rel = 'noopener';
     photoLink.setAttribute('aria-label', tr.open);
     var img = el('img', 'vz-lifestyle-feature');
     img.loading = 'lazy'; img.decoding = 'async'; img.width = 850; img.height = 900;
     photoLink.append(img, el('span', 'vz-lifestyle-zoom', '↗'));
-    section.append(photoLink, copy);
+    var photoGroup = el('div', 'vz-lifestyle-photo-group');
+    var realThumbs = el('div', 'vz-lifestyle-real-thumbs');
+    realPhotos.forEach(function (photo, i) {
+      var button = el('button', 'vz-lifestyle-real-thumb');
+      button.type = 'button';
+      button.setAttribute('aria-label', photo.label);
+      var thumb = el('img');
+      thumb.src = realArg + photo.file;
+      thumb.alt = photo.label;
+      thumb.loading = 'lazy';
+      button.append(thumb);
+      button.addEventListener('click', function () {
+        var src = realArg + photo.file;
+        img.src = src;
+        img.alt = 'VINILAZO Argentina – ' + photo.label;
+        photoLink.href = src;
+        realThumbs.querySelectorAll('button').forEach(function (b) { b.classList.toggle('is-active', b === button); });
+      });
+      if (i === 0) button.classList.add('is-active');
+      realThumbs.append(button);
+    });
+    photoGroup.append(photoLink, realThumbs);
+    section.append(photoGroup, copy);
     anchor.before(section);
     function refresh() {
       var team = activeTeam();
@@ -131,6 +171,12 @@
       if (img.getAttribute('src') !== src) img.src = src;
       img.alt = 'VINILAZO – ' + team.name + ' – ' + item[2];
       photoLink.href = src;
+      var isReal = team.id === 'argentina';
+      section.classList.toggle('vz-lifestyle-is-real', isReal);
+      realThumbs.hidden = !isReal;
+      realThumbs.querySelectorAll('button').forEach(function (b,i) { b.classList.toggle('is-active', i === 0); });
+      note.textContent = isReal ? realLabels.sample : tr.illustrative;
+      copy.querySelector('.vz-lifestyle-intro').textContent = isReal ? realLabels.intro : tr.detailIntro;
       teamName.textContent = team.name;
       section.style.setProperty('--vz-photo-accent', team.cols && team.cols[0] || '#74acdf');
     }
