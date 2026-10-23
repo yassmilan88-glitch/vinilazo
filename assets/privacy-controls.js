@@ -30,7 +30,7 @@
 /* Shared pixel: no Meta resource or event before marketing consent. */
 (function(){
  'use strict';
- var initialized=false,pageSent=false,viewSent=false,purchaseBusy=false,purchaseSession=null;
+ var initialized=false,pageSent=false,viewSent=null,purchaseBusy=false,purchaseSession=null;
  if(/\/payment-return\.html$/.test(location.pathname)){
   var receiptUrl=new URL(location.href);
   purchaseSession=receiptUrl.searchParams.get('session_id');
@@ -72,13 +72,16 @@
   purchase();
  }
  function view(){
-  if(!document.body.classList.contains('vz-catalog-mode')&&!viewSent){
+  if(document.readyState==='loading')return;
+  if(!document.body.classList.contains('vz-catalog-mode')){
    var p=window.VINILAZO_CURRENT_PRODUCT;
    if(!p&&document.body.classList.contains('pp'))p={content_ids:['argentina'],content_name:'Argentina',content_type:'product',value:Number((window.VINILAZO_CONFIG||{}).PRICE)||69,currency:'EUR'};
-   if(p&&track('ViewContent',p))viewSent=true;
+   var key=p&&JSON.stringify(p.content_ids);
+   if(p&&key!==viewSent&&track('ViewContent',p))viewSent=key;
   }
  }
  window.addEventListener('vinilazo:consent',start);
+ window.addEventListener('vinilazo:product',view);
  document.addEventListener('DOMContentLoaded',function(){start();view();});
  window.addEventListener('pageshow',purchase);
  start();

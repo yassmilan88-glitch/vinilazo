@@ -451,6 +451,7 @@
     if (opts.save) remember(t);
     var lr = $("#live"); if (lr && opts.animate) lr.textContent = T.edition + " " + t.name;
     window.VINILAZO_CURRENT_PRODUCT = { content_name: t.name, content_ids: [t.id], content_type: "product", value: PRICE, currency: "EUR" };
+    window.dispatchEvent(new CustomEvent("vinilazo:product"));
   }
 
   /* ---------- "Cambia bandiera": porta alla fila delle bandiere, con la propria già in vista ---------- */
