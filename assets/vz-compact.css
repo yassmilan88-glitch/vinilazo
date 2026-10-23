@@ -53,3 +53,9 @@ html body .hero p.sub{font-size:clamp(15px,.3vw + 14px,17px)!important}
   .vz-quick-nav,.vz-quick-nav.vz-glide{right:19px;bottom:calc(154px + env(safe-area-inset-bottom,0px))}
 }
 @media(prefers-reduced-motion:reduce){header.top{transition:none}}
+
+/* Home: tolta la sezione "piazze" (foto dei tifosi), doppione emotivo di giornali e storie */
+#vz-fans{display:none!important}
+
+/* Un solo carattere per i testi: il corsivo Georgia resta solo nelle finte prime pagine di giornale */
+.poem p:not(.hit),.moment-cta span,.memory,.vz-about-sign,.vz-catalog-end p,body.pp .vz-goal-entry .pp-text .memory{font-family:var(--text,system-ui)!important}
