@@ -32,6 +32,12 @@ export default async function handler(request) {
     params.set(`line_items[${i}][price_data][product_data][description]`,qty===2?'Pacchetto da 2: sconto 10% già incluso. Spedizione inclusa.':'Spedizione inclusa.');
   });
   params.set('payment_intent_data[metadata][order_reference]',reference);
+  // Shipping details typed on the site, kept with the payment for the confirmation messages (optional, never blocks the payment).
+  const c = order.customer && typeof order.customer === 'object' ? order.customer : {};
+  const clean = (v, max) => typeof v === 'string' ? v.replace(/[\u0000-\u001f\u007f]+/g, ' ').trim().slice(0, max) : '';
+  const customer = { c_name: clean(c.name, 120), c_phone: clean(c.phone, 30), c_address: clean(c.address, 200), c_cap: clean(c.cap, 20), c_city: clean(c.city, 100), c_country: clean(c.country, 60), c_iso: /^[A-Z]{2}$/.test(c.iso || '') ? c.iso : '' };
+  Object.entries(customer).forEach(([k, v]) => { if (v) params.set(`metadata[${k}]`, v); });
+  params.set('metadata[lang]', lang);
   // Email already typed on the site: prefill it in Stripe (optional, never blocks the payment).
   const email = typeof order.email === 'string' ? order.email.trim() : '';
   if (email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) params.set('customer_email', email);
