@@ -15,3 +15,23 @@ for = "/*"
   [headers.values]
   X-Content-Type-Options = "nosniff"
   Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Un solo dominio: il vecchio indirizzo Netlify porta a vinilazo.eu
+[[redirects]]
+from = "https://vinilazo.netlify.app/*"
+to = "https://vinilazo.eu/:splat"
+status = 301
+force = true
+
+# File interni da non pubblicare
+[[redirects]]
+from = "/attivazione-stripe.md"
+to = "/404.html"
+status = 404
+force = true
+
+[[redirects]]
+from = "/netlify/*"
+to = "/404.html"
+status = 404
+force = true

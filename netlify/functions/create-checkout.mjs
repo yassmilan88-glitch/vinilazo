@@ -1,13 +1,14 @@
 import { createHash } from 'node:crypto';
 import teams from './teams.json' with { type: 'json' };
-const SITE = 'https://vinilazo.netlify.app';
+const SITE = 'https://vinilazo.eu';
+const ALLOWED_ORIGINS = new Set([SITE, 'https://www.vinilazo.eu', 'https://vinilazo.netlify.app']);
 const json = (body, status = 200) => new Response(JSON.stringify(body), {status, headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
 export default async function handler(request) {
   const key = process.env.STRIPE_SECRET_KEY;
   const ready = process.env.VINILAZO_CHECKOUT_ENABLED === 'true' && /^(sk|rk)_live_/.test(key || '');
   if (request.method === 'GET') return json({ready});
   if (request.method !== 'POST') return json({error:'method_not_allowed'},405);
-  if (request.headers.get('origin') !== SITE) return json({error:'origin_not_allowed'},403);
+  if (!ALLOWED_ORIGINS.has(request.headers.get('origin'))) return json({error:'origin_not_allowed'},403);
   if (!ready) return json({error:'checkout_not_configured'},503);
   let order;
   try { const raw = await request.text(); if (raw.length > 4096) return json({error:'invalid_order'},400); order=JSON.parse(raw); } catch { return json({error:'invalid_order'},400); }
