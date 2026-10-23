@@ -27,3 +27,15 @@
 .vz-lifestyle-detail-copy .vz-lifestyle-disclaimer{text-align:left;margin-top:15px}
 @media(max-width:760px){.vz-lifestyle-catalog{padding:50px 15px}.vz-lifestyle-card{width:min(77vw,320px)}.vz-lifestyle-card-footer{padding:12px 14px}.vz-lifestyle-detail{grid-template-columns:1fr;gap:26px;padding:47px 17px}.vz-lifestyle-detail-photo{max-width:540px}.vz-lifestyle-detail-copy{text-align:center;margin:0 auto}.vz-lifestyle-detail-copy .vz-lifestyle-intro,.vz-lifestyle-detail-copy .vz-lifestyle-disclaimer{text-align:center}}
 @media(prefers-reduced-motion:reduce){.vz-lifestyle-card{transition:none}.vz-lifestyle-rail{scroll-behavior:auto}}
+/* Argentina: photos of physical sample */
+.vz-lifestyle-card{position:relative}
+.vz-lifestyle-real-tag{position:absolute;top:12px;left:12px;background:#f3f7ff;color:#0b2443;border-radius:999px;padding:6px 10px;font:800 11px/1 system-ui,sans-serif;letter-spacing:.09em;box-shadow:0 3px 12px #0004}
+.vz-lifestyle-real .vz-lifestyle-photo{object-fit:cover;object-position:center;background:#191919}
+.vz-lifestyle-photo-group{width:100%;max-width:620px;justify-self:center;min-width:0}
+.vz-lifestyle-photo-group .vz-lifestyle-detail-photo{max-width:none}
+.vz-lifestyle-real-thumbs{display:flex;justify-content:center;gap:11px;margin-top:13px}
+.vz-lifestyle-real-thumbs[hidden]{display:none!important}
+.vz-lifestyle-real-thumb{background:#142941;border:2px solid transparent;border-radius:10px;padding:3px;cursor:pointer;width:80px;height:80px;overflow:hidden}
+.vz-lifestyle-real-thumb.is-active,.vz-lifestyle-real-thumb:focus-visible{border-color:var(--vz-photo-accent,#74acdf);outline:2px solid rgba(255,255,255,.5);outline-offset:2px}
+.vz-lifestyle-real-thumb img{display:block;width:100%;height:100%;object-fit:cover;border-radius:6px}
+.vz-lifestyle-is-real .vz-lifestyle-feature{max-height:580px;object-fit:contain;background:#191919}
