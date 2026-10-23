@@ -19,7 +19,7 @@ export default async function handler(request) {
   const unit = qty === 2 ? 6210 : 6900;
   const ids = qty === 2 ? [teamId,secondId] : [teamId];
   const params = new URLSearchParams({mode:'payment',locale:lang,client_reference_id:reference,
-    success_url:`${SITE}/payment-return.html`,cancel_url:`${SITE}/${lang}/?team=${encodeURIComponent(teamId)}#ordina`,
+    success_url:`${SITE}/payment-return.html?lang=${lang}`,cancel_url:`${SITE}/${lang}/?team=${encodeURIComponent(teamId)}#ordina`,
     'automatic_tax[enabled]':'false','adaptive_pricing[enabled]':'false',
     'metadata[order_reference]':reference,'metadata[quantity]':String(qty),'metadata[first_team]':teamId,
     'metadata[second_team]':qty===2 ? secondId : '', 'metadata[gift]':gift?'yes':'no','metadata[discount_percent]':qty===2?'10':'0'});

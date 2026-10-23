@@ -75,6 +75,34 @@
     fold(document.querySelector('section.faq'));
     if (location.hash) reveal(decodeURIComponent(location.hash.slice(1)));
   }
-  function start() { run(); setTimeout(run, 1500); }
+  // Telefono: intestazione che si nasconde scorrendo in giù
+  function headroom() {
+    var head = document.querySelector('header.top'); if (!head || head._vzHead) return; head._vzHead = true;
+    var lastY = window.scrollY, ticking = false;
+    window.addEventListener('scroll', function () {
+      if (ticking) return; ticking = true;
+      requestAnimationFrame(function () {
+        var y = window.scrollY, mobile = window.innerWidth <= 700;
+        if (!mobile || y < 260 || y < lastY - 4) head.classList.remove('vz-head-hidden');
+        else if (y > lastY + 4 && !head.contains(document.activeElement)) head.classList.add('vz-head-hidden');
+        lastY = y; ticking = false;
+      });
+    }, { passive: true });
+  }
+  // Computer: "Ordina · prezzo" nell'intestazione quando il pulsante principale esce dallo schermo
+  var CTA = { it: 'Ordina', es: 'Pedir', fr: 'Commander', en: 'Order', de: 'Bestellen' };
+  function headCta() {
+    var head = document.querySelector('header.top'), main = document.querySelector('.hero .buy a[data-cta]');
+    if (!head || !main || head.querySelector('.vz-head-cta') || !main.offsetParent || !('IntersectionObserver' in window)) return;
+    var priceEl = document.querySelector('[data-price]');
+    var price = priceEl ? priceEl.textContent.trim() : '';
+    var a = document.createElement('a'); a.className = 'vz-head-cta'; a.href = '#ordina';
+    a.textContent = (CTA[lang] || CTA.it) + (price ? ' · ' + price : '');
+    var slot = head.querySelector('.top-r') || head; slot.insertBefore(a, slot.firstChild);
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { document.documentElement.classList.toggle('vz-show-head-cta', !e.isIntersecting && e.boundingClientRect.top < 0); });
+    }).observe(main);
+  }
+  function start() { run(); headroom(); headCta(); setTimeout(function () { run(); headCta(); }, 1500); }
   if (document.readyState === 'complete') start(); else window.addEventListener('load', start, { once: true });
 })();
