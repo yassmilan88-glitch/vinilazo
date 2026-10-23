@@ -58,7 +58,8 @@
       var a = document.createElement('a'); a.href = '#' + id; a.textContent = t.chips[i];
       a.addEventListener('click', function (e) {
         e.preventDefault(); reveal(id);
-        target.scrollIntoView({ block: 'start', behavior: reduce ? 'instant' : 'smooth' });
+        var hdr = document.querySelector('header.top'), off = (hdr ? hdr.getBoundingClientRect().height : 0) + 10;
+        window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - off, behavior: reduce ? 'instant' : 'smooth' });
         if (history.replaceState) history.replaceState(null, '', '#' + id);
       });
       nav.appendChild(a);
