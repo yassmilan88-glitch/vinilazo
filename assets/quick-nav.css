@@ -91,3 +91,6 @@
 @media(prefers-reduced-motion:reduce){
  .moment #moment-h.vz-head-play,.moment .poem p.vz-copy-line.vz-in{animation:none!important}
 }
+
+/* Phones: round Menu icon above the WhatsApp button, never over hero headlines */
+@media(max-width:700px){.vz-quick-nav,.vz-quick-nav.vz-glide{top:auto;bottom:calc(162px + env(safe-area-inset-bottom,0px));right:23px;transform:none;align-items:flex-end;transition:none}.vz-nav-toggle{width:44px;height:44px;padding:0;border-radius:50%}.vz-nav-toggle span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.vz-nav-links{transform-origin:bottom right;max-height:min(60vh,calc(100vh - 220px))}}
