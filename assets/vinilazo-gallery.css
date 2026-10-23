@@ -1,4 +1,4 @@
-/* VINILAZO — team-specific lifestyle gallery; illustrations, not customer reviews. */
+/* VINILAZO — galleria edizioni (illustrazioni "sul frigo" e "set completo"), non recensioni di clienti. */
 .vz-lifestyle-gallery{color:#f3f6fb;background:linear-gradient(145deg,#09172f,#0c2140);border-top:1px solid rgba(255,255,255,.11);border-bottom:1px solid rgba(255,255,255,.11);overflow:hidden}
 .vz-lifestyle-gallery[hidden]{display:none!important}
 .vz-lifestyle-catalog{padding:clamp(50px,7vw,95px) clamp(16px,5vw,70px)}
@@ -10,7 +10,7 @@
 .vz-lifestyle-cards{display:flex;gap:clamp(12px,1.7vw,23px);width:max-content}
 .vz-lifestyle-card{display:flex;flex-direction:column;width:clamp(230px,26vw,350px);scroll-snap-align:start;border:1px solid rgba(255,255,255,.16);border-radius:15px;overflow:hidden;background:#142941;text-decoration:none;color:inherit;transition:transform .2s ease,border-color .2s ease}
 .vz-lifestyle-card:hover,.vz-lifestyle-card:focus-visible{transform:translateY(-3px);border-color:var(--vz-photo-accent,#74acdf);outline:none}
-.vz-lifestyle-photo{display:block;width:100%;height:auto;aspect-ratio:1 / 1.08;object-fit:contain;background:#e5d7c0}
+.vz-lifestyle-photo{display:block;width:100%;height:auto;aspect-ratio:1000 / 1080;object-fit:cover;background:#16253a}
 .vz-lifestyle-card-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 17px;border-top:3px solid var(--vz-photo-accent,#74acdf);font-size:16px}
 .vz-lifestyle-card-footer strong{font-weight:850}.vz-lifestyle-card-footer span{font-size:22px;color:#b0cdea}
 .vz-lifestyle-controls{display:flex;gap:10px;justify-content:center;margin-top:15px}
@@ -18,8 +18,8 @@
 .vz-lifestyle-arrow:focus-visible{outline:2px solid #74acdf;outline-offset:3px}
 .vz-lifestyle-disclaimer{color:#95a9c4;font-size:12px;line-height:1.5;text-align:center;margin:15px 0 0}
 .vz-lifestyle-detail{--vz-photo-accent:#74acdf;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center;gap:clamp(24px,6vw,92px);padding:clamp(42px,7vw,105px) clamp(16px,7vw,100px)}
-.vz-lifestyle-detail-photo{position:relative;display:block;background:#f0e6d4;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.14);box-shadow:0 25px 70px rgba(0,0,0,.22);max-width:620px;justify-self:center;width:100%}
-.vz-lifestyle-feature{display:block;width:100%;height:auto;max-height:600px;object-fit:contain}
+.vz-lifestyle-detail-photo{position:relative;display:block;background:#16253a;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.14);box-shadow:0 25px 70px rgba(0,0,0,.22);max-width:620px;justify-self:center;width:100%}
+.vz-lifestyle-feature{display:block;width:100%;height:auto;aspect-ratio:1000 / 1080;object-fit:contain}
 .vz-lifestyle-zoom{position:absolute;bottom:15px;right:15px;border-radius:100px;padding:8px 13px;color:#111e31;background:rgba(255,255,255,.92);font:20px/1 system-ui,sans-serif}
 .vz-lifestyle-detail-copy{max-width:550px}.vz-lifestyle-detail-copy .vz-lifestyle-intro{text-align:left;margin:0}
 .vz-lifestyle-team-name{display:block;margin-top:23px;font-size:clamp(23px,3vw,36px)}
@@ -27,15 +27,16 @@
 .vz-lifestyle-detail-copy .vz-lifestyle-disclaimer{text-align:left;margin-top:15px}
 @media(max-width:760px){.vz-lifestyle-catalog{padding:50px 15px}.vz-lifestyle-card{width:min(77vw,320px)}.vz-lifestyle-card-footer{padding:12px 14px}.vz-lifestyle-detail{grid-template-columns:1fr;gap:26px;padding:47px 17px}.vz-lifestyle-detail-photo{max-width:540px}.vz-lifestyle-detail-copy{text-align:center;margin:0 auto}.vz-lifestyle-detail-copy .vz-lifestyle-intro,.vz-lifestyle-detail-copy .vz-lifestyle-disclaimer{text-align:center}}
 @media(prefers-reduced-motion:reduce){.vz-lifestyle-card{transition:none}.vz-lifestyle-rail{scroll-behavior:auto}}
-/* Argentina: photos of physical sample */
 .vz-lifestyle-card{position:relative}
-.vz-lifestyle-real-tag{position:absolute;top:12px;left:12px;background:#f3f7ff;color:#0b2443;border-radius:999px;padding:6px 10px;font:800 11px/1 system-ui,sans-serif;letter-spacing:.09em;box-shadow:0 3px 12px #0004}
-.vz-lifestyle-real .vz-lifestyle-photo{object-fit:cover;object-position:center;background:#191919}
-.vz-lifestyle-photo-group{width:100%;max-width:620px;justify-self:center;min-width:0}
+.vz-lifestyle-photo-group{width:100%;max-width:560px;justify-self:center;min-width:0}
 .vz-lifestyle-photo-group .vz-lifestyle-detail-photo{max-width:none}
-.vz-lifestyle-real-thumbs{display:flex;justify-content:center;gap:11px;margin-top:13px}
-.vz-lifestyle-real-thumbs[hidden]{display:none!important}
-.vz-lifestyle-real-thumb{background:#142941;border:2px solid transparent;border-radius:10px;padding:3px;cursor:pointer;width:80px;height:80px;overflow:hidden}
-.vz-lifestyle-real-thumb.is-active,.vz-lifestyle-real-thumb:focus-visible{border-color:var(--vz-photo-accent,#74acdf);outline:2px solid rgba(255,255,255,.5);outline-offset:2px}
-.vz-lifestyle-real-thumb img{display:block;width:100%;height:100%;object-fit:cover;border-radius:6px}
-.vz-lifestyle-is-real .vz-lifestyle-feature{max-height:580px;object-fit:contain;background:#191919}
+.vz-lifestyle-thumbs{display:flex;justify-content:center;gap:12px;margin-top:14px}
+.vz-lifestyle-thumb{display:flex;align-items:center;gap:10px;background:#142941;border:2px solid rgba(255,255,255,.14);border-radius:12px;padding:5px 14px 5px 5px;cursor:pointer;color:#dce7f5;font:800 14px/1.2 var(--text,system-ui),sans-serif;min-height:48px;transition:border-color .2s ease,background .2s ease}
+.vz-lifestyle-thumb img{display:block;width:46px;height:50px;object-fit:cover;border-radius:7px}
+.vz-lifestyle-thumb:hover{border-color:rgba(255,255,255,.35)}
+.vz-lifestyle-thumb.is-active,.vz-lifestyle-thumb:focus-visible{border-color:var(--vz-photo-accent,#74acdf);background:#1b3556;color:#fff}
+.vz-lifestyle-thumb:focus-visible{outline:2px solid rgba(255,255,255,.5);outline-offset:2px}
+@media(max-width:420px){.vz-lifestyle-thumb{padding-right:10px;font-size:13px}.vz-lifestyle-thumbs{gap:8px}}
+/* pagina prodotto compatta: foto intera, senza bande ai lati */
+body.vz-compact-product .vz-photo-disclosure .vz-lifestyle-photo-group{max-width:340px}
+body.vz-compact-product .vz-photo-disclosure .vz-lifestyle-photo-group .vz-lifestyle-feature{max-height:none}
