@@ -361,6 +361,9 @@
   }
   function swapTo(t) {
     current = t;
+    // Meta Pixel: prodotto visto anche al primo caricamento della pagina (?team=...), non solo cambiando squadra
+    window.VINILAZO_CURRENT_PRODUCT = { content_name: t.name, content_ids: [t.id], content_type: "product", value: PRICE, currency: "EUR" };
+    window.dispatchEvent(new CustomEvent("vinilazo:product"));
     setVars(t);
     setTexts(t);
     drawDiscs(t);
@@ -450,8 +453,6 @@
     if (opts.animate) transition(t, opts); else swapTo(t);
     if (opts.save) remember(t);
     var lr = $("#live"); if (lr && opts.animate) lr.textContent = T.edition + " " + t.name;
-    window.VINILAZO_CURRENT_PRODUCT = { content_name: t.name, content_ids: [t.id], content_type: "product", value: PRICE, currency: "EUR" };
-    window.dispatchEvent(new CustomEvent("vinilazo:product"));
   }
 
   /* ---------- "Cambia bandiera": porta alla fila delle bandiere, con la propria già in vista ---------- */
