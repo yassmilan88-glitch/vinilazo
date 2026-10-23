@@ -1,1 +1,68 @@
-<!doctype html><html lang="it"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Il tuo pagamento · VINILAZO</title><style>body{font:18px/1.6 system-ui;max-width:580px;margin:10vh auto;padding:24px;background:#08142a;color:white}a{color:#f7d078}</style><h1>Grazie per aver scelto VINILAZO</h1><p>Controlla la conferma e la ricevuta inviate da Stripe all’indirizzo email usato per il pagamento. L’apertura di questa pagina, da sola, non conferma l’addebito.</p><p>Se hai dubbi, chiedici di verificare il tuo ordine prima di ripetere il pagamento.</p><a href="/it/#il-mio-ordine">Assistenza sul mio ordine</a></html>
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>VINILAZO</title>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<style>
+:root{--bg:#08142a;--card:#0f2140;--ink:#f3f6fb;--soft:#b9c6da;--acc:#74acdf}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:radial-gradient(1200px 600px at 50% -10%,#16315c 0%,var(--bg) 60%);color:var(--ink);font:17px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+main{width:100%;max-width:560px;background:var(--card);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:32px 26px;box-shadow:0 18px 50px rgba(0,0,0,.35)}
+.mark{display:flex;align-items:center;gap:10px;font:900 26px/1 system-ui,sans-serif;letter-spacing:.02em;margin-bottom:22px}
+.mark svg{width:30px;height:30px}
+h1{font-size:clamp(24px,5vw,30px);line-height:1.15;margin:0 0 14px}
+p{margin:0 0 12px;color:var(--soft)}
+.ref{margin:18px 0;padding:14px 16px;border-radius:14px;background:rgba(116,172,223,.12);border:1px solid rgba(116,172,223,.35);color:var(--ink)}
+.ref b{display:block;font-size:22px;letter-spacing:.04em;margin-top:4px;font-variant-numeric:tabular-nums}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 20px;border-radius:999px;font-weight:800;text-decoration:none}
+.btn-wa{background:#25D366;color:#06210f}
+.btn-home{border:1px solid rgba(255,255,255,.3);color:var(--ink)}
+.btn:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
+</style>
+</head>
+<body>
+<main>
+  <div class="mark"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#141414"/><circle cx="32" cy="32" r="13" fill="#74ACDF"/><path d="M27 19.7v24.6M37 19.7v24.6" stroke="#fff" stroke-width="4"/><circle cx="32" cy="32" r="2.6" fill="#141414"/></svg>VINILAZO</div>
+  <h1 id="t">Grazie per aver scelto VINILAZO</h1>
+  <p id="p1">Controlla la conferma e la ricevuta inviate da Stripe all’indirizzo email usato per il pagamento. L’apertura di questa pagina, da sola, non conferma l’addebito.</p>
+  <p id="p2">Se hai dubbi, chiedici di verificare il tuo ordine prima di ripetere il pagamento.</p>
+  <div class="ref" id="ref" hidden><span id="ref-l">Il tuo riferimento ordine</span><b id="ref-v"></b></div>
+  <div class="actions">
+    <a class="btn btn-wa" id="wa" href="https://wa.me/393295865883" target="_blank" rel="noopener">Scrivici su WhatsApp</a>
+    <a class="btn btn-home" id="home" href="/it/">Torna al sito</a>
+  </div>
+</main>
+<script>
+(function () {
+  var T = {
+    it: ['Grazie per aver scelto VINILAZO', 'Controlla la conferma e la ricevuta inviate da Stripe all’indirizzo email usato per il pagamento. L’apertura di questa pagina, da sola, non conferma l’addebito.', 'Se hai dubbi, chiedici di verificare il tuo ordine prima di ripetere il pagamento.', 'Il tuo riferimento ordine', 'Scrivici su WhatsApp', 'Torna al sito', 'Ciao VINILAZO! Ho appena pagato il mio ordine', 'Il tuo pagamento · VINILAZO'],
+    es: ['Gracias por elegir VINILAZO', 'Revisá la confirmación y el recibo que Stripe envió al email usado para el pago. Esta página, por sí sola, no confirma el cobro.', 'Si tenés dudas, pedinos que verifiquemos tu pedido antes de volver a pagar.', 'Tu referencia de pedido', 'Escribinos por WhatsApp', 'Volver a la web', '¡Hola VINILAZO! Acabo de pagar mi pedido', 'Tu pago · VINILAZO'],
+    fr: ['Merci d’avoir choisi VINILAZO', 'Vérifiez la confirmation et le reçu envoyés par Stripe à l’adresse email utilisée pour le paiement. Cette page, à elle seule, ne confirme pas le débit.', 'En cas de doute, demandez-nous de vérifier votre commande avant de payer à nouveau.', 'Votre référence de commande', 'Nous écrire sur WhatsApp', 'Retour au site', 'Bonjour VINILAZO ! Je viens de payer ma commande', 'Votre paiement · VINILAZO'],
+    en: ['Thank you for choosing VINILAZO', 'Check the confirmation and receipt Stripe sent to the email used for payment. This page on its own does not confirm the charge.', 'If in doubt, ask us to check your order before paying again.', 'Your order reference', 'Message us on WhatsApp', 'Back to the site', 'Hi VINILAZO! I’ve just paid for my order', 'Your payment · VINILAZO'],
+    de: ['Danke, dass du dich für VINILAZO entschieden hast', 'Prüfe die Bestätigung und die Quittung, die Stripe an die bei der Zahlung verwendete E-Mail-Adresse geschickt hat. Diese Seite allein bestätigt die Abbuchung nicht.', 'Im Zweifel bitte uns, deine Bestellung zu prüfen, bevor du erneut zahlst.', 'Deine Bestellnummer', 'Schreib uns auf WhatsApp', 'Zurück zur Seite', 'Hallo VINILAZO! Ich habe gerade meine Bestellung bezahlt', 'Deine Zahlung · VINILAZO']
+  };
+  var q = (location.search.match(/[?&]lang=([a-z]{2})/) || [])[1];
+  var nav = ((navigator.languages && navigator.languages[0]) || navigator.language || 'it').slice(0, 2).toLowerCase();
+  var lang = T[q] ? q : (T[nav] ? nav : 'it');
+  var t = T[lang];
+  document.documentElement.lang = lang;
+  document.title = t[7];
+  document.getElementById('t').textContent = t[0];
+  document.getElementById('p1').textContent = t[1];
+  document.getElementById('p2').textContent = t[2];
+  document.getElementById('ref-l').textContent = t[3];
+  document.getElementById('wa').textContent = t[4];
+  var home = document.getElementById('home'); home.textContent = t[5]; home.href = '/' + lang + '/';
+  var ref = '';
+  try { ref = sessionStorage.getItem('vinilazo-last-ref') || ''; } catch (e) {}
+  if (!/^VZ-[A-F0-9]{16}$/.test(ref)) ref = '';
+  if (ref) { document.getElementById('ref-v').textContent = ref; document.getElementById('ref').hidden = false; }
+  document.getElementById('wa').href = 'https://wa.me/393295865883?text=' + encodeURIComponent(t[6] + (ref ? ' (' + ref + ')' : '') + '.');
+})();
+</script>
+</body>
+</html>

@@ -34,3 +34,22 @@ html body .hero p.sub{font-size:clamp(15px,.3vw + 14px,17px)!important}
 .vz-fold-btn:focus-visible{outline:3px solid var(--acc,#74acdf);outline-offset:3px}
 .vz-fold.vz-open + .vz-fold-btn{margin-top:8px}
 @media(prefers-reduced-motion:reduce){.vz-chips a{transition:none}}
+
+/* Piccole scritte colorate (es. "IL MOMENTO"): più chiare, leggibili con ogni squadra */
+.moment-k,.gift-kicker,.vz-about-kicker,.memory-k,.hd-more,.pp-n,.vin-audio-kicker{color:color-mix(in srgb,var(--acc,#74acdf) 70%,#fff)}
+
+/* Computer: pulsante Ordina nell'intestazione quando il pulsante principale non si vede più */
+.vz-head-cta{display:none;align-items:center;min-height:40px;padding:8px 16px;border-radius:999px;background:var(--acc,#74acdf);color:var(--onAcc,#08142a);font:800 15px/1 var(--text,system-ui);text-decoration:none;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.vz-head-cta:hover{filter:brightness(1.08)}
+.vz-head-cta:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media(min-width:701px){.vz-show-head-cta .vz-head-cta{display:inline-flex}}
+
+/* Telefono: l'intestazione si nasconde scorrendo verso il basso e torna scorrendo verso l'alto */
+@media(max-width:700px){
+  header.top{transition:transform .25s ease}
+  header.top.vz-head-hidden{transform:translateY(-110%)}
+  .wa{width:50px;height:50px}
+  .wa svg{width:28px;height:28px}
+  .vz-quick-nav,.vz-quick-nav.vz-glide{right:19px;bottom:calc(154px + env(safe-area-inset-bottom,0px))}
+}
+@media(prefers-reduced-motion:reduce){header.top{transition:none}}
