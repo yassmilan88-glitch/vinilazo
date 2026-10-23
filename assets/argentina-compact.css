@@ -1,0 +1,153 @@
+/* VINILAZO Argentina 2026 – calm editorial layout, readable mobile & desktop. */
+body.pp{font-size:16px;line-height:1.55;background:#08142a}
+body.pp h1,body.pp h2,body.pp h3{overflow-wrap:break-word;hyphens:auto;line-height:1.15;letter-spacing:0}
+body.pp .topbar{font-size:11px;gap:4px 13px;padding:5px 12px}
+body.pp .top{padding-block:8px}
+body.pp .wordmark{font-size:clamp(25px,3vw,31px)}
+body.pp .pp-shortcuts{position:relative;top:auto;z-index:30;gap:7px;padding:9px clamp(12px,3vw,28px);box-shadow:none}
+body.pp .pp-shortcuts>a,body.pp .pp-shortcuts-menu>summary{font:700 12px/1.25 var(--text);padding:8px 12px;min-height:36px}
+body.pp .pp-shortcuts .pp-shortcut-order{margin-left:3px}
+body.pp .pp-shortcuts-list{z-index:35}
+body.pp .pp-hero{min-height:0;gap:clamp(18px,3vw,42px);padding:clamp(30px,5vw,56px) clamp(16px,5vw,70px) clamp(34px,5vw,60px);align-items:center}
+body.pp .pp-hero .hero-copy{gap:12px;max-width:580px;min-width:0}
+body.pp .pp-back{font-size:12px;padding:7px 12px;font-weight:700}
+body.pp .pp-hero .edition{font-size:clamp(15px,2vw,19px);line-height:1.4;gap:8px}
+body.pp .pp-hero .ed-disc{width:30px;height:30px}
+body.pp .pp-hero .ready{font-size:11px;line-height:1.1}
+body.pp .pp-h1{font-size:clamp(36px,4.8vw,58px);line-height:1.1;max-width:13ch}
+body.pp .pp-hero .sub{font-size:clamp(15px,1.5vw,17px);line-height:1.6;margin:2px 0 0;max-width:38ch}
+body.pp .pp-listen-hero{font-size:13px;margin:4px 0 0;padding:9px 14px;box-shadow:none;border-width:1px}
+body.pp .pp-hero .buy{margin:2px 0 0}
+body.pp .pp-hero .buy .btn{min-height:46px;font-size:15px;padding:10px 20px;animation:none!important;white-space:normal;line-height:1.25}
+body.pp .pp-hero .fine{font-size:12px;line-height:1.5}
+body.pp .pp-hero .hero-stage{min-height:0;padding:0}
+body.pp .pp-hero .product{width:min(330px,90%);transform:rotate(-1deg);margin:0}
+body.pp .pp-hero.has-press .product{width:min(300px,90%);margin:0}
+body.pp .pp-index{padding:clamp(32px,4vw,58px) 16px;background:#0c203d;border-block:1px solid rgba(255,255,255,.11)}
+body.pp .pp-index h2{font-size:clamp(26px,3.2vw,40px);line-height:1.18}
+body.pp .pp-index>p{font-size:14px;line-height:1.5;margin:6px auto 19px;max-width:520px}
+body.pp .ix-list{display:grid!important;grid-template-columns:repeat(9,minmax(0,1fr));width:min(100%,1130px);max-width:1130px;gap:8px}
+body.pp .ix-list li{min-width:0;width:auto}
+body.pp .ix-list a{display:flex;flex-direction:column;align-items:center;gap:5px;min-height:0;padding:8px 3px 10px;border:1px solid rgba(255,255,255,.12);background:#102543;border-radius:13px;box-sizing:border-box;overflow:hidden}
+body.pp .ix-list a:hover,body.pp .ix-list a:focus-visible{border-color:var(--acc);background:#173452}
+body.pp .ix-disc{width:clamp(50px,6vw,78px);height:clamp(50px,6vw,78px);filter:drop-shadow(0 5px 7px #0004)}
+body.pp .ix-name{font:850 clamp(12px,1.2vw,16px)/1.15 var(--text);letter-spacing:0;text-align:center}
+body.pp .ix-min{font:600 11px/1.3 var(--text);padding:0 3px;text-align:center;overflow-wrap:anywhere}
+body.pp .ix-list .ix-goal-photo{opacity:.13;filter:grayscale(.6);object-fit:cover}
+body.pp .ix-list a.has-goal-photo::after{background:linear-gradient(0deg,rgba(8,20,42,.65),rgba(8,20,42,.55))}
+/* Closed by default: full editorial material is preserved, not dumped on the page. */
+body.pp .vz-goal-archive{max-width:1200px;margin:0 auto;padding:clamp(26px,4vw,56px) clamp(15px,4vw,40px) clamp(38px,5vw,64px)}
+body.pp .vz-archive-disclosure{border:1px solid rgba(255,255,255,.18);border-radius:19px;overflow:clip;background:#0d213c}
+body.pp .vz-archive-summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:16px;min-height:85px;padding:20px clamp(16px,3vw,29px);background:#102644}
+body.pp .vz-archive-summary::-webkit-details-marker,body.pp .vz-goal-entry-title::-webkit-details-marker{display:none}
+body.pp .vz-archive-summary:focus-visible,body.pp .vz-goal-entry-title:focus-visible{outline:2px solid var(--acc);outline-offset:-3px}
+body.pp .vz-archive-icon{font-size:26px;color:var(--acc);flex:none}
+body.pp .vz-archive-summary-copy{display:grid;gap:4px;flex:1;min-width:0}
+body.pp .vz-archive-summary strong{font:800 clamp(17px,2vw,22px)/1.22 var(--text);letter-spacing:0}
+body.pp .vz-archive-summary small{font:500 13px/1.5 var(--text);color:#b5c8df}
+body.pp .vz-archive-chevron{font:500 30px/1 var(--text);color:var(--acc);transition:transform .18s}
+body.pp .vz-archive-disclosure[open] .vz-archive-chevron{transform:rotate(180deg)}
+body.pp .vz-archive-list{padding:8px clamp(9px,2vw,24px) 20px;border-top:1px solid rgba(255,255,255,.13)}
+body.pp .vz-goal-entry{border-bottom:1px solid rgba(255,255,255,.14)}
+body.pp .vz-goal-entry:last-child{border-bottom:0}
+body.pp .vz-goal-entry-title{list-style:none;display:flex;align-items:center;gap:12px;cursor:pointer;padding:15px 10px;min-height:60px}
+body.pp .vz-goal-number{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:#19395c;flex:none;font:800 12px/1 var(--text);color:#b7d8f7}
+body.pp .vz-goal-entry-name{display:grid;gap:2px;flex:1;min-width:0}
+body.pp .vz-goal-entry-name strong{font:800 16px/1.25 var(--text)}
+body.pp .vz-goal-entry-name small{font:550 12px/1.35 var(--text);color:#bdcde1}
+body.pp .vz-goal-entry-meta{color:#98aec9;font:600 12px/1.4 var(--text);text-align:right;max-width:230px}
+body.pp .vz-goal-chevron{font:500 23px/1 var(--text);color:#b9d7f1;flex:none}
+body.pp .vz-goal-entry[open]>.vz-goal-entry-title{color:white;background:#142f4d;border-radius:11px 11px 0 0}
+body.pp .vz-goal-entry[open]>.vz-goal-entry-title .vz-goal-chevron{transform:rotate(45deg)}
+body.pp .vz-goal-entry-body{padding:0 10px 17px;background:#091c34}
+body.pp .vz-goal-entry .pp-disc{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:clamp(18px,3vw,40px);border:0;border-radius:13px;padding:clamp(18px,3vw,30px);min-height:0;margin:0;scroll-margin-top:20px;isolation:isolate;overflow:hidden;background:#0b203c}
+body.pp .vz-goal-entry .pp-disc:nth-child(even) .pp-media,body.pp .vz-goal-entry .pp-disc:nth-of-type(even) .pp-media{order:0}
+body.pp .vz-goal-entry .pp-media{position:relative;top:auto;order:0;gap:15px;align-content:start;min-width:0;width:100%}
+body.pp .vz-goal-entry .pp-big{width:min(150px,64%);margin:0 auto;aspect-ratio:1;filter:drop-shadow(0 10px 14px #0007)}
+body.pp .vz-goal-entry .ph,body.pp .vz-goal-entry .clip{max-width:min(100%,285px);width:100%;transform:none;margin:0 auto;padding:6px;box-shadow:0 8px 18px #0007}
+body.pp .vz-goal-entry .ph img{max-height:360px;object-fit:contain}
+body.pp .vz-goal-entry .ph figcaption{font-size:11px;line-height:1.4}
+body.pp .vz-goal-entry .ph figcaption span:first-child{font-size:12px}
+body.pp .vz-goal-entry .pp-text{min-width:0}
+body.pp .vz-goal-entry .pp-n{font-size:11px;line-height:1.4}
+body.pp .vz-goal-entry .pp-text h2{font-size:clamp(27px,3vw,39px);line-height:1.16;margin:5px 0 5px}
+body.pp .vz-goal-entry .pp-min{display:inline}
+body.pp .vz-goal-entry .pp-sub{font-size:clamp(17px,2vw,22px);line-height:1.25;margin:0 0 10px}
+body.pp .vz-goal-entry .pp-meta{margin:13px 0;gap:6px}
+body.pp .vz-goal-entry .pp-meta li{font-size:11px;line-height:1.3;padding:6px 9px;white-space:normal}
+body.pp .vz-goal-entry .pp-text>p{font-size:15px;line-height:1.66;margin:0 0 11px;max-width:65ch}
+body.pp .vz-goal-entry .pp-text .memory{font:italic 16px/1.55 Georgia,serif;border-left:2px solid var(--acc);padding:8px 0 8px 13px;margin:10px 0 15px}
+body.pp .vz-goal-entry .pp-text .memory-k{font:800 11px/1.3 var(--text);margin-bottom:5px}
+body.pp .vz-goal-entry .pp-text .fact{font-size:14px;line-height:1.56;padding:12px 14px;margin:14px 0 0}
+body.pp .vz-goal-entry .fact-src{font-size:12px;line-height:1.4}
+body.pp .vz-goal-entry .vin-audio{margin-top:16px}
+body.pp .vz-goal-entry .pp-nav{margin-top:17px;gap:7px}
+body.pp .vz-goal-entry .pp-btn{font-size:12px;min-height:38px;padding:8px 12px;line-height:1.25}
+body.pp .vz-goal-entry .pp-goal-photo{opacity:.08;filter:saturate(.65)}
+body.pp .vz-goal-entry .pp-disc.has-goal-photo::before{background:linear-gradient(90deg,#0b203cf2,#0b203ce6)}
+body.pp .pp-order{padding:clamp(34px,5vw,66px) 18px;gap:10px}
+body.pp .pp-order h2{font-size:clamp(25px,3.2vw,39px);line-height:1.18}
+body.pp .pp-order .fine{font-size:13px;line-height:1.4}
+body.pp .pp-order .pp-obtn{min-height:46px;font-size:15px;line-height:1.3;padding:10px 20px}
+body.pp .usage-guide{padding:clamp(36px,5vw,64px) 18px}
+body.pp .usage-guide h2{font-size:clamp(26px,3vw,40px)}
+body.pp .usage-guide>p{font-size:14px;line-height:1.6}
+body.pp .usage-card h3{font-size:20px;line-height:1.3}
+body.pp .usage-card p{font-size:14px;line-height:1.55}
+body.pp .usage-card{padding:17px;border-radius:13px}
+body.pp .usage-card img{max-height:150px;object-fit:contain;margin:0 auto 12px}
+body.pp .sticky{gap:10px;padding-top:8px}
+body.pp .sticky .btn{font-size:16px;min-height:42px}
+body.pp .sticky-txt{font-size:16px}
+body.pp .sticky-txt b{font-size:18px}
+body.pp .foot{padding-bottom:95px}
+body.pp #dischi,body.pp #vz-goal-archive,body.pp #pp-order,body.pp .vz-goal-entry{scroll-margin-top:85px}
+@media(max-width:850px){
+  body.pp .pp-hero{grid-template-columns:1fr;gap:6px;min-height:0}
+  body.pp .pp-hero .hero-copy{order:0;max-width:620px}
+  body.pp .pp-hero .hero-stage{order:1;max-height:270px}
+  body.pp .pp-hero .hero-stage .product{width:min(220px,65%)}
+  body.pp .pp-hero.has-press .hero-stage{place-items:center}
+  body.pp .pp-hero.has-press .product{width:min(220px,65%)}
+  body.pp .ix-list{grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}
+  body.pp .vz-goal-entry .pp-disc{grid-template-columns:1fr}
+  body.pp .vz-goal-entry .pp-media{position:relative;display:grid;grid-template-columns:minmax(0,110px) minmax(0,1fr);align-items:start;justify-items:center}
+  body.pp .vz-goal-entry .pp-big{width:100%}
+  body.pp .vz-goal-entry .ph{max-width:200px}
+  body.pp .vz-goal-entry .pp-text>p{font-size:14px}
+}
+@media(max-width:560px){
+  body.pp .topbar{font-size:10px}
+  body.pp .pp-shortcuts{justify-content:space-between;gap:5px;padding:7px 10px;flex-wrap:nowrap}
+  body.pp .pp-shortcuts>a,body.pp .pp-shortcuts-menu>summary{font-size:11px;line-height:1.25;padding:6px 8px;min-height:34px}
+  body.pp .pp-shortcuts>a:first-child{min-width:0;white-space:normal}
+  body.pp .pp-shortcuts-menu{display:none}
+  body.pp .pp-h1{font-size:clamp(33px,9vw,43px);max-width:14ch}
+  body.pp .pp-hero .hero-stage{max-height:235px}
+  body.pp .pp-index{padding:30px 12px}
+  body.pp .pp-index h2{font-size:29px}
+  body.pp .ix-list{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+  body.pp .ix-list a{padding:8px 2px;min-height:104px}
+  body.pp .ix-disc{width:62px;height:62px}
+  body.pp .ix-name{font-size:12px}
+  body.pp .ix-min{font-size:10px;line-height:1.3}
+  body.pp .vz-archive-summary{gap:10px;padding:16px 12px;min-height:78px}
+  body.pp .vz-archive-icon{font-size:21px}
+  body.pp .vz-archive-summary strong{font-size:16px}
+  body.pp .vz-archive-summary small{font-size:12px}
+  body.pp .vz-archive-list{padding:5px 8px 12px}
+  body.pp .vz-goal-entry-title{gap:9px;padding:12px 6px}
+  body.pp .vz-goal-entry-meta{display:none}
+  body.pp .vz-goal-entry .pp-disc{padding:15px 10px;gap:14px}
+  body.pp .vz-goal-entry .pp-media{grid-template-columns:minmax(0,78px) minmax(0,1fr);gap:11px}
+  body.pp .vz-goal-entry .ph{max-width:200px}
+  body.pp .vz-goal-entry .ph img{max-height:195px}
+  body.pp .vz-goal-entry .pp-text h2{font-size:30px}
+  body.pp .vz-goal-entry .pp-text .memory{font-size:14px}
+  body.pp .vz-goal-entry .pp-text>p{font-size:14px}
+  body.pp .usage-cards{gap:11px}
+}
+@media(prefers-reduced-motion:reduce){body.pp *,body.pp *::before,body.pp *::after{scroll-behavior:auto;animation-duration:.001ms!important;transition:none!important}}
+/* The authentic newspaper sources live in the archive; the hero no longer layers covers on top of copy. */
+body.pp .pp-hero>.paper,body.pp .pp-hero>.cover-credit{display:none!important}
+body.pp .pp-hero .hero-stage{place-items:center;align-self:center}

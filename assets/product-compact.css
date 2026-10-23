@@ -1,0 +1,141 @@
+/* VINILAZO – calmer typographic scale and progressive detail disclosure. */
+body.vz-compact-product{font-size:16px;line-height:1.55}
+body.vz-compact-product h1,body.vz-compact-product h2,body.vz-compact-product h3{line-height:1.18;overflow-wrap:break-word;letter-spacing:0}
+body.vz-compact-product .hero{min-height:0;gap:clamp(18px,3vw,38px);padding:clamp(27px,4vw,57px) clamp(16px,4vw,52px) clamp(34px,5vw,70px)}
+body.vz-compact-product .hero-copy{gap:13px;max-width:640px}
+body.vz-compact-product .hero-copy .quote,body.vz-compact-product .hero-copy .quote.q-mid{font-size:clamp(38px,5vw,59px);line-height:1.08;padding-top:.31em}
+body.vz-compact-product .hero-copy .quote.q-long{font-size:clamp(30px,3.8vw,45px);line-height:1.13}
+body.vz-compact-product .hero-copy .quote::after{margin-top:14px;height:3px}
+body.vz-compact-product .hero-copy .quote-by,body.vz-compact-product .hero-copy .quote-tr{font-size:13px;line-height:1.4;margin:0}
+body.vz-compact-product .hero-copy .sub{font-size:15px;line-height:1.58;margin:0;max-width:59ch}
+body.vz-compact-product .hero-copy .edition{font-size:18px;line-height:1.2;gap:6px 10px;margin:0}
+body.vz-compact-product .hero-copy .ed-disc{width:28px;height:28px}
+body.vz-compact-product .hero-copy .ready{font-size:10px}
+body.vz-compact-product .hero-copy .buy{margin:4px 0 0}
+body.vz-compact-product .hero-copy .buy .btn{font-size:16px;line-height:1.25;min-height:48px;height:auto;padding:10px 20px;white-space:normal}
+body.vz-compact-product .hero-copy .fine{font-size:12px;line-height:1.5;margin:0}
+body.vz-compact-product .hero-stage{min-height:0}
+body.vz-compact-product .hero-stage .product{width:min(330px,85%)}
+body.vz-compact-product .hero.has-press .hero-stage{min-height:0}
+body.vz-compact-product .hero.has-press .product{width:min(260px,70%)}
+body.vz-compact-product .hero>.hd{margin-top:3px;gap:7px;padding:0;align-self:start}
+body.vz-compact-product .hd-t{font:800 15px/1.3 var(--text);letter-spacing:0}
+body.vz-compact-product .hd-list{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:3px;max-width:655px;width:100%}
+body.vz-compact-product .hd-list li{min-width:0}
+body.vz-compact-product .hd-list a{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;width:100%;padding:4px 1px;border-radius:9px}
+body.vz-compact-product .hd-disc{width:clamp(34px,4vw,48px);height:clamp(34px,4vw,48px);filter:drop-shadow(0 4px 6px #0005)}
+body.vz-compact-product .hd-name{font:700 10px/1.2 var(--text);width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+body.vz-compact-product .hd-more{display:none}
+body.vz-compact-product #vz-preview-caption{font-size:12px;margin:0}
+body.vz-compact-product .hd-cta{font:750 13px/1.25 var(--text);min-height:37px;height:auto;width:fit-content;padding:8px 13px}
+body.vz-compact-product .moment{padding:clamp(32px,4vw,62px) clamp(16px,5vw,70px);background:#06132a}
+body.vz-compact-product .moment::after{width:90px;height:90px;opacity:.2}
+body.vz-compact-product .moment-in{max-width:870px;margin:0 auto}
+body.vz-compact-product .moment-k{font-size:11px;letter-spacing:.16em}
+body.vz-compact-product .moment h2{font-size:clamp(30px,3.4vw,45px);line-height:1.16;padding-left:15px;border-left:3px solid var(--acc);margin:10px 0 18px}
+body.vz-compact-product .moment .poem{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+body.vz-compact-product .moment .poem p{display:none}
+body.vz-compact-product .moment .poem p.hit,body.vz-compact-product .moment .poem p:last-child{display:block;font-size:clamp(20px,2.5vw,29px);line-height:1.2;margin:0;padding:0;background:none;font-style:normal;font-family:var(--display);font-weight:750;animation:none!important}
+body.vz-compact-product .moment .poem p:last-child{font:500 14px/1.4 var(--text);color:var(--soft)}
+body.vz-compact-product .moment .poem p.hit::before,body.vz-compact-product .moment .poem p.hit::after{display:none}
+body.vz-compact-product .moment-after{font-size:14px;margin:14px 0 0;line-height:1.5}
+body.vz-compact-product .moment-cta{margin:16px 0 0;gap:9px}
+body.vz-compact-product .moment-cta .btn{min-height:40px;font-size:13px;padding:9px 15px}
+body.vz-compact-product .moment-cta span{font-size:13px}
+body.vz-compact-product .stories{padding:clamp(24px,3.5vw,46px) 16px;background:#0b1a35}
+body.vz-compact-product .vz-details-stories{max-width:1090px;margin:0 auto;border:1px solid rgba(255,255,255,.17);border-radius:16px;overflow:hidden;background:#0e2746}
+body.vz-compact-product .vz-compact-summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:13px;min-height:74px;padding:16px clamp(14px,3vw,25px);background:#122b4b}
+body.vz-compact-product .vz-compact-summary::-webkit-details-marker{display:none}
+body.vz-compact-product .vz-compact-summary:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
+body.vz-compact-product .vz-compact-icon{font-size:23px;line-height:1;color:var(--acc)}
+body.vz-compact-product .vz-compact-summary-copy{display:grid;gap:3px;flex:1;min-width:0}
+body.vz-compact-product .vz-compact-summary strong{font:800 clamp(16px,2vw,20px)/1.3 var(--text)}
+body.vz-compact-product .vz-compact-summary small{color:#bfd0e5;font:500 12px/1.5 var(--text)}
+body.vz-compact-product .vz-compact-arrow{font:400 26px/1 var(--text);color:#a2c8ea;transition:transform .2s}
+body.vz-compact-product details[open]>.vz-compact-summary .vz-compact-arrow{transform:rotate(180deg)}
+body.vz-compact-product .vz-compact-stories-content{padding:clamp(14px,2.5vw,28px);border-top:1px solid rgba(255,255,255,.16)}
+body.vz-compact-product .stories .rack-head{margin-bottom:14px}
+body.vz-compact-product .stories .rack-head h2{font-size:clamp(26px,3vw,35px)}
+body.vz-compact-product .stories .rack-head p{font-size:14px;line-height:1.55;margin-top:6px}
+body.vz-compact-product .story-grid{gap:11px}
+body.vz-compact-product .story{padding:15px;gap:12px;border-radius:12px;box-shadow:none;min-width:0}
+body.vz-compact-product .story .sdisc{width:67px;min-width:67px}
+body.vz-compact-product .story h3{font-size:22px;line-height:1.2;margin:0 0 7px;gap:4px 8px}
+body.vz-compact-product .story h3 small{font-size:12px}
+body.vz-compact-product .story p,body.vz-compact-product .story .fact{font-size:14px;line-height:1.6}
+body.vz-compact-product .story .memory{font-size:16px}
+body.vz-compact-product .story .press p{font-size:16px}
+body.vz-compact-product .how{padding:clamp(34px,4vw,60px) clamp(16px,4vw,48px)}
+body.vz-compact-product .how h2,body.vz-compact-product .box h2,body.vz-compact-product .faq h2{font-size:clamp(29px,3.4vw,43px);line-height:1.2;margin-bottom:18px}
+body.vz-compact-product .steps{gap:clamp(12px,2vw,24px)}
+body.vz-compact-product .step video{aspect-ratio:4/3;max-height:230px;object-fit:cover;box-shadow:none}
+body.vz-compact-product .step h3{font-size:20px;line-height:1.3;gap:8px;margin:11px 0 7px}
+body.vz-compact-product .step p{font-size:14px;line-height:1.55}
+body.vz-compact-product .step-n{height:27px;width:27px;font-size:16px}
+body.vz-compact-product .box{display:block;padding:clamp(32px,4.4vw,65px) clamp(16px,5vw,70px);background:#0b1d39}
+body.vz-compact-product .box-discs{display:none}
+body.vz-compact-product .box-copy{max-width:930px;margin:0 auto}
+body.vz-compact-product .contents{margin:17px 0 25px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+body.vz-compact-product .contents li{padding:12px 14px 12px 34px;font-size:14px;line-height:1.55;border:1px solid rgba(255,255,255,.17);border-radius:10px;background:rgba(255,255,255,.025)}
+body.vz-compact-product .contents li::before{width:13px;height:13px;left:11px;top:17px;background:var(--acc);box-shadow:none}
+body.vz-compact-product .box-copy h3{font-size:22px;margin:5px 0 6px}
+body.vz-compact-product .box-copy>p{font-size:14px;line-height:1.6}
+body.vz-compact-product .vz-photo-disclosure{max-width:1090px;margin:0 auto 33px;border:1px solid rgba(255,255,255,.17);border-radius:16px;overflow:hidden;background:#0d2745}
+body.vz-compact-product .vz-photo-disclosure .vz-lifestyle-detail{padding:24px;gap:25px;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:#0b1a35}
+body.vz-compact-product .vz-photo-disclosure .vz-lifestyle-feature{max-height:360px}
+body.vz-compact-product .vz-photo-disclosure .vz-lifestyle-title{font-size:clamp(27px,3vw,37px);line-height:1.22}
+body.vz-compact-product .vz-photo-disclosure .vz-lifestyle-intro{font-size:14px;line-height:1.6}
+body.vz-compact-product .vz-photo-disclosure .vz-lifestyle-team-name{font-size:21px;margin-top:10px}
+body.vz-compact-product .vz-photo-disclosure .vz-lifestyle-cta{margin-top:12px;font-size:13px;padding:10px 16px}
+body.vz-compact-product .gift-section,body.vz-compact-product .order-help{padding:clamp(34px,4.3vw,62px) 18px}
+body.vz-compact-product .gift-section h2,body.vz-compact-product .order-help h2{font-size:clamp(30px,3.4vw,42px);line-height:1.17;margin:10px 0 14px}
+body.vz-compact-product .gift-section p,body.vz-compact-product .order-help p{font-size:14px;line-height:1.6;margin:10px 0 18px}
+body.vz-compact-product .gift-section .btn,body.vz-compact-product .order-help .btn{font-size:14px;line-height:1.3;min-height:43px;padding:9px 18px}
+body.vz-compact-product .order{padding:clamp(32px,4.5vw,64px) 12px}
+body.vz-compact-product .ticket h2{font-size:clamp(32px,4vw,45px);line-height:1.2}
+body.vz-compact-product .faq{padding:clamp(35px,5vw,69px) clamp(16px,5vw,70px)}
+body.vz-compact-product .faq summary{font-size:15px;line-height:1.4;padding:14px 0}
+body.vz-compact-product .faq details p{font-size:14px;line-height:1.65}
+body.vz-compact-product .usage-guide{padding:clamp(32px,4.5vw,60px) 18px}
+body.vz-compact-product .usage-guide h2{font-size:clamp(28px,3.5vw,42px)}
+body.vz-compact-product .usage-guide>p{font-size:14px;line-height:1.5}
+body.vz-compact-product .usage-card h3{font-size:21px;line-height:1.3}
+body.vz-compact-product .usage-card p{font-size:14px;line-height:1.5}
+body.vz-compact-product .usage-card img{max-height:170px;object-fit:contain}
+@media(max-width:850px){
+ body.vz-compact-product .hd-list{grid-template-columns:repeat(5,minmax(0,1fr));max-width:480px}
+ body.vz-compact-product .hd-disc{width:49px;height:49px}
+ body.vz-compact-product .hero{grid-template-columns:1fr;gap:16px}
+ body.vz-compact-product .hero-stage{order:-1}
+ body.vz-compact-product .hero.has-press .hero-stage{place-items:center}
+ body.vz-compact-product .hero.has-press .product{margin:0;width:min(230px,63%)}
+ body.vz-compact-product .vz-photo-disclosure .vz-lifestyle-detail{grid-template-columns:1fr;padding:18px}
+ body.vz-compact-product .steps{grid-template-columns:1fr;gap:14px}
+ body.vz-compact-product .step{display:grid;grid-template-columns:100px minmax(0,1fr);gap:14px;align-items:start}
+ body.vz-compact-product .step video{aspect-ratio:4/5;max-height:125px}
+ body.vz-compact-product .step h3{margin:0 0 7px;font-size:18px}
+ body.vz-compact-product .step p{font-size:13px}
+}
+@media(max-width:560px){
+ body.vz-compact-product .hero-copy .quote,body.vz-compact-product .hero-copy .quote.q-mid{font-size:clamp(35px,9vw,43px)}
+ body.vz-compact-product .hero-copy .quote.q-long{font-size:clamp(29px,8vw,37px)}
+ body.vz-compact-product .hero-copy .sub{font-size:14px}
+ body.vz-compact-product .hero-stage .product{width:min(240px,68%)}
+ body.vz-compact-product .hero>.hd{grid-column:1}
+ body.vz-compact-product .hd-list{grid-template-columns:repeat(5,minmax(0,1fr));gap:3px}
+ body.vz-compact-product .hd-disc{width:47px;height:47px}
+ body.vz-compact-product .hd-name{font-size:10px}
+ body.vz-compact-product .hd-cta{font-size:12px}
+ body.vz-compact-product .story-grid{grid-template-columns:1fr}
+ body.vz-compact-product .story .sdisc{width:53px;min-width:53px}
+ body.vz-compact-product .contents{grid-template-columns:1fr;gap:8px}
+ body.vz-compact-product .moment .poem{gap:5px 12px}
+ body.vz-compact-product .moment .poem p.hit{font-size:25px}
+ body.vz-compact-product .vz-compact-summary{padding:15px 12px;gap:11px}
+ body.vz-compact-product .vz-compact-summary strong{font-size:16px}
+ body.vz-compact-product .vz-compact-summary small{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){body.vz-compact-product .vz-compact-arrow{transition:none}}
+/* Keep the genuine covers in the archive rather than behind overlapping hero text. */
+body.vz-compact-product .hero>.paper,body.vz-compact-product .hero>.cover-credit{display:none!important}
+body.vz-compact-product .hero.has-press .hero-stage{place-items:center;align-self:center}

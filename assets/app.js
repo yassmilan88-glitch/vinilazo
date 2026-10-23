@@ -128,7 +128,7 @@
       html += pp ? '<a class="d" style="--i:' + i + '" href="' + pp + "#disco-" + (i + 1) + '" title="' + label + '" aria-label="' + label + " – " + esc(T.details) + '">' + pic + "</a>"
                  : '<div class="d" style="--i:' + i + '" title="' + label + '">' + pic + "</div>";
       var href = pp ? pp + "#disco-" + (i + 1) : (i < nSt ? "#storia-" + (i + 1) : "#cosa");
-      if (i < 3) hd += '<li style="--i:' + i + '"><a data-preview-disc="' + (i + 1) + '" href="' + href + '"' + (!pp && i < nSt ? ' data-story="' + (i + 1) + '"' : "") + ' aria-label="' + label + '">' +
+      if (i < 9) hd += '<li style="--i:' + i + '"><a data-preview-disc="' + (i + 1) + '" href="' + href + '"' + (!pp && i < nSt ? ' data-story="' + (i + 1) + '"' : "") + ' aria-label="' + label + '">' +
             '<span class="hd-disc">' + pic + "</span>" + '<span class="hd-name">' + esc(g[0]) + "</span>" +
             (pp ? '<span class="hd-more">' + esc(T.details) + " ▸</span>" : "") + "</a></li>";
       var shot = ((DATA.celebrations || {})[t.id] || {})[i + 1];
