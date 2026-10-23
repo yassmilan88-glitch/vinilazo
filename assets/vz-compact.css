@@ -24,7 +24,8 @@ html body .hero p.sub{font-size:clamp(15px,.3vw + 14px,17px)!important}
 .vz-chips a{display:inline-flex;align-items:center;min-height:36px;padding:7px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.06);color:#f3f6fb;font:650 14px/1.1 var(--text,system-ui);text-decoration:none;white-space:nowrap;transition:background .2s,border-color .2s}
 .vz-chips a:hover,.vz-chips a:focus-visible{background:rgba(255,255,255,.14);border-color:var(--acc,#74acdf)}
 .vz-chips a:focus-visible{outline:3px solid var(--acc,#74acdf);outline-offset:2px}
-@media(max-width:700px){.vz-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin-right:-16px;padding-right:16px}.vz-chips::-webkit-scrollbar{display:none}}
+.hero .hero-copy{min-width:0}
+@media(max-width:700px){.vz-chips{flex-wrap:nowrap;overflow-x:auto;contain:inline-size;max-width:100%;scrollbar-width:none;-webkit-overflow-scrolling:touch}.vz-chips::-webkit-scrollbar{display:none}}
 
 /* Sezioni lunghe richiuse: si vede l'inizio, il resto con "Mostra tutto" */
 .vz-fold:not(.vz-open){max-height:var(--vzc-fold);overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent);mask-image:linear-gradient(to bottom,#000 55%,transparent)}
