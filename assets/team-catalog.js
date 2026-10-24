@@ -234,11 +234,11 @@ var grid=make('div','vz-flag-grid');stage.append(grid);main.append(stage);
 
 // Editorial newspaper carousel: the press memory becomes a VINILAZO record.
 var pressTx={
- it:['IL GOL FA STORIA','Certi gol non si dimenticano mai.','Sfoglia i ricordi, ritrova la voce, rivivi quel momento.','Scopri questa squadra','Articolo precedente','Articolo successivo','Giornali d’epoca e ricordi calcistici','Prima era una prima pagina. Ora è un disco.'],
- es:['EL GOL HACE HISTORIA','Hay goles que no se olvidan jamás.','Volvé a esas portadas, escuchá aquella voz, reviví ese momento.','Descubrí este equipo','Anterior portada','Siguiente portada','Portadas históricas y recuerdos del fútbol','Antes era una portada. Hoy es un disco.'],
- fr:['LE BUT ENTRE DANS L’HISTOIRE','Certains buts ne s’oublient jamais.','Retrouvez les unes, la voix du match et cette émotion intacte.','Découvrir cette équipe','Une précédente','Une suivante','Archives de presse et souvenirs de football','Hier en une. Aujourd’hui sur un disque.'],
- en:['WHEN GOALS MAKE HISTORY','Some goals are never forgotten.','See the headlines, hear the voice and relive that instant.','Explore this team','Previous newspaper','Next newspaper','Historic newspaper covers and football memories','Once a front page. Now a record.'],
- de:['TORE SCHREIBEN GESCHICHTE','Manche Tore vergisst man nie.','Erlebe die Schlagzeilen, die Stimme und den Moment noch einmal.','Dieses Team entdecken','Vorherige Zeitung','Nächste Zeitung','Historische Zeitungsseiten und Fußballerinnerungen','Damals Titelseite. Heute Schallplatte.']
+ it:['GIORNALI D’EPOCA','Certi gol non si dimenticano mai.','Sfoglia i giornali e scopri la squadra di ogni gol.','Scopri questa squadra','Articolo precedente','Articolo successivo','Giornali d’epoca e ricordi calcistici','Le prime pagine del giorno dopo.'],
+ es:['DIARIOS DE ÉPOCA','Hay goles que no se olvidan jamás.','Mirá las portadas y descubrí el equipo de cada gol.','Descubrí este equipo','Anterior portada','Siguiente portada','Portadas históricas y recuerdos del fútbol','Las portadas del día después.'],
+ fr:['JOURNAUX D’ÉPOQUE','Certains buts ne s’oublient jamais.','Feuilletez les journaux et découvrez l’équipe de chaque but.','Découvrir cette équipe','Une précédente','Une suivante','Archives de presse et souvenirs de football','Les unes du lendemain.'],
+ en:['VINTAGE NEWSPAPERS','Some goals are never forgotten.','Browse the newspapers and find the team behind each goal.','Explore this team','Previous newspaper','Next newspaper','Historic newspaper covers and football memories','The front pages from the day after.'],
+ de:['ALTE ZEITUNGEN','Manche Tore vergisst man nie.','Blättere durch die Zeitungen und entdecke das Team zu jedem Tor.','Dieses Team entdecken','Vorherige Zeitung','Nächste Zeitung','Historische Zeitungsseiten und Fußballerinnerungen','Die Titelseiten vom Tag danach.']
 }[locale]||[];
 var pressStories=[
  {
@@ -429,11 +429,11 @@ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
 
  // Real supporters at verified celebrations; photo links lead to original Creative Commons files.
  var crowdsText={
- it:['E LA CITTÀ ESPLODE','Non era solo un gol. Era una piazza intera.','I giornali raccontano il risultato. Le strade raccontano quello che abbiamo provato.','Buenos Aires · Mondiali 2022','Roma · Mondiali 2006','Madrid · Mondiali 2010','Foto originale e licenza'],
- es:['Y LA CIUDAD ESTALLA','No fue solo un gol. Fue toda una ciudad.','Los diarios cuentan el resultado. Las calles cuentan lo que sentimos.','Buenos Aires · Mundial 2022','Roma · Mundial 2006','Madrid · Mundial 2010','Foto original y licencia'],
- fr:['ET LA VILLE EXULTE',"Ce n’était pas seulement un but. C’était toute une ville.",'Les unes racontent le score. La rue raconte nos émotions.','Buenos Aires · Coupe du monde 2022','Rome · Coupe du monde 2006','Madrid · Coupe du monde 2010','Photo originale et licence'],
- en:['WHEN A CITY ERUPTS','Not just a goal. An entire city celebrating.','The newspapers record the result. The streets remember how it felt.','Buenos Aires · World Cup 2022','Rome · World Cup 2006','Madrid · World Cup 2010','Original image and licence'],
- de:['WENN EINE STADT JUBELT','Nicht nur ein Tor. Eine ganze Stadt feiert.','Die Zeitungen zeigen das Ergebnis. Die Straßen zeigen das Gefühl.','Buenos Aires · WM 2022','Rom · WM 2006','Madrid · WM 2010','Originalfoto und Lizenz']
+ it:['LE FESTE IN PIAZZA','Quando la squadra vince, festeggia tutta la città','Le feste dei tifosi dopo le grandi vittorie, di nazionali e club.','Buenos Aires · Mondiali 2022','Roma · Mondiali 2006','Madrid · Mondiali 2010','Foto originale e licenza'],
+ es:['FESTEJOS EN LA CALLE','Cuando gana el equipo, festeja toda la ciudad','Los festejos de los hinchas después de las grandes victorias, de selecciones y clubes.','Buenos Aires · Mundial 2022','Roma · Mundial 2006','Madrid · Mundial 2010','Foto original y licencia'],
+ fr:['LA FÊTE DANS LES RUES','Quand l’équipe gagne, toute la ville fait la fête','La fête des supporters après les grandes victoires, en sélection comme en club.','Buenos Aires · Coupe du monde 2022','Rome · Coupe du monde 2006','Madrid · Coupe du monde 2010','Photo originale et licence'],
+ en:['STREET CELEBRATIONS','When the team wins, the whole city celebrates','Fans celebrating after the big wins, for national teams and clubs.','Buenos Aires · World Cup 2022','Rome · World Cup 2006','Madrid · World Cup 2010','Original image and licence'],
+ de:['FEIERN AUF DER STRASSE','Wenn das Team gewinnt, feiert die ganze Stadt','Fans feiern nach großen Siegen, von Nationalteams und Vereinen.','Buenos Aires · WM 2022','Rom · WM 2006','Madrid · WM 2010','Originalfoto und Lizenz']
  }[locale]||[];
  var crowdPhotos=[
  {file:'Festejos en el Obelisco de Buenos Aires por la obtención de la Copa del Mundo de Fútbol 2022.jpg',image:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Festejos_en_el_Obelisco_de_Buenos_Aires_por_la_obtenci%C3%B3n_de_la_Copa_del_Mundo_de_F%C3%BAtbol_2022.jpg/800px-Festejos_en_el_Obelisco_de_Buenos_Aires_por_la_obtenci%C3%B3n_de_la_Copa_del_Mundo_de_F%C3%BAtbol_2022.jpg',credit:'Gobierno de Buenos Aires · CC BY 2.5 AR',label:3},
@@ -525,11 +525,11 @@ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
 
 // A concise emotional gift message, without crowding the product selector.
 var giftTx={
- it:['UN REGALO CHE FA CENTRO','Per chi dice che non vuole niente. Ma vive per quei colori.','Per tuo padre, il tuo compagno o quell’amico che conosce ancora ogni telecronaca a memoria. Non un oggetto qualsiasi: il suo gol, la sua voce, la sua squadra.','Scegli la squadra del regalo'],
- es:['UN REGALO QUE EMOCIONA','Para quien dice que no necesita nada. Salvo volver a sentir ese gol.','Para tu papá, tu pareja o ese amigo que todavía recita cada relato. Su gol. Su voz. Sus colores.','Elegí el equipo del regalo'],
- fr:['UN CADEAU QUI TOUCHE','Pour celui qui dit ne vouloir rien. Sauf revivre ce but.','Pour un père, un compagnon ou cet ami qui connaît chaque commentaire par cœur. Son but, sa voix, ses couleurs.','Choisir son équipe'],
- en:['THE GIFT THEY REMEMBER','For the man who says he wants nothing. Except that goal again.','For dad, your partner or the friend who still knows every word of the commentary. His team, his voice, his moment.','Choose his team'],
- de:['EIN GESCHENK MIT GEFÜHL','Für den Mann, der sagt, er braucht nichts. Außer dieses Tor noch einmal.','Für Papa, deinen Partner oder den Freund, der jeden Kommentar auswendig kennt. Sein Verein. Seine Stimme. Sein Moment.','Seine Mannschaft wählen']
+ it:['IDEA REGALO','Un regalo per chi tifa','Arriva già in confezione regalo, con il giradischi e i 9 dischi della squadra che scegli tu. Spedizione inclusa.','Scegli la squadra'],
+ es:['IDEA DE REGALO','Un regalo para un hincha','Llega en caja de regalo, con el tocadiscos y los 9 discos del equipo que elijas. Envío incluido.','Elegir el equipo'],
+ fr:['IDÉE CADEAU','Un cadeau pour un supporter','Livré en coffret cadeau, avec la platine et les 9 disques de l’équipe de votre choix. Livraison incluse.','Choisir l’équipe'],
+ en:['GIFT IDEA','A gift for a football fan','It arrives in a gift box, with the record player and the 9 discs of the team you choose. Shipping included.','Choose the team'],
+ de:['GESCHENKIDEE','Ein Geschenk für Fußballfans','Kommt in einer Geschenkbox, mit dem Plattenspieler und den 9 Platten des Teams deiner Wahl. Versand inklusive.','Team wählen']
 }[locale]||[];
 var gift=make('section','vz-gift-home');gift.id='vz-gift-home';
 gift.append(make('p','vz-section-eyebrow',giftTx[0]),make('h2','vz-section-title',giftTx[1]),make('p','vz-section-sub',giftTx[2]));
