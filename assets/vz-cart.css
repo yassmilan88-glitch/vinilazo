@@ -1,0 +1,73 @@
+/* VINILAZO — carrello. Colori del sito: blu notte, testo chiaro, colore squadra (--acc) per "Compra subito",
+   bianco per "Aggiungi al carrello" (si distingue da tutti i colori squadra). */
+.vz-add-cart{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:#F6FBFF;color:#08142A!important;border:2px solid #F6FBFF;text-decoration:none;cursor:pointer;box-shadow:0 8px 0 rgba(0,0,0,.18);animation:none!important;font-family:inherit}
+.vz-add-cart svg{width:1.05em;height:1.05em;flex:none}
+.vz-add-cart:hover{background:#fff;filter:brightness(1.02)}
+.vz-add-cart:focus-visible{outline:3px solid var(--acc,#74acdf);outline-offset:3px}
+body.vz-compact-product .hero-copy .buy .vz-add-cart,body.pp .pp-hero .buy .vz-add-cart{font-size:16px;line-height:1.25;min-height:48px;padding:10px 20px}
+body.pp .pp-hero .buy .vz-add-cart{min-height:46px;font-size:15px}
+@media(max-width:560px){.hero .buy{flex-direction:column;align-items:stretch;gap:10px!important}.hero .buy .btn{width:100%}}
+
+/* barra fissa in basso */
+.vz-sticky-add{flex:none;display:grid;place-items:center;width:54px;height:54px;border-radius:999px;border:2px solid #F6FBFF;background:#F6FBFF;color:#08142A;cursor:pointer}
+.vz-sticky-add svg{width:26px;height:26px}
+.vz-sticky-add:focus-visible{outline:3px solid var(--acc,#74acdf);outline-offset:2px}
+
+/* icona nell'intestazione */
+.vz-cart-btn{position:relative;display:grid;place-items:center;width:44px;height:44px;flex:none;border-radius:999px;border:1.5px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06);color:#F3F6FB;cursor:pointer}
+.vz-cart-btn[hidden]{display:none}
+.vz-cart-btn svg{width:23px;height:23px}
+.vz-cart-btn:hover{background:rgba(255,255,255,.14)}
+.vz-cart-btn:focus-visible{outline:3px solid var(--acc,#74acdf);outline-offset:2px}
+.vz-cart-badge{position:absolute;top:-5px;right:-5px;min-width:21px;height:21px;padding:0 5px;border-radius:999px;background:var(--acc,#74acdf);color:var(--onAcc,#08142a);font:900 12px/21px var(--text,system-ui),sans-serif;text-align:center;box-shadow:0 0 0 2px #08142a}
+.vz-cart-btn.vz-bump{animation:vzCartBump .45s ease}
+@keyframes vzCartBump{0%{transform:scale(1)}40%{transform:scale(1.18)}100%{transform:scale(1)}}
+@media(max-width:480px){.vz-cart-btn{width:40px;height:40px}.vz-cart-btn svg{width:21px;height:21px}}
+
+/* pannello */
+.vz-cart-backdrop{position:fixed;inset:0;z-index:2147483000;background:rgba(3,9,20,.62);opacity:0;transition:opacity .2s ease}
+.vz-cart-backdrop.in{opacity:1}
+.vz-cart{position:fixed;z-index:2147483001;top:0;right:0;bottom:0;width:min(430px,100%);display:flex;flex-direction:column;background:#0c1a33;color:#F3F6FB;border-left:1px solid rgba(255,255,255,.14);box-shadow:-20px 0 50px rgba(0,0,0,.45);transform:translateX(100%);transition:transform .25s cubic-bezier(.2,.8,.2,1);font-family:var(--text,system-ui),sans-serif;overflow-y:auto;overscroll-behavior:contain}
+.vz-cart.in{transform:none}
+html.vz-cart-open{overflow:hidden}
+.vz-cart-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 20px 14px;border-bottom:1px solid rgba(255,255,255,.12)}
+.vz-cart-head h2{margin:0;font:900 30px/1 var(--display,"Arial Narrow"),sans-serif;letter-spacing:.01em}
+.vz-cart-head h2 small{font:600 14px/1 var(--text,system-ui),sans-serif;color:#B4C3DA}
+.vz-cart-x{width:42px;height:42px;flex:none;border-radius:50%;border:1.5px solid rgba(255,255,255,.22);background:transparent;color:#F3F6FB;font:400 28px/1 system-ui;cursor:pointer}
+.vz-cart-x:focus-visible,.vz-cart button:focus-visible,.vz-cart a:focus-visible{outline:3px solid var(--acc,#74acdf);outline-offset:2px}
+.vz-cart-note{margin:14px 20px 0;padding:10px 14px;border-radius:12px;background:rgba(127,209,160,.14);color:#cdeedb;font-weight:700;font-size:14px}
+.vz-cart-empty{padding:34px 20px;text-align:center;color:#B4C3DA}
+.vz-cart-empty .vz-cart-checkout{display:inline-flex;width:auto;margin-top:8px;text-decoration:none}
+.vz-cart-items{list-style:none;margin:0;padding:6px 20px}
+.vz-cart-item{display:grid;grid-template-columns:42px minmax(0,1fr) auto;grid-template-areas:"sw info step" "sw rm step";column-gap:12px;row-gap:4px;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.vz-cart-swatch{grid-area:sw;width:42px;height:42px;border-radius:50%;box-shadow:inset 0 0 0 6px #08142a,inset 0 0 0 8px rgba(255,255,255,.35)}
+.vz-cart-info{grid-area:info;min-width:0}
+.vz-cart-info strong{display:block;font-size:16px;line-height:1.2}
+.vz-cart-info small{display:block;margin-top:3px;color:#B4C3DA;font-size:13px}
+.vz-cart-rm{grid-area:rm;justify-self:start;padding:2px 0;border:0;background:none;color:#9fc7ee;font:600 13px/1.2 var(--text,system-ui),sans-serif;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.vz-cart-step{grid-area:step;display:flex;align-items:center;border:1.5px solid rgba(255,255,255,.22);border-radius:999px;overflow:hidden}
+.vz-cart-step button{width:38px;height:38px;border:0;background:transparent;color:#F3F6FB;font:800 20px/1 system-ui;cursor:pointer}
+.vz-cart-step button:disabled{opacity:.35;cursor:not-allowed}
+.vz-cart-step output{min-width:22px;text-align:center;font-weight:800}
+.vz-cart-another{margin:10px 20px 0;align-self:flex-start;padding:10px 16px;border-radius:999px;border:1.5px dashed rgba(255,255,255,.3);background:transparent;color:#F3F6FB;font:700 14px/1.2 var(--text,system-ui),sans-serif;cursor:pointer}
+.vz-cart-foot{margin-top:auto;padding:18px 20px 22px;border-top:1px solid rgba(255,255,255,.12);background:#0a1730;position:sticky;bottom:0}
+.vz-cart-hint{margin:0 0 10px;font-size:13px;font-weight:700;color:#f3d48a}
+.vz-cart-hint.on{color:#9fe3b8}
+.vz-cart-hint:empty{display:none}
+.vz-cart-lines{margin:0 0 6px}
+.vz-cart-lines div{display:flex;justify-content:space-between;gap:12px;padding:3px 0;color:#B4C3DA;font-size:15px}
+.vz-cart-lines dt,.vz-cart-lines dd{margin:0}
+.vz-cart-lines .vz-cart-total{color:#F3F6FB;font-size:20px;font-weight:900;padding-top:6px}
+.vz-cart-ship{margin:0 0 14px;color:#B4C3DA;font-size:13px}
+.vz-cart-checkout{display:flex;align-items:center;justify-content:center;width:100%;min-height:54px;padding:12px 20px;border:0;border-radius:999px;background:var(--acc,#74acdf);color:var(--onAcc,#08142a)!important;font:900 18px/1.2 var(--text,system-ui),sans-serif;cursor:pointer;box-shadow:0 8px 0 rgba(0,0,0,.18)}
+.vz-cart-keep{display:block;width:100%;margin-top:10px;padding:10px;border:0;background:none;color:#F3F6FB;font:700 15px/1.2 var(--text,system-ui),sans-serif;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+@media(max-width:560px){.vz-cart{top:auto;width:100%;max-height:88vh;border-left:0;border-top:1px solid rgba(255,255,255,.14);border-radius:22px 22px 0 0;transform:translateY(100%)}.vz-cart.in{transform:none}}
+@media(prefers-reduced-motion:reduce){.vz-cart,.vz-cart-backdrop{transition:none}.vz-cart-btn.vz-bump{animation:none}}
+
+/* riepilogo carrello nel modulo d'ordine */
+.vz-cart-review{display:none}
+.vz-cart-mode .vz-cart-review{display:block;margin:4px 0 14px;padding:14px 16px;border:1px solid var(--line,rgba(255,255,255,.14));border-radius:14px}
+.vz-cart-review ul{list-style:none;margin:0 0 8px;padding:0}
+.vz-cart-review li{padding:3px 0;font-size:16px}
+.vz-cart-edit{padding:0;border:0;background:none;color:var(--acc,#74acdf);font:700 14px/1.2 var(--text,system-ui),sans-serif;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.vz-cart-mode .chosen,.vz-cart-mode .qty,.vz-cart-mode .bundle-offer,.vz-cart-mode #second-team-field{display:none!important}
