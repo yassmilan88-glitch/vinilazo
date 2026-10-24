@@ -59,3 +59,13 @@ html body .hero p.sub{font-size:clamp(15px,.3vw + 14px,17px)!important}
 
 /* Un solo carattere per i testi: il corsivo Georgia resta solo nelle finte prime pagine di giornale */
 .poem p:not(.hit),.moment-cta span,.memory,.vz-about-sign,.vz-catalog-end p,body.pp .vz-goal-entry .pp-text .memory{font-family:var(--text,system-ui)!important}
+
+/* Pulsante Home nell'intestazione (pagine prodotto) */
+header.top .wordmark{flex:0 0 auto}
+.vz-home-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;margin:0 auto 0 14px;padding:0 16px 0 12px;border-radius:999px;border:1px solid rgba(255,255,255,.32);background:rgba(255,255,255,.08);color:#f3f6fb;font:800 15px/1 var(--text,system-ui);text-decoration:none;white-space:nowrap;transition:background .2s,border-color .2s}
+.vz-home-btn svg{width:20px;height:20px;flex:0 0 auto}
+.vz-home-btn:hover{background:rgba(255,255,255,.15);border-color:var(--acc,#74acdf)}
+.vz-home-btn:focus-visible{outline:3px solid var(--acc,#74acdf);outline-offset:2px}
+@media(max-width:700px){.vz-home-btn{margin-left:8px;padding:0 12px 0 10px;gap:6px;font-size:14px;min-height:40px}}
+@media(max-width:420px){header.top:has(.vz-home-btn) .wordmark{font-size:25px}}
+@media(max-width:480px){.vz-home-btn{width:42px;min-height:42px;padding:0;justify-content:center;border-color:rgba(255,255,255,.45);background:rgba(255,255,255,.12)}.vz-home-btn span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}

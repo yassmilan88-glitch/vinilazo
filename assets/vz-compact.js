@@ -103,6 +103,19 @@
       entries.forEach(function (e) { document.documentElement.classList.toggle('vz-show-head-cta', !e.isIntersecting && e.boundingClientRect.top < 0); });
     }).observe(main);
   }
-  function start() { run(); headroom(); headCta(); setTimeout(function () { run(); headCta(); }, 1500); }
+  // Pulsante Home ben visibile nelle pagine prodotto (in home non serve)
+  var HOME = { it: 'Home', es: 'Inicio', fr: 'Accueil', en: 'Home', de: 'Start' };
+  function homeBtn() {
+    var head = document.querySelector('header.top');
+    if (!head || head.querySelector('.vz-home-btn') || document.body.classList.contains('vz-catalog-mode')) return;
+    var a = document.createElement('a'); a.className = 'vz-home-btn';
+    a.href = /\/argentina\/?$/.test(location.pathname) ? '../' : './';
+    a.setAttribute('aria-label', HOME[lang] || HOME.it);
+    a.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9.5h4.5V15h3v4.5H18V10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>';
+    var txt = document.createElement('span'); txt.textContent = HOME[lang] || HOME.it; a.appendChild(txt);
+    var brand = head.querySelector('.wordmark');
+    if (brand && brand.nextSibling) head.insertBefore(a, brand.nextSibling); else head.insertBefore(a, head.firstChild);
+  }
+  function start() { homeBtn(); run(); headroom(); headCta(); setTimeout(function () { homeBtn(); run(); headCta(); }, 1500); }
   if (document.readyState === 'complete') start(); else window.addEventListener('load', start, { once: true });
 })();
