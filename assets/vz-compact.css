@@ -263,3 +263,10 @@ html body .vz-personal-memory h2::after,html body .vz-fridge-show .vz-lifestyle-
 /* "Da dove cominciamo?": niente linea né luce, pulsano già le icone sotto */
 html body .vz-choose-heading{animation:none!important;padding-bottom:0!important}
 html body .vz-choose-heading::after{content:none!important;display:none!important}
+
+/* "Hai un gol nel cuore?": la luce pulsa dietro la scritta (niente linea sotto) */
+@keyframes vzBehindPulse{0%,100%{opacity:.35;transform:scale(.9)}50%{opacity:1;transform:scale(1.06)}}
+html body .vz-personal-memory h2{isolation:isolate;padding-bottom:0!important}
+html body .vz-personal-memory h2::after{content:none!important;display:none!important}
+html body .vz-personal-memory h2::before{content:"";position:absolute;left:-14%;right:-14%;top:-115%;bottom:-115%;z-index:-1;pointer-events:none;border-radius:50%;background:radial-gradient(ellipse closest-side,rgba(74,203,255,.66) 0%,rgba(120,185,255,.36) 40%,rgba(255,210,130,.16) 66%,rgba(0,0,0,0) 100%);filter:blur(9px);animation:vzBehindPulse 2.4s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){html body .vz-personal-memory h2::before{animation:none!important;opacity:.6}}
