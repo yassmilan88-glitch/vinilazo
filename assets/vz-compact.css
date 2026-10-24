@@ -228,3 +228,28 @@ html body .vz-catalog .vz-catalog-title::after,html body .hero-copy .quote::afte
  html body .moment .poem p.hit::after,html body .moment .poem p.hit::before,html body .moment h2::after,html body .vz-cine-highlight,html body .vz-catalog .vz-catalog-title::after,html body .hero-copy .quote::after{animation:none!important}
  html body .vz-choice .vz-choice-vinyl::after{opacity:.7}
 }
+
+/* ===== Home: altri testi con luce a impulso =====
+   Titoli: la scritta respira di luce e sotto pulsa una linea luminosa.
+   Frasi chiave: targa scura premium con linea di luce, come "Un gol dura un secondo." */
+@keyframes vzTextGlow{0%,100%{text-shadow:0 0 0 rgba(120,205,255,0),0 1px 2px rgba(0,0,0,.4)}50%{text-shadow:0 0 16px rgba(120,205,255,.5),0 0 34px rgba(255,214,140,.22),0 1px 2px rgba(0,0,0,.4)}}
+html body .vz-personal-memory h2,html body .vz-fridge-show .vz-lifestyle-title,html body .vz-choose-heading,html body #vz-about-title{position:relative;padding-bottom:15px;animation:vzTextGlow 2.4s ease-in-out infinite}
+html body .vz-personal-memory h2::after,html body .vz-fridge-show .vz-lifestyle-title::after,html body .vz-choose-heading::after,html body #vz-about-title::after{content:"";position:absolute;bottom:0;height:3px;border-radius:3px;pointer-events:none;background:linear-gradient(90deg,transparent,#4acbff 16%,#fff 50%,#ffde97 84%,transparent);box-shadow:0 0 10px rgba(74,203,255,.75),0 0 24px rgba(255,222,151,.35);animation:vzLinePulse 2.4s ease-in-out infinite}
+html body .vz-personal-memory h2::after,html body .vz-choose-heading::after{left:0;width:min(230px,75%);transform-origin:left center}
+html body .vz-fridge-show .vz-lifestyle-title::after,html body #vz-about-title::after{left:0;right:0;margin:0 auto;width:min(240px,60%);transform-origin:center}
+html body .vz-choose-heading,html body .vz-choose-heading::after{animation-delay:.6s}
+@media(max-width:720px){html body .vz-choose-heading::after{right:0;margin:0 auto;width:min(220px,60%);transform-origin:center}}
+html body #vz-about-title,html body #vz-about-title::after{animation-delay:.9s}
+/* frasi chiave su targa premium */
+html body .vz-press-statement,html body .vz-gift-home > p.vz-section-sub{position:relative;isolation:isolate;display:table;width:fit-content;max-width:min(100%,760px);margin-left:auto!important;margin-right:auto!important;padding:11px 22px 17px!important;border-radius:12px;color:#fff;background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.015) 46%,rgba(0,0,0,.2)),linear-gradient(100deg,#14365f,#0a1529 80%);border:1px solid rgba(140,205,255,.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 12px 30px rgba(0,0,0,.38);text-shadow:0 0 14px rgba(120,205,255,.4),0 1px 2px #000}
+html body .vz-press-statement::after,html body .vz-gift-home > p.vz-section-sub::after{content:"";position:absolute;left:20px;right:20px;bottom:6px;height:3px;border-radius:3px;pointer-events:none;background:linear-gradient(90deg,transparent,#4acbff 16%,#fff 50%,#ffde97 84%,transparent);box-shadow:0 0 10px rgba(74,203,255,.75),0 0 24px rgba(255,222,151,.35);transform-origin:center;animation:vzLinePulse 2.4s ease-in-out infinite}
+html body .vz-press-statement::before,html body .vz-gift-home > p.vz-section-sub::before{content:"";position:absolute;left:-12px;right:-12px;top:-10px;bottom:-16px;z-index:-1;border-radius:22px;pointer-events:none;background:radial-gradient(ellipse at 50% 92%,rgba(74,203,255,.42),transparent 68%);filter:blur(8px);animation:vzHaloPulse 2.4s ease-in-out infinite}
+/* regalo: tutto in oro */
+html body .vz-gift-home > p.vz-section-sub{background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.015) 46%,rgba(0,0,0,.2)),linear-gradient(100deg,#3a2c12,#14110c 82%);border-color:rgba(242,204,118,.45);text-shadow:0 0 14px rgba(255,200,90,.38),0 1px 2px #000}
+html body .vz-gift-home > p.vz-section-sub::after{background:linear-gradient(90deg,transparent,#f2c45e 16%,#fff6dc 50%,#f2c45e 84%,transparent);box-shadow:0 0 10px rgba(242,196,94,.8),0 0 24px rgba(255,214,130,.4)}
+html body .vz-gift-home > p.vz-section-sub::before{background:radial-gradient(ellipse at 50% 92%,rgba(255,196,80,.42),transparent 68%)}
+@media(prefers-reduced-motion:reduce){
+ html body .vz-personal-memory h2,html body .vz-fridge-show .vz-lifestyle-title,html body .vz-choose-heading,html body #vz-about-title,
+ html body .vz-personal-memory h2::after,html body .vz-fridge-show .vz-lifestyle-title::after,html body .vz-choose-heading::after,html body #vz-about-title::after,
+ html body .vz-press-statement::after,html body .vz-press-statement::before,html body .vz-gift-home > p.vz-section-sub::after,html body .vz-gift-home > p.vz-section-sub::before{animation:none!important}
+}
