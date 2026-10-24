@@ -151,7 +151,7 @@ html body .vz-choice .vz-choice-vinyl::before{content:none!important;display:non
 html body .vz-choice .vz-choice-centre{background:#102039!important;box-shadow:inset 0 0 0 1px #ffffff35!important}
 html body .vz-choice .vz-choice-orb{background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible!important}
 html body .vz-choice .vz-choice-orb-mark{background:none!important;border-radius:0!important;overflow:visible!important}
-html body .vz-choice .vz-choice-orb-mark .vz-trophy-asset{object-fit:contain!important;filter:none!important}
+html body .vz-choice .vz-choice-orb-mark .vz-trophy-asset{object-fit:contain!important}
 /* Fixed, accessible quote colour, independent of the selected team. */
 html body .vz-about-sign{color:#f4f7fc!important;font-style:normal;line-height:1.5;text-align:center}
 .vz-about-quote{display:block;max-width:32ch;margin:0 auto;color:#f4f7fc;text-wrap:balance;text-shadow:0 0 18px #dceaff25}
@@ -187,3 +187,44 @@ html body .vz-choice[data-group="club"] .vz-choice-orb-mark::before{animation-de
 /* Etichetta: targhetta intera, mai tagliata dal tondo */
 html body .vz-choice .vz-choice-centre strong,html body .vz-choice[data-group] .vz-choice-centre strong{white-space:nowrap;max-width:none!important;overflow:visible;position:relative;z-index:3;padding:3px 10px!important;letter-spacing:.04em;color:#fff!important;background:linear-gradient(180deg,#10284a,#06111f)!important;border:1px solid var(--vz-rim);box-shadow:0 2px 8px rgba(0,0,0,.55),0 0 12px var(--vz-glow-soft);text-shadow:0 1px 2px #000}
 @media(prefers-reduced-motion:reduce){html body .vz-choice .vz-choice-orb-mark::after,html body .vz-choice .vz-choice-orb-mark::before{animation:none!important;opacity:0}}
+
+/* ===== Luci a impulso =====
+   Icone Nazionali/Club: la luce respira e si allarga oltre il disco (niente alone tagliato dal tondo).
+   Frasi ad impatto: targa scura premium con una linea di luce che pulsa sotto la frase. */
+@keyframes vzAuraPulse{0%,100%{opacity:.3;transform:scale(.95)}50%{opacity:1;transform:scale(1.05)}}
+@keyframes vzCorePulse{0%,100%{opacity:.45;transform:scale(.88)}50%{opacity:1;transform:scale(1.08)}}
+@keyframes vzTrophyPulse{0%,100%{filter:drop-shadow(0 0 2px var(--vz-glow)) brightness(1)}50%{filter:drop-shadow(0 0 7px var(--vz-glow)) drop-shadow(0 0 18px var(--vz-glow-soft)) brightness(1.16)}}
+@keyframes vzPlatePulse{0%,100%{border-color:var(--vz-rim);box-shadow:0 2px 8px rgba(0,0,0,.55),0 0 6px var(--vz-glow-soft)}50%{border-color:#fff8e6;box-shadow:0 2px 8px rgba(0,0,0,.55),0 0 16px var(--vz-glow),0 0 30px var(--vz-glow-soft)}}
+.vz-choice[data-group="nat"]{--vz-glow:rgba(255,200,84,.62);--vz-glow-soft:rgba(255,190,70,.3)}
+.vz-choice[data-group="club"]{--vz-glow:rgba(190,222,255,.58);--vz-glow-soft:rgba(160,200,255,.28)}
+html body .vz-choice .vz-choice-vinyl{position:relative;isolation:isolate;overflow:visible!important}
+html body .vz-choice .vz-choice-vinyl::after{content:""!important;display:block!important;position:absolute;inset:-24px!important;border:0!important;border-radius:50%;pointer-events:none;z-index:-1;background:radial-gradient(circle closest-side,rgba(0,0,0,0) 73%,var(--vz-glow) 81%,var(--vz-glow-soft) 89%,rgba(0,0,0,0) 100%);animation:vzAuraPulse 2.6s ease-in-out infinite}
+html body .vz-choice .vz-choice-centre{position:relative;z-index:1}
+html body .vz-choice .vz-choice-centre::before{content:"";position:absolute;inset:-30%;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,var(--vz-glow) 0%,var(--vz-glow-soft) 32%,rgba(0,0,0,0) 64%);mix-blend-mode:screen;animation:vzCorePulse 2.6s ease-in-out infinite}
+html body .vz-choice .vz-choice-orb{position:relative;z-index:2}
+html body .vz-choice .vz-choice-orb-mark .vz-trophy-asset{animation:vzTrophyPulse 2.6s ease-in-out infinite}
+html body .vz-choice .vz-choice-centre strong{animation:vzPlatePulse 2.6s ease-in-out infinite}
+html body .vz-choice[data-group="club"] .vz-choice-vinyl::after,html body .vz-choice[data-group="club"] .vz-choice-centre::before,html body .vz-choice[data-group="club"] .vz-trophy-asset,html body .vz-choice[data-group="club"] .vz-choice-centre strong{animation-delay:1.3s}
+html body .vz-choice:hover .vz-choice-vinyl::after,html body .vz-choice:focus-visible .vz-choice-vinyl::after{animation-duration:1.3s}
+
+/* Frasi ad impatto */
+@keyframes vzLinePulse{0%,100%{opacity:.5;transform:scaleX(.8);filter:brightness(1)}50%{opacity:1;transform:scaleX(1);filter:brightness(1.4)}}
+@keyframes vzHaloPulse{0%,100%{opacity:.2;transform:scale(.94)}50%{opacity:.8;transform:scale(1.03)}}
+@keyframes vzBarPulse{0%,100%{box-shadow:0 0 5px rgba(114,206,255,.3);filter:brightness(1)}50%{box-shadow:0 0 16px rgba(114,206,255,.8),0 0 34px rgba(255,217,146,.4);filter:brightness(1.3)}}
+@keyframes vzAccPulse{0%,100%{box-shadow:0 0 6px var(--acc);filter:brightness(1)}50%{box-shadow:0 0 18px var(--acc),0 0 36px color-mix(in srgb,var(--acc) 55%,transparent);filter:brightness(1.35)}}
+@keyframes vzHighlightPulse{0%,100%{text-decoration-color:rgba(255,222,151,.4);filter:drop-shadow(0 0 0 rgba(255,214,130,0))}50%{text-decoration-color:#fff1cc;filter:drop-shadow(0 0 9px rgba(255,214,130,.55))}}
+/* "Un gol dura un secondo." / "Il ricordo, una vita intera." */
+html body .moment .poem p.hit{position:relative;isolation:isolate;display:table!important;width:fit-content;max-width:100%;margin:10px 0 6px!important;padding:9px 18px 15px!important;border-radius:12px;color:#fff!important;background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.015) 46%,rgba(0,0,0,.2)),linear-gradient(100deg,color-mix(in srgb,var(--acc) 22%,#0a1529),#0a1529 78%)!important;border:1px solid color-mix(in srgb,var(--acc) 40%,rgba(255,255,255,.1));box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 12px 30px rgba(0,0,0,.38);text-shadow:0 0 16px color-mix(in srgb,var(--acc) 60%,transparent),0 1px 2px #000}
+html body .moment .poem p.hit::after{content:""!important;display:block!important;position:absolute;left:18px;right:18px;bottom:6px;width:auto!important;max-width:none!important;height:3px;margin:0!important;border-radius:3px;background:linear-gradient(90deg,transparent,var(--acc) 16%,#fff 50%,var(--acc) 84%,transparent)!important;box-shadow:0 0 10px var(--acc),0 0 24px color-mix(in srgb,var(--acc) 60%,transparent)!important;transform-origin:center;animation:vzLinePulse 2.4s ease-in-out infinite!important}
+html body .moment .poem p.hit::before{content:""!important;display:block!important;position:absolute;left:-12px!important;right:-12px;top:-10px!important;bottom:-16px;width:auto!important;height:auto!important;z-index:-1;border-radius:22px;background:radial-gradient(ellipse at 50% 92%,color-mix(in srgb,var(--acc) 50%,transparent),transparent 68%)!important;box-shadow:none!important;filter:blur(8px);animation:vzHaloPulse 2.4s ease-in-out infinite}
+html body .moment .poem p.hit + p.hit::after,html body .moment .poem p.hit + p.hit::before{animation-delay:1.2s!important}
+html body .moment h2::after{animation:vz-score-line 1.2s cubic-bezier(.2,.8,.2,1) both,vzAccPulse 2.4s 1.3s ease-in-out infinite!important}
+/* Home: "Certi gol non si dimenticano mai." */
+html body .vz-cine-highlight{text-decoration-line:underline;text-decoration-thickness:3px;text-underline-offset:.2em;text-decoration-skip-ink:none;text-decoration-color:rgba(255,222,151,.6);animation:vz-cine-shimmer 7.8s ease-in-out infinite,vzHighlightPulse 2.4s ease-in-out infinite!important}
+/* Linee sotto i titoli (home e citazione della squadra) */
+html body .vz-catalog .vz-catalog-title::after,html body .hero-copy .quote::after{animation:vz-cine-beam 7.2s ease-in-out infinite,vzBarPulse 2.4s ease-in-out infinite!important}
+@media(prefers-reduced-motion:reduce){
+ html body .vz-choice .vz-choice-vinyl::after,html body .vz-choice .vz-choice-centre::before,html body .vz-choice .vz-trophy-asset,html body .vz-choice .vz-choice-centre strong,
+ html body .moment .poem p.hit::after,html body .moment .poem p.hit::before,html body .moment h2::after,html body .vz-cine-highlight,html body .vz-catalog .vz-catalog-title::after,html body .hero-copy .quote::after{animation:none!important}
+ html body .vz-choice .vz-choice-vinyl::after{opacity:.7}
+}
