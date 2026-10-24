@@ -559,3 +559,13 @@ body:not(.vz-catalog-mode) .hero-copy .vz-sub-extra[hidden]{display:none!importa
  .vz-fans-grid.vz-fans-ready{scroll-behavior:auto}
  .vz-fans-arrow{transition:none}
 }
+/* Qualsiasi squadra: riga nell'hero del catalogo, box nel selettore, nota assistenza personale */
+.vz-any-team-line{display:block;width:fit-content;max-width:100%;margin-top:18px;color:#bfe3ff;font:800 14px/1.5 system-ui,sans-serif;text-decoration:underline;text-decoration-color:#85cfff99;text-underline-offset:4px;transition:color .2s}
+.vz-any-team-line:hover,.vz-any-team-line:focus-visible{color:#fff;text-decoration-color:#fff}
+.vz-request-eyebrow{margin:0 0 10px!important;color:#83c4ff!important;letter-spacing:.2em;font:850 11px/1.4 system-ui,sans-serif!important}
+.vz-pk-any{margin:20px 4px 6px;padding:18px;border:1.5px dashed var(--line,#ffffff40);border-radius:18px;text-align:center}
+.vz-pk-any strong{display:block;font:800 17px/1.2 var(--text,system-ui),sans-serif;color:var(--ink,#fff);margin-bottom:6px}
+.vz-pk-any p{margin:0 0 14px;font:500 14px/1.45 var(--text,system-ui),sans-serif;color:var(--soft,#cbdbec)}
+.vz-care-note{margin:8px 0 0;font:600 13px/1.45 var(--text,system-ui),sans-serif;color:var(--soft,#cbdbec)}
+.vz-care-note::before{content:'✓ ';color:var(--acc,#7fd1a0);font-weight:900}
+@media(max-width:720px){.vz-any-team-line{font-size:13px;margin:16px auto 0;max-width:330px}}
