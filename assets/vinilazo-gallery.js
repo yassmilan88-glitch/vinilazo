@@ -8,11 +8,11 @@
   try { data = JSON.parse(node.textContent); } catch (e) { return; }
   var lang = data.lang || 'it';
   var tr = {
-    it: {eyebrow:'VINILAZO A CASA',title:'Quei gol, proprio lì sul tuo frigo.',intro:'Tutte le edizioni, da vicino: sul frigo e nel set completo.',illustrative:'Immagini illustrative: grafiche e colori dei dischi possono variare leggermente.',detailTitle:'Ecco come sta a casa tua.',detailIntro:'Il tuo VINILAZO con i colori e i gol della squadra che hai scelto.',detailLink:'Scegli questa edizione',open:'Apri la foto a grandezza naturale',prev:'Foto precedenti',next:'Foto successive',view:'Scopri l’edizione',frigo:'Sul frigo',set:'Il set completo'},
-    es: {eyebrow:'VINILAZO EN CASA',title:'Ese gol, ahí mismo en tu nevera.',intro:'Todas las ediciones, de cerca: en la nevera y en el set completo.',illustrative:'Imágenes ilustrativas: los diseños y colores de los discos pueden variar ligeramente.',detailTitle:'Así queda en tu casa.',detailIntro:'Tu VINILAZO con los colores y goles de tu equipo.',detailLink:'Elegí esta edición',open:'Abrir imagen a tamaño completo',prev:'Fotos anteriores',next:'Fotos siguientes',view:'Descubrí la edición',frigo:'En la nevera',set:'El set completo'},
-    fr: {eyebrow:'VINILAZO CHEZ VOUS',title:'Ces buts, juste là sur votre frigo.',intro:'Toutes les éditions, de près : sur le frigo et en coffret complet.',illustrative:'Images d’illustration : les visuels et couleurs des disques peuvent légèrement varier.',detailTitle:'Imaginez-le chez vous.',detailIntro:'Votre VINILAZO aux couleurs et aux buts de votre équipe.',detailLink:'Choisir cette édition',open:'Ouvrir la photo en plein format',prev:'Photos précédentes',next:'Photos suivantes',view:'Découvrir l’édition',frigo:'Sur le frigo',set:'Le coffret complet'},
-    en: {eyebrow:'VINILAZO AT HOME',title:'That goal, right there on your fridge.',intro:'Every edition, up close: on the fridge and as a complete set.',illustrative:'Illustrative images: disc artwork and colours may vary slightly.',detailTitle:'Picture it at home.',detailIntro:'Your VINILAZO in your team’s colours, with its unforgettable goals.',detailLink:'Choose this edition',open:'Open full-size photo',prev:'Previous photos',next:'Next photos',view:'Explore this edition',frigo:'On the fridge',set:'The complete set'},
-    de: {eyebrow:'VINILAZO ZU HAUSE',title:'Dieses Tor, direkt an deinem Kühlschrank.',intro:'Alle Editionen aus der Nähe: am Kühlschrank und als komplettes Set.',illustrative:'Illustrationen: Motive und Farben der Scheiben können leicht abweichen.',detailTitle:'So sieht es bei dir aus.',detailIntro:'Dein VINILAZO mit den Farben und Toren deiner Mannschaft.',detailLink:'Diese Edition wählen',open:'Foto in voller Größe öffnen',prev:'Vorherige Fotos',next:'Nächste Fotos',view:'Edition ansehen',frigo:'Am Kühlschrank',set:'Das komplette Set'}
+    it: {eyebrow:'VINILAZO A CASA',title:'Quei gol, proprio lì sul tuo frigo.',intro:'Tutte le edizioni, da vicino: sul frigo e nel set completo.',illustrative:'Immagini illustrative: grafiche e colori dei dischi possono variare leggermente.',detailTitle:'Ecco come sta a casa tua.',detailIntro:'Il tuo VINILAZO con i colori e i gol della squadra che hai scelto.',detailLink:'Scegli questa edizione',open:'Apri la foto a grandezza naturale',prev:'Foto precedenti',next:'Foto successive',view:'Scopri l’edizione',frigo:'Sul frigo',set:'Il set completo',casa:'A casa'},
+    es: {eyebrow:'VINILAZO EN CASA',title:'Ese gol, ahí mismo en tu nevera.',intro:'Todas las ediciones, de cerca: en la nevera y en el set completo.',illustrative:'Imágenes ilustrativas: los diseños y colores de los discos pueden variar ligeramente.',detailTitle:'Así queda en tu casa.',detailIntro:'Tu VINILAZO con los colores y goles de tu equipo.',detailLink:'Elegí esta edición',open:'Abrir imagen a tamaño completo',prev:'Fotos anteriores',next:'Fotos siguientes',view:'Descubrí la edición',frigo:'En la nevera',set:'El set completo',casa:'En casa'},
+    fr: {eyebrow:'VINILAZO CHEZ VOUS',title:'Ces buts, juste là sur votre frigo.',intro:'Toutes les éditions, de près : sur le frigo et en coffret complet.',illustrative:'Images d’illustration : les visuels et couleurs des disques peuvent légèrement varier.',detailTitle:'Imaginez-le chez vous.',detailIntro:'Votre VINILAZO aux couleurs et aux buts de votre équipe.',detailLink:'Choisir cette édition',open:'Ouvrir la photo en plein format',prev:'Photos précédentes',next:'Photos suivantes',view:'Découvrir l’édition',frigo:'Sur le frigo',set:'Le coffret complet',casa:'Chez vous'},
+    en: {eyebrow:'VINILAZO AT HOME',title:'That goal, right there on your fridge.',intro:'Every edition, up close: on the fridge and as a complete set.',illustrative:'Illustrative images: disc artwork and colours may vary slightly.',detailTitle:'Picture it at home.',detailIntro:'Your VINILAZO in your team’s colours, with its unforgettable goals.',detailLink:'Choose this edition',open:'Open full-size photo',prev:'Previous photos',next:'Next photos',view:'Explore this edition',frigo:'On the fridge',set:'The complete set',casa:'At home'},
+    de: {eyebrow:'VINILAZO ZU HAUSE',title:'Dieses Tor, direkt an deinem Kühlschrank.',intro:'Alle Editionen aus der Nähe: am Kühlschrank und als komplettes Set.',illustrative:'Illustrationen: Motive und Farben der Scheiben können leicht abweichen.',detailTitle:'So sieht es bei dir aus.',detailIntro:'Dein VINILAZO mit den Farben und Toren deiner Mannschaft.',detailLink:'Diese Edition wählen',open:'Foto in voller Größe öffnen',prev:'Vorherige Fotos',next:'Nächste Fotos',view:'Edition ansehen',frigo:'Am Kühlschrank',set:'Das komplette Set',casa:'Zu Hause'}
   }[lang] || null;
   if (!tr) return;
 
@@ -20,6 +20,9 @@
   var order = ['inter', 'milan', 'juventus', 'real-madrid', 'barcelona', 'argentina', 'psg', 'bayern', 'liverpool', 'manchester-city',
     'manchester-united', 'italia', 'brasile', 'francia', 'spagna', 'portogallo', 'germania', 'inghilterra', 'olanda', 'messico'];
   var kinds = ['frigo', 'set'];
+  // Foto vere in casa (prima immagine) per le edizioni che le hanno.
+  var homes = { italia: 1, argentina: 1, spagna: 1 };
+  function kindsFor(id) { return homes[id] ? ['casa'].concat(kinds) : kinds; }
   var assetBase = (data.assets || '../assets/') + 'gallery/';
   var byId = {};
   (data.teams || []).forEach(function (team) { byId[team.id] = team; });
@@ -124,17 +127,24 @@
       photoLink.href = imageSrc(current.id, kind);
       thumbs.querySelectorAll('button').forEach(function (b) { b.classList.toggle('is-active', b.dataset.kind === kind); b.setAttribute('aria-pressed', b.dataset.kind === kind ? 'true' : 'false'); });
     }
-    kinds.forEach(function (kind) {
-      var button = el('button', 'vz-lifestyle-thumb');
-      button.type = 'button';
-      button.dataset.kind = kind;
-      button.setAttribute('aria-label', tr[kind]);
-      var thumb = el('img');
-      thumb.loading = 'lazy'; thumb.decoding = 'async'; thumb.width = 80; thumb.height = 86;
-      button.append(thumb, el('span', '', tr[kind]));
-      button.addEventListener('click', function () { show(kind); });
-      thumbs.append(button);
-    });
+    function buildThumbs(team) {
+      thumbs.replaceChildren();
+      var list = kindsFor(team.id);
+      thumbs.classList.toggle('is-three', list.length > 2);
+      list.forEach(function (kind) {
+        var button = el('button', 'vz-lifestyle-thumb');
+        button.type = 'button';
+        button.dataset.kind = kind;
+        button.setAttribute('aria-label', tr[kind]);
+        var thumb = el('img');
+        thumb.loading = 'lazy'; thumb.decoding = 'async'; thumb.width = 80; thumb.height = 86;
+        setImage(thumb, team, kind);
+        button.append(thumb, el('span', '', tr[kind]));
+        button.addEventListener('click', function () { show(kind); });
+        thumbs.append(button);
+      });
+      return list[0];
+    }
     photoGroup.append(photoLink, thumbs);
     section.append(photoGroup, copy);
     anchor.before(section);
@@ -144,8 +154,7 @@
       if (section.hidden) return;
       if (!current || current.id !== team.id) {
         current = team;
-        thumbs.querySelectorAll('button').forEach(function (b) { setImage(b.querySelector('img'), team, b.dataset.kind); });
-        show('frigo');
+        show(buildThumbs(team));
       }
       teamName.textContent = team.name;
       section.style.setProperty('--vz-photo-accent', team.th && team.th.acc || team.cols && team.cols[0] || '#74acdf');
