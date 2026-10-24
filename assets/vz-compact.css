@@ -69,3 +69,7 @@ header.top .wordmark{flex:0 0 auto}
 @media(max-width:700px){.vz-home-btn{margin-left:8px;padding:0 12px 0 10px;gap:6px;font-size:14px;min-height:40px}}
 @media(max-width:420px){header.top:has(.vz-home-btn) .wordmark{font-size:25px}}
 @media(max-width:480px){.vz-home-btn{width:42px;min-height:42px;padding:0;justify-content:center;border-color:rgba(255,255,255,.45);background:rgba(255,255,255,.12)}.vz-home-btn span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
+
+/* Dischi fermi dove il sito non fa sentire l'audio (solo l'edizione Argentina ha la telecronaca) */
+html.vz-no-audio .hero-disc,html.vz-no-audio .ed-disc,html.vz-no-audio .mini-disc,html.vz-no-audio .sticky-disc,html.vz-no-audio .done-disc,html.vz-no-audio .tap,html.vz-no-audio .team.spin .tdisc{animation:none!important}
+.vz-silent .vz-product-disc,.vz-press-vinyl,.vz-choice-vinyl::before{animation:none!important}

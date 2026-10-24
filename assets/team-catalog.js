@@ -208,6 +208,7 @@ function displayEdition(team){
  emblem.append(currentMark);
  labelName.textContent='';
  tag.textContent=team.name+' · 9';
+ product.classList.toggle('vz-silent',team.id!=='argentina');
  product.setAttribute('aria-label','VINILAZO: '+team.name+', nove dischi intercambiabili');
 }
 displayEdition(featured[0]);
