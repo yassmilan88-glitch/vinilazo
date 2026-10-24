@@ -59,7 +59,7 @@
       var deco = halo ? ' stroke="' + halo + '" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke"' : "";
       var top = (opts.top || t.name).toUpperCase(), fsT = opts.minute ? 24 : fit(top, 70, 12.5);
       var big = (opts.big || "VINILAZO").toUpperCase(), small = (opts.small || "").toUpperCase();
-      var fsB = fit(big, 90, 21), fsS = fit(small, 86, 8.4);
+      var fsB = fit(big, 90, 21), fsS = Math.min(8.4, 84 / (Math.max(1, small.length) * 0.66));
       s += '<g fill="' + ink + '"' + deco + ' text-anchor="middle">' +
            '<text x="100" y="' + (opts.minute ? 92 : 86) + '" font-family="Big Shoulders Display, Arial Narrow, sans-serif" font-weight="900" font-size="' + fsT.toFixed(1) + '">' + esc(top) + "</text>" +
            '<text x="100" y="' + (small ? 124 : 128) + '" font-family="Big Shoulders Display, Arial Narrow, sans-serif" font-weight="900" font-size="' + fsB.toFixed(1) + '">' + esc(big) + "</text>" +
