@@ -253,3 +253,9 @@ html body .vz-gift-home > p.vz-section-sub::before{background:radial-gradient(el
  html body .vz-personal-memory h2::after,html body .vz-fridge-show .vz-lifestyle-title::after,html body .vz-choose-heading::after,html body #vz-about-title::after,
  html body .vz-press-statement::after,html body .vz-press-statement::before,html body .vz-gift-home > p.vz-section-sub::after,html body .vz-gift-home > p.vz-section-sub::before{animation:none!important}
 }
+
+/* Linee sotto i titoli: corte (circa metà della scritta) e centrate sotto il testo */
+html body .vz-personal-memory h2,html body .vz-fridge-show .vz-lifestyle-title,html body .vz-choose-heading,html body #vz-about-title{width:fit-content;max-width:100%}
+html body .vz-fridge-show .vz-lifestyle-title,html body #vz-about-title{margin-left:auto!important;margin-right:auto!important}
+@media(max-width:720px){html body .vz-choose-heading{margin-left:auto;margin-right:auto}}
+html body .vz-personal-memory h2::after,html body .vz-fridge-show .vz-lifestyle-title::after,html body .vz-choose-heading::after,html body #vz-about-title::after{left:0!important;right:0!important;margin:0 auto!important;width:46%!important;min-width:60px;transform-origin:center!important}
