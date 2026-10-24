@@ -19,7 +19,7 @@ p{margin:0 0 12px;color:var(--soft)}
 .ref b{display:block;font-size:clamp(16px,4.6vw,22px);letter-spacing:.03em;margin-top:4px;white-space:nowrap;font-variant-numeric:tabular-nums}
 .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 20px;border-radius:999px;font-weight:800;text-decoration:none}
-.btn-wa{background:#25D366;color:#06210f}
+.btn-wa{background:linear-gradient(45deg,#f09433,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888);color:#fff}
 .btn-home{border:1px solid rgba(255,255,255,.3);color:var(--ink)}
 .btn:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
 </style>
@@ -32,18 +32,18 @@ p{margin:0 0 12px;color:var(--soft)}
   <p id="p2">Se hai dubbi, chiedici di verificare il tuo ordine prima di ripetere il pagamento.</p>
   <div class="ref" id="ref" hidden><span id="ref-l">Il tuo riferimento ordine</span><b id="ref-v"></b></div>
   <div class="actions">
-    <a class="btn btn-wa" id="wa" href="https://wa.me/393295865883" target="_blank" rel="noopener">Scrivici su WhatsApp</a>
+    <a class="btn btn-wa" id="wa" href="https://ig.me/m/vinilazoo" target="_blank" rel="noopener">Scrivici su Instagram</a>
     <a class="btn btn-home" id="home" href="/it/">Torna al sito</a>
   </div>
 </main>
 <script>
 (function () {
   var T = {
-    it: ['Grazie per aver scelto VINILAZO', 'Controlla la conferma e la ricevuta inviate da Stripe all’indirizzo email usato per il pagamento. L’apertura di questa pagina, da sola, non conferma l’addebito.', 'Se hai dubbi, chiedici di verificare il tuo ordine prima di ripetere il pagamento.', 'Il tuo riferimento ordine', 'Scrivici su WhatsApp', 'Torna al sito', 'Ciao VINILAZO! Ho appena pagato il mio ordine', 'Il tuo pagamento · VINILAZO'],
-    es: ['Gracias por elegir VINILAZO', 'Revisá la confirmación y el recibo que Stripe envió al email usado para el pago. Esta página, por sí sola, no confirma el cobro.', 'Si tenés dudas, pedinos que verifiquemos tu pedido antes de volver a pagar.', 'Tu referencia de pedido', 'Escribinos por WhatsApp', 'Volver a la web', '¡Hola VINILAZO! Acabo de pagar mi pedido', 'Tu pago · VINILAZO'],
-    fr: ['Merci d’avoir choisi VINILAZO', 'Vérifiez la confirmation et le reçu envoyés par Stripe à l’adresse email utilisée pour le paiement. Cette page, à elle seule, ne confirme pas le débit.', 'En cas de doute, demandez-nous de vérifier votre commande avant de payer à nouveau.', 'Votre référence de commande', 'Nous écrire sur WhatsApp', 'Retour au site', 'Bonjour VINILAZO ! Je viens de payer ma commande', 'Votre paiement · VINILAZO'],
-    en: ['Thank you for choosing VINILAZO', 'Check the confirmation and receipt Stripe sent to the email used for payment. This page on its own does not confirm the charge.', 'If in doubt, ask us to check your order before paying again.', 'Your order reference', 'Message us on WhatsApp', 'Back to the site', 'Hi VINILAZO! I’ve just paid for my order', 'Your payment · VINILAZO'],
-    de: ['Danke, dass du dich für VINILAZO entschieden hast', 'Prüfe die Bestätigung und die Quittung, die Stripe an die bei der Zahlung verwendete E-Mail-Adresse geschickt hat. Diese Seite allein bestätigt die Abbuchung nicht.', 'Im Zweifel bitte uns, deine Bestellung zu prüfen, bevor du erneut zahlst.', 'Deine Bestellnummer', 'Schreib uns auf WhatsApp', 'Zurück zur Seite', 'Hallo VINILAZO! Ich habe gerade meine Bestellung bezahlt', 'Deine Zahlung · VINILAZO']
+    it: ['Grazie per aver scelto VINILAZO', 'Controlla la conferma e la ricevuta inviate da Stripe all’indirizzo email usato per il pagamento. L’apertura di questa pagina, da sola, non conferma l’addebito.', 'Se hai dubbi, chiedici di verificare il tuo ordine prima di ripetere il pagamento.', 'Il tuo riferimento ordine', 'Scrivici su Instagram', 'Torna al sito', 'Ciao VINILAZO! Ho appena pagato il mio ordine', 'Il tuo pagamento · VINILAZO'],
+    es: ['Gracias por elegir VINILAZO', 'Revisá la confirmación y el recibo que Stripe envió al email usado para el pago. Esta página, por sí sola, no confirma el cobro.', 'Si tenés dudas, pedinos que verifiquemos tu pedido antes de volver a pagar.', 'Tu referencia de pedido', 'Escribinos por Instagram', 'Volver a la web', '¡Hola VINILAZO! Acabo de pagar mi pedido', 'Tu pago · VINILAZO'],
+    fr: ['Merci d’avoir choisi VINILAZO', 'Vérifiez la confirmation et le reçu envoyés par Stripe à l’adresse email utilisée pour le paiement. Cette page, à elle seule, ne confirme pas le débit.', 'En cas de doute, demandez-nous de vérifier votre commande avant de payer à nouveau.', 'Votre référence de commande', 'Nous écrire sur Instagram', 'Retour au site', 'Bonjour VINILAZO ! Je viens de payer ma commande', 'Votre paiement · VINILAZO'],
+    en: ['Thank you for choosing VINILAZO', 'Check the confirmation and receipt Stripe sent to the email used for payment. This page on its own does not confirm the charge.', 'If in doubt, ask us to check your order before paying again.', 'Your order reference', 'Message us on Instagram', 'Back to the site', 'Hi VINILAZO! I’ve just paid for my order', 'Your payment · VINILAZO'],
+    de: ['Danke, dass du dich für VINILAZO entschieden hast', 'Prüfe die Bestätigung und die Quittung, die Stripe an die bei der Zahlung verwendete E-Mail-Adresse geschickt hat. Diese Seite allein bestätigt die Abbuchung nicht.', 'Im Zweifel bitte uns, deine Bestellung zu prüfen, bevor du erneut zahlst.', 'Deine Bestellnummer', 'Schreib uns auf Instagram', 'Zurück zur Seite', 'Hallo VINILAZO! Ich habe gerade meine Bestellung bezahlt', 'Deine Zahlung · VINILAZO']
   };
   // Pagamento completato su Stripe: svuota il carrello.
   try { localStorage.removeItem('vinilazo-cart'); } catch (e) {}
@@ -63,11 +63,11 @@ p{margin:0 0 12px;color:var(--soft)}
   try { ref = sessionStorage.getItem('vinilazo-last-ref') || ''; } catch (e) {}
   if (!/^VZ-[A-F0-9]{16}$/.test(ref)) ref = '';
   if (ref) { document.getElementById('ref-v').textContent = ref; document.getElementById('ref').hidden = false; }
-  document.getElementById('wa').href = 'https://wa.me/393295865883?text=' + encodeURIComponent(t[6] + (ref ? ' (' + ref + ')' : '') + '.');
+  document.getElementById('wa').setAttribute('data-msg', t[6] + (ref ? ' (' + ref + ')' : '') + '.');
 })();
 </script>
 <button type="button" data-privacy-settings style="color:inherit;background:transparent;border:1px solid;padding:12px">Cookie</button>
-<script src="/assets/config.js?v=meta20261023"></script>
+<script src="/assets/config.js?v=ig20261024"></script>
 <script src="/assets/privacy-controls.js?v=meta20261023b"></script>
 </body>
 </html>

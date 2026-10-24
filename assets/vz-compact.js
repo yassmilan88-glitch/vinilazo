@@ -162,7 +162,7 @@
   var p=document.createElement('p');p.textContent=t[1];
   var a=document.createElement('a');a.className='vz-personal-memory-cta';a.textContent=t[2]+' →';
   var prompts={it:'Ciao VINILAZO! Ho un gol nel cuore e vorrei farlo rivivere sul mio disco. Il gol e il ricordo sono: ',es:'¡Hola VINILAZO! Quiero personalizar un disco con un gol especial. El gol y mi recuerdo son: ',fr:'Bonjour VINILAZO ! Je voudrais un disque avec un but qui compte pour moi. Mon but et mon souvenir : ',en:'Hi VINILAZO! I’d love a custom disc with a goal that means something to me. The goal and my memory: ',de:'Hallo VINILAZO! Ich möchte eine Platte mit einem besonderen Tor. Mein Tor und meine Erinnerung: '};
-  a.href='https://wa.me/393295865883?text='+encodeURIComponent(prompts[lang]||prompts.en);a.target='_blank';a.rel='noopener noreferrer';
+  a.href='https://ig.me/m/vinilazoo';a.setAttribute('data-msg',prompts[lang]||prompts.en);a.target='_blank';a.rel='noopener noreferrer';
   section.append(h,p,a);
   var anchor=home?document.getElementById('vz-press'):document.getElementById('momento');
   if(anchor)anchor.before(section);

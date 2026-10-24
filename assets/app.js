@@ -358,8 +358,10 @@
       };
       mh.textContent = fill((headlines[lang] && headlines[lang][t.id]) || fallbacks[lang] || fallbacks.it, {scorer:scorer});
     }
-    $("#wa").href = "https://wa.me/" + (CFG.WHATSAPP || "") + "?text=" + encodeURIComponent(fill(T.wa, { team: t.name }));
-    $$("[data-checkout-wa]").forEach(function (a) { a.href = $("#wa").href; });
+    var contactMsg = fill(T.wa, { team: t.name });
+    $("#wa").href = "https://ig.me/m/" + (CFG.INSTAGRAM || "vinilazoo");
+    $("#wa").setAttribute("data-msg", contactMsg);
+    $$("[data-checkout-wa]").forEach(function (a) { a.href = $("#wa").href; a.setAttribute("data-msg", contactMsg); a.target = "_blank"; a.rel = "noopener"; });
     updateSummary();
   }
   function swapTo(t) {
@@ -696,7 +698,10 @@
   var statusReference = $("#order-reference");
   function statusLink() {
     var value = statusReference.value.trim();
-    $("#order-status-wa").href = "https://wa.me/" + CFG.WHATSAPP + "?text=" + encodeURIComponent(fill(STORE.order_wa, { reference: value || "—" }));
+    var statusBtn = $("#order-status-wa");
+    statusBtn.href = "https://ig.me/m/" + (CFG.INSTAGRAM || "vinilazoo");
+    statusBtn.setAttribute("data-msg", fill(STORE.order_wa, { reference: value || "—" }));
+    statusBtn.target = "_blank"; statusBtn.rel = "noopener";
   }
   try { statusReference.value = sessionStorage.getItem("vinilazo-last-ref") || ""; } catch (err) {}
   statusReference.addEventListener("input", statusLink); statusLink();
