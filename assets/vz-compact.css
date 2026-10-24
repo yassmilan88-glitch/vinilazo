@@ -166,3 +166,8 @@ html body .vz-about-sign{color:#f4f7fc!important;font-style:normal;line-height:1
 /* Keep the closing quotation visible instead of fading it inside a collapsed section. */
 html body #chi-siamo.vz-fold{max-height:none!important;overflow:visible!important;-webkit-mask-image:none!important;mask-image:none!important}
 #chi-siamo.vz-fold + .vz-fold-btn{display:none!important}
+
+/* Pagina Argentina: foto vera del quadro in casa, prima dell'ordine */
+.vz-arg-home{max-width:520px;margin:34px auto 8px;padding:0 16px}
+.vz-arg-home img{display:block;width:100%;height:auto;border-radius:18px;box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.vz-arg-home figcaption{margin-top:10px;text-align:center;font:600 14px/1.4 var(--text,system-ui),sans-serif;color:var(--soft,#b4c3da)}

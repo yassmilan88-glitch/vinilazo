@@ -40,3 +40,8 @@
 /* pagina prodotto compatta: foto intera, senza bande ai lati */
 body.vz-compact-product .vz-photo-disclosure .vz-lifestyle-photo-group{max-width:340px}
 body.vz-compact-product .vz-photo-disclosure .vz-lifestyle-photo-group .vz-lifestyle-feature{max-height:none}
+
+/* tre miniature (foto in casa + frigo + set) */
+.vz-lifestyle-thumbs{flex-wrap:wrap}
+.vz-lifestyle-thumbs.is-three{gap:8px;flex-wrap:nowrap}.vz-lifestyle-thumbs.is-three .vz-lifestyle-thumb{flex-direction:column;gap:4px;padding:5px 8px 7px;font-size:12px;text-align:center}.vz-lifestyle-thumbs.is-three .vz-lifestyle-thumb img{width:56px;height:60px}
+@media(max-width:520px){.vz-lifestyle-thumbs.is-three{gap:6px}.vz-lifestyle-thumbs.is-three .vz-lifestyle-thumb{padding:5px 6px 7px}}
