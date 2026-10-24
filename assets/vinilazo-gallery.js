@@ -17,7 +17,7 @@
   if (!tr) return;
 
   // Ordine del carosello; gli ID sono quelli delle squadre del sito.
-  var order = ['inter', 'milan', 'juventus', 'real-madrid', 'barcelona', 'argentina', 'psg', 'bayern', 'liverpool', 'manchester-city',
+  var order = ['inter', 'milan', 'juventus', 'napoli', 'real-madrid', 'barcelona', 'argentina', 'psg', 'bayern', 'liverpool', 'manchester-city',
     'manchester-united', 'italia', 'brasile', 'francia', 'spagna', 'portogallo', 'germania', 'inghilterra', 'olanda', 'messico'];
   var kinds = ['tavolo', 'frigo', 'set'];
   // Foto vere in casa (prima immagine) per le edizioni che le hanno.

@@ -30,7 +30,7 @@ function anyTeamLink(cls,label,text){var a=make('a',cls,label);a.href='https://w
 var flags={argentina:'🇦🇷',brasile:'🇧🇷',francia:'🇫🇷',spagna:'🇪🇸',italia:'🇮🇹',germania:'🇩🇪',inghilterra:'🇬🇧',portogallo:'🇵🇹',olanda:'🇳🇱',messico:'🇲🇽'};
 var crestSlugs={
  argentina:'argentina-national-team',brasile:'brazil-national-team',francia:'france-national-team',spagna:'spain-national-team',italia:'italy-national-team',germania:'germany-national-team',inghilterra:'england-national-team',portogallo:'portugal-national-team',olanda:'netherlands-national-team-dutch',messico:'mexico-national-team',
- 'real-madrid':'real-madrid',barcelona:'fc-barcelona','manchester-united':'manchester-united',liverpool:'liverpool-fc',bayern:'bayern-munich',juventus:'juventus',milan:'ac-milan',inter:'inter-milan',psg:'paris-saint-germain-psg','manchester-city':'manchester-city'
+ 'real-madrid':'real-madrid',barcelona:'fc-barcelona','manchester-united':'manchester-united',liverpool:'liverpool-fc',bayern:'bayern-munich',juventus:'juventus',milan:'ac-milan',inter:'inter-milan',psg:'paris-saint-germain-psg','manchester-city':'manchester-city',napoli:'napoli'
 };
 function crestUrl(team){var slug=crestSlugs[team.id];return slug?'https://assets.footylogos.com/logos/'+slug+'/'+slug+'-logo-footylogos.svg':''}
 function teamMark(team,className){
@@ -187,7 +187,7 @@ var flagPatterns={
  olanda:['#AE1C28','#FFFFFF','#21468B',180],
  messico:['#006847','#FFFFFF','#CE1126',90]
 };
-var featuredIds=['argentina','milan','brasile','barcelona','francia','inter','italia','real-madrid','portogallo','liverpool'];
+var featuredIds=['argentina','milan','napoli','brasile','barcelona','francia','inter','italia','real-madrid','portogallo','liverpool'];
 var featured=featuredIds.map(function(id){return D.teams.find(function(x){return x.id===id})}).filter(Boolean);
 if(!featured.length)featured=(D.teams||[]).slice(0,8);
 function displayEdition(team){
@@ -566,10 +566,11 @@ function openGroup(group){
   en:['By request','Can’t find your team?','Ask us about customised teams and discs.','Request on WhatsApp'],
   de:['Auf Anfrage','Dein Team fehlt?','Frage nach individuell gestalteten Teams und Platten.','Per WhatsApp anfragen']
  }[locale]||[];
- var customName=group==='nat'?({it:'Marocco',es:'Marruecos',fr:'Maroc',en:'Morocco',de:'Marokko'}[locale]||'Marocco'):'Arsenal';
- var customIcon=group==='nat'?'🇲🇦':'ARS';
+ // Club: niente squadra d'esempio, solo l'invito a chiedere la propria.
+ var customName=group==='nat'?({it:'Marocco',es:'Marruecos',fr:'Maroc',en:'Morocco',de:'Marokko'}[locale]||'Marocco'):({it:'La tua squadra',es:'Tu equipo',fr:'Ton équipe',en:'Your team',de:'Dein Team'}[locale]||'La tua squadra');
+ var customIcon=group==='nat'?'🇲🇦':'+';
  var waText={it:['Ciao VINILAZO! Vorrei sapere se è possibile personalizzare un’edizione '+customName+' con 9 dischi e audio.','Ciao VINILAZO! Vorrei una squadra non presente sul sito oppure dischi personalizzati. Mi date informazioni?'],es:['¡Hola VINILAZO! Quisiera saber si es posible personalizar una edición '+customName+' con 9 discos y audio.','¡Hola VINILAZO! Quiero un equipo que no está en la web o discos personalizados. ¿Me pasan información?'],fr:['Bonjour VINILAZO ! Est-il possible de personnaliser une édition '+customName+' avec 9 disques et l’audio ?','Bonjour VINILAZO ! Je voudrais une équipe absente du site ou des disques personnalisés. Pouvez-vous me renseigner ?'],en:['Hi VINILAZO! Is it possible to customise a '+customName+' edition with 9 discs and audio?','Hi VINILAZO! I’d like a team that isn’t on the site, or custom discs. Can you tell me more?'],de:['Hallo VINILAZO! Ist eine individuelle '+customName+'-Edition mit 9 Platten und Audio möglich?','Hallo VINILAZO! Ich hätte gern ein Team, das nicht auf der Seite ist, oder individuelle Platten. Könnt ihr mir mehr dazu sagen?']}[locale]||[];
- var customPrompt=encodeURIComponent(waText[0]||'');
+ var customPrompt=encodeURIComponent((group==='nat'?waText[0]:(anyTeam&&anyTeam.wa)||waText[1])||'');
  var customCard=make('a','vz-flag-card vz-custom-card');
  customCard.href='https://wa.me/393295865883?text='+customPrompt;customCard.target='_blank';customCard.rel='noopener noreferrer';
  customCard.append(make('span','vz-custom-symbol',customIcon),make('strong','vz-flag-name',customName),make('small','vz-custom-hint',(anyTeam?anyTeam.hint:customWords[0])+' ↗'));
