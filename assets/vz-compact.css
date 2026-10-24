@@ -79,7 +79,7 @@ html.vz-no-audio .hero-disc,html.vz-no-audio .ed-disc,html.vz-no-audio .mini-dis
 .vz-page-context a{color:#b9dcff;text-decoration:underline;text-underline-offset:3px;min-height:32px;display:inline-flex;align-items:center}
 .vz-page-context strong{overflow-wrap:anywhere}
 body.vz-catalog-mode .vz-page-context{background:#08142a}
-html body .hero .product-disc{left:50.58%;top:41.67%;width:42%;line-height:0}
+html body .hero .product-disc{left:50.58%;top:41.67%;width:46.8%;line-height:0}
 html body .hero .product img{display:block}
 html.vz-no-audio .hero-disc,html.vz-no-audio .hero-disc.boost,html.vz-no-audio .tap{animation:none!important}
 html.vz-no-audio .tap,html.vz-no-audio .vz-play-indicator{display:none!important}
@@ -113,4 +113,14 @@ html.vz-no-audio .hero-disc::before,html.vz-no-audio .hero-disc::after{animation
  .vz-press-thumb{scroll-snap-align:start}
  .vz-lifestyle-card{scroll-snap-align:start}
  .hero .hd{padding-bottom:14px!important}
+}
+
+@media(max-width:360px){
+ html body header.top{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:8px;padding:10px 12px}
+ html body header.top .top-r{display:contents}
+ html body header.top .wordmark{grid-column:1;grid-row:1;font-size:22px}
+ html body header.top .vz-home-btn{grid-column:2;grid-row:1;margin:0;min-width:57px;padding:0 7px;font-size:12px}
+ html body header.top .lang{grid-column:3;grid-row:1;min-width:0}
+ html body header.top .lang select{width:100%;min-width:0;font-size:12px;padding:8px 19px 8px 7px}
+ html body header.top #team-pick{grid-column:1/-1;grid-row:2;width:100%}
 }
