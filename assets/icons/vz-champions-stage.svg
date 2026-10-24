@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200"><defs>
+<linearGradient id="t-silver" x1="0" y1="0" x2="1" y2=".15"><stop stop-color="#596879"/><stop offset=".17" stop-color="#eff9ff"/><stop offset=".29" stop-color="#91a6bb"/><stop offset=".51" stop-color="#fff"/><stop offset=".71" stop-color="#b4c5d4"/><stop offset="1" stop-color="#56718a"/></linearGradient>
+<linearGradient id="t-deep" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#0d233d"/><stop offset=".26" stop-color="#849caf"/><stop offset=".53" stop-color="#172f47"/><stop offset=".78" stop-color="#dbeaf6"/><stop offset="1" stop-color="#385373"/></linearGradient>
+<radialGradient id="bg" cx="50%" cy="62%" r="72%"><stop offset="0" stop-color="#1f5296"/><stop offset=".42" stop-color="#0d2a58"/><stop offset="1" stop-color="#040c1e"/></radialGradient>
+<linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef6ff" stop-opacity=".55"/><stop offset=".7" stop-color="#eef6ff" stop-opacity=".12"/><stop offset="1" stop-color="#eef6ff" stop-opacity="0"/></linearGradient>
+<radialGradient id="floor" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#bfe2ff" stop-opacity=".75"/><stop offset=".55" stop-color="#6fb2f0" stop-opacity=".28"/><stop offset="1" stop-color="#6fb2f0" stop-opacity="0"/></radialGradient>
+<radialGradient id="halo" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#d8ecff" stop-opacity=".45"/><stop offset="1" stop-color="#d8ecff" stop-opacity="0"/></radialGradient>
+<linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<mask id="refl" maskUnits="userSpaceOnUse" x="0" y="164" width="200" height="36"><rect x="0" y="164" width="200" height="36" fill="url(#fade)"/></mask>
+<filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="6"/></filter>
+<filter id="bokeh" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.2"/></filter>
+<g id="cup"><g transform="translate(46.62 42.00) scale(0.7625)">
+<path d="M42 43C27 35 25 20 36 11c10-9 20-3 22 7 1 7-3 10-8 10-6 0-6-6-3-9 4-3 2-6-2-6-8 0-13 7-11 15 1 8 6 12 14 16" fill="none" stroke="url(#t-silver)" stroke-width="7" stroke-linecap="round"/>
+<path d="M98 43c15-8 17-23 6-32-10-9-20-3-22 7-1 7 3 10 8 10 6 0 6-6 3-9-4-3-2-6 2-6 8 0 13 7 11 15-1 8-6 12-14 16" fill="none" stroke="url(#t-silver)" stroke-width="7" stroke-linecap="round"/>
+<path d="M39 42c3-4 12-8 31-8s28 4 31 8c-4 21-9 42-13 56-3 11-12 17-18 17s-15-6-18-17C48 84 43 63 39 42Z" fill="url(#t-silver)" stroke="#f7fbff" stroke-width="1.5"/>
+<path d="M48 49c2 13 7 30 11 47 2 7 7 12 11 14-10-7-16-31-22-61Z" fill="#425c77" opacity=".75"/>
+<path d="M88 48c-3 14-7 34-13 54 12-8 16-29 21-53Z" fill="#e1f3ff" opacity=".8"/>
+<ellipse cx="70" cy="42" rx="31.4" ry="8.6" fill="url(#t-deep)" stroke="#eff9ff" stroke-width="3"/><ellipse cx="70" cy="41" rx="24" ry="4" fill="#41566e" stroke="#d6e8f8" stroke-width="1.2"/>
+<path d="M54 56q16 7 32 0" fill="none" stroke="#fff" stroke-width="2" opacity=".8"/>
+<path d="M61 114h18l-2 13h-14Z" fill="url(#t-silver)"/><ellipse cx="70" cy="129" rx="20" ry="4.5" fill="url(#t-deep)" stroke="#eef7ff" stroke-width="2"/>
+<path d="M53 128h34l9 17H44Z" fill="url(#t-silver)" stroke="#e8f7ff" stroke-width="1.5"/><ellipse cx="70" cy="146" rx="27" ry="5" fill="url(#t-deep)" stroke="#e8f6ff" stroke-width="3"/>
+<path d="M51 49c4-1 8-2 12-2" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".9"/></g></g></defs>
+<rect width="200" height="200" fill="url(#bg)"/>
+<g filter="url(#bokeh)" fill="#cfe6ff"><circle cx="34" cy="58" r="5" opacity=".16"/><circle cx="168" cy="46" r="7" opacity=".12"/><circle cx="152" cy="98" r="4" opacity=".18"/><circle cx="46" cy="122" r="6" opacity=".1"/><circle cx="178" cy="132" r="3.5" opacity=".14"/><circle cx="22" cy="92" r="3" opacity=".14"/></g>
+<path d="M84 -12h32l58 186H26Z" fill="url(#beam)" filter="url(#soft)"/>
+<ellipse cx="100" cy="102" rx="54" ry="62" fill="url(#halo)"/>
+<ellipse cx="100" cy="166" rx="74" ry="13" fill="url(#floor)"/>
+<g mask="url(#refl)" opacity=".55"><use xlink:href="#cup" href="#cup" transform="translate(0 330) scale(1 -1)"/></g>
+<use xlink:href="#cup" href="#cup"/>
+</svg>
