@@ -132,3 +132,14 @@ html body .vz-choice .vz-choice-orb,
 html body .vz-choice .vz-choice-orb-mark{width:64px;height:64px;flex:none;transform:none!important;animation:none!important}
 html body .vz-choice .vz-choice-orb-mark .vz-trophy-asset{width:84%!important;height:94%!important;object-fit:contain!important}
 html body .vz-choice .vz-choice-centre strong{transform:none!important;line-height:1.2;margin:0}
+
+/* The personal request is visible without opening the team picker. */
+.vz-personal-memory{max-width:960px;margin:clamp(30px,6vw,65px) auto;padding:clamp(25px,5vw,45px);border:1px solid #bfd9f347;border-radius:22px;background:linear-gradient(130deg,#15334e,#0c1c32);text-align:left}
+.vz-personal-memory h2{margin:0 0 16px;color:#fff}
+.vz-personal-memory > p{max-width:55ch;margin:0 0 24px;color:#e0eaf5;font:500 clamp(16px,2vw,20px)/1.7 var(--text,system-ui)}
+.vz-personal-memory-cta{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 19px;border-radius:99px;background:#eef7ff;color:#0a213b;font:800 15px/1.4 var(--text,system-ui);text-decoration:none}
+.vz-personal-memory-cta:focus-visible{outline:3px solid #f4ce79;outline-offset:4px}
+html body .vz-emotion-phrase{opacity:0;translate:0 14px;transition:opacity .75s ease,translate .75s cubic-bezier(.2,.7,.2,1)}
+html body .vz-emotion-phrase.vz-emotion-visible{opacity:1;translate:0 0}
+@media(max-width:700px){.vz-personal-memory{margin:30px 16px;padding:25px 21px}}
+@media(prefers-reduced-motion:reduce){html body .vz-emotion-phrase{opacity:1;translate:none;transition:none}}

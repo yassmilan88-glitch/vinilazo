@@ -148,3 +148,40 @@
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
+
+/* The visitor's own goal and shared memory, in Home and each edition. */
+(function(){
+ 'use strict';
+ var copy={"it":["Hai un gol nel cuore?","Magari è quello che hai festeggiato con tuo padre, con un amico o con una persona speciale. Abbiamo scelto alcuni gol da rivivere, ma il tuo ricordo potrebbe essere un altro. Raccontacelo: lo faremo rivivere sul tuo VINILAZO.","Raccontaci il tuo gol"],"es":["¿Hay un gol que llevás en el corazón?","Capaz lo gritaste con tu viejo, con un amigo o con alguien especial. Elegimos algunos goles para volver a vivirlos, pero el tuyo puede ser otro. Contanos cuál: lo hacemos volver en tu VINILAZO.","Contanos tu gol"],"fr":["Tu as un but dans le cœur ?","Peut-être celui que tu as fêté avec ton père, un ami ou une personne qui compte pour toi. Nous avons choisi quelques buts à revivre, mais ton souvenir est peut-être ailleurs. Raconte-nous : on le fera revivre sur ton VINILAZO.","Raconte-nous ton but"],"en":["Is there a goal close to your heart?","Maybe you celebrated it with your dad, a friend or someone special. We’ve picked some goals to relive, but yours might be a different one. Tell us about it. We’ll bring it back on your VINILAZO.","Tell us your goal"],"de":["Gibt es ein Tor, das dir am Herzen liegt?","Vielleicht hast du es mit deinem Vater, einem Freund oder einem besonderen Menschen gefeiert. Wir haben einige Tore zum Wiedererleben ausgesucht. Aber dein schönster Moment war vielleicht ein anderer. Erzähl uns davon. Wir lassen ihn auf deinem VINILAZO wieder aufleben.","Erzähl uns von deinem Tor"]};
+ function boot(){
+  var lang=(document.documentElement.lang||'it').slice(0,2),t=copy[lang]||copy.en;
+  var home=document.body.classList.contains('vz-catalog-mode');
+  var section=document.createElement('section');section.className='vz-personal-memory';section.id='il-tuo-gol';
+  section.setAttribute('aria-labelledby','vz-personal-memory-title');
+  var h=document.createElement('h2');h.id='vz-personal-memory-title';h.textContent=t[0];
+  var p=document.createElement('p');p.textContent=t[1];
+  var a=document.createElement('a');a.className='vz-personal-memory-cta';a.textContent=t[2]+' →';
+  var prompts={it:'Ciao VINILAZO! Ho un gol nel cuore e vorrei farlo rivivere sul mio disco. Il gol e il ricordo sono: ',es:'¡Hola VINILAZO! Quiero personalizar un disco con un gol especial. El gol y mi recuerdo son: ',fr:'Bonjour VINILAZO ! Je voudrais un disque avec un but qui compte pour moi. Mon but et mon souvenir : ',en:'Hi VINILAZO! I’d love a custom disc with a goal that means something to me. The goal and my memory: ',de:'Hallo VINILAZO! Ich möchte eine Platte mit einem besonderen Tor. Mein Tor und meine Erinnerung: '};
+  a.href='https://wa.me/393295865883?text='+encodeURIComponent(prompts[lang]||prompts.en);a.target='_blank';a.rel='noopener noreferrer';
+  section.append(h,p,a);
+  var anchor=home?document.getElementById('vz-press'):document.getElementById('momento');
+  if(anchor)anchor.before(section);
+  // The team picker keeps the same invitation if the visitor opens it later.
+  function updateRequests(){
+   document.querySelectorAll('.vz-request-other,.vz-picker-request').forEach(function(box){
+    var title=box.querySelector('h3,strong'),text=box.querySelector('h3 + p,strong + p');
+    if(title&&title.textContent!==t[0])title.textContent=t[0];
+    if(text&&text.textContent!==t[1])text.textContent=t[1];
+   });
+  }
+  updateRequests();
+  var stage=document.getElementById('vz-teams-stage');
+  if(stage)new MutationObserver(updateRequests).observe(stage,{childList:true,subtree:true});
+  // One subtle entrance per phrase, with reduced-motion support.
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver' in window))return;
+  var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('vz-emotion-visible');observer.unobserve(entry.target);}});},{threshold:.15,rootMargin:'0px 0px -20px 0px'});
+  var selectors='.vz-personal-memory h2,.vz-personal-memory > p,.moment h2,.moment .poem p.hit,.moment-after,.vz-press-intro h2,.vz-press-statement,.vz-gift-home h2,#gift-heading,.vz-about-sign';
+  document.querySelectorAll(selectors).forEach(function(el){el.classList.add('vz-emotion-phrase');observer.observe(el);});
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();
