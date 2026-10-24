@@ -119,3 +119,32 @@
   function start() { homeBtn(); run(); headroom(); headCta(); setTimeout(function () { homeBtn(); run(); headCta(); }, 1500); }
   if (document.readyState === 'complete') start(); else window.addEventListener('load', start, { once: true });
 })();
+
+/* Recognisable Home / product context; no changes to purchase or tracking. */
+(function(){
+ function boot(){
+  var source=document.getElementById('data');if(!source)return;
+  var data;try{data=JSON.parse(source.textContent)}catch(e){return;}
+  var lang=data.lang||'it';
+  var labels={it:['Home','Collezione','Edizione','Hai un gol nel cuore?','Magari è quello che hai festeggiato con una persona speciale. Raccontacelo, lo faremo rivivere sul tuo VINILAZO'],es:['Inicio','Colección','Edición'],fr:['Accueil','Collection','Édition'],en:['Home','Collection','Edition'],de:['Start','Kollektion','Edition']}[lang]||['Home','Collection','Edition'];
+  var home=document.body.classList.contains('vz-catalog-mode');
+  var base=/\/argentina\/?$/.test(location.pathname)?'../':'./';
+  var head=document.querySelector('header.top');if(!head)return;
+  var brand=head.querySelector('.wordmark');if(brand){brand.href=base;brand.setAttribute('aria-label','VINILAZO · '+labels[0]);}
+  var nav=document.createElement('nav');nav.className='vz-page-context';nav.setAttribute('aria-label',labels[1]);
+  var link=document.createElement('a');link.href=base;link.textContent=labels[0];nav.append(link);
+  if(home){link.setAttribute('aria-current','page');var collection=document.createElement('strong');collection.textContent=' · '+labels[1]+' VINILAZO';nav.append(collection);}
+  else{
+   var sep=document.createElement('span');sep.textContent='›';sep.setAttribute('aria-hidden','true');nav.append(sep);
+   var title=document.createElement('strong');title.setAttribute('aria-current','page');nav.append(title);
+   function update(){var name=document.querySelector('#team-pick [data-team-name]')?.textContent.trim()||data.team?.name||'';title.textContent=labels[2]+' '+name;document.title='VINILAZO · '+labels[2]+' '+name;}
+   update();var nameNode=document.querySelector('#team-pick [data-team-name]');if(nameNode)new MutationObserver(update).observe(nameNode,{childList:true,subtree:true,characterData:true});
+  }
+  head.after(nav);
+  if(lang==='it'){
+   document.querySelectorAll('.vz-request-other').forEach(function(box){var title=box.querySelector('h3'),text=box.querySelector('h3 + p');if(title)title.textContent=labels[3];if(text)text.textContent=labels[4];});
+   var faq=document.querySelectorAll('.faq details');faq.forEach(function(detail){if(/personalizz/i.test(detail.querySelector('summary')?.textContent||'')){var p=detail.querySelector('p');if(p)p.textContent=labels[3]+' '+labels[4];}});
+  }
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();

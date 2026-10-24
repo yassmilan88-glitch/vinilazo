@@ -321,6 +321,7 @@
   function setTexts(t) {
     // Solo le edizioni con audio sul sito (per ora Argentina) mostrano i dischi che girano.
     root.classList.toggle("vz-no-audio", t.id !== "argentina");
+    if (vzPreviewAudio) { vzPreviewAudio.pause(); vzPreviewAudio = null; }
     $$("[data-team-name]").forEach(function (el) { el.textContent = t.name; });
     $$("[data-edition]").forEach(function (el) { el.textContent = T.edition + " " + t.name; });
     $$("[data-eta]").forEach(function (el) { el.textContent = t.ready ? T.price_ready : T.price_note; });
@@ -881,7 +882,7 @@
     var former = Math.max(0, Number(hero.dataset.currentDisc || "1")-1);
     var oldMarkup = hero.innerHTML;
     var nextMarkup = discSVG(team, gOpts(team, team.goals[index]));
-    var canMove = !window.matchMedia("(prefers-reduced-motion: reduce)").matches && thumb && hero.animate;
+    var canMove = team.id === "argentina" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches && thumb && hero.animate;
     if (canMove) {
       var from = thumb.getBoundingClientRect(), to = hero.getBoundingClientRect();
       function flight(markup, start, finish, reverse) {
