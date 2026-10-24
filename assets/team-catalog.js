@@ -151,7 +151,7 @@ if(anyTeam)choose.append(anyTeamLink('vz-any-team-line',anyTeam.hero+' →'));
 function setTrophy(button,group){
  var mark=button.querySelector('.vz-choice-orb-mark');if(!mark)return;
  var icon=make('img','vz-trophy-asset');
- icon.src=group==='nat'?'../assets/icons/vz-world-cup-stage.svg?v=mobile20261024c':'../assets/icons/vz-champions-stage.svg?v=mobile20261024c';
+ icon.src=group==='nat'?'../assets/icons/vz-world-cup-stage.svg?v=premium1':'../assets/icons/vz-champions-stage.svg?v=premium1';
  icon.alt='';icon.setAttribute('aria-hidden','true');
  icon.width=200;icon.height=200;icon.decoding='async';
  mark.replaceChildren(icon);
