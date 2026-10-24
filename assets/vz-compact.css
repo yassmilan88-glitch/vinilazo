@@ -124,3 +124,11 @@ html.vz-no-audio .hero-disc::before,html.vz-no-audio .hero-disc::after{animation
  html body header.top .lang select{width:100%;min-width:0;font-size:12px;padding:8px 19px 8px 7px}
  html body header.top #team-pick{grid-column:1/-1;grid-row:2;width:100%}
 }
+
+/* Keep both trophies upright at the same visual scale, including selection. */
+html body .vz-choice .vz-choice-vinyl{transform:none!important;animation:none!important}
+html body .vz-choice .vz-choice-centre{gap:3px;justify-content:center}
+html body .vz-choice .vz-choice-orb,
+html body .vz-choice .vz-choice-orb-mark{width:64px;height:64px;flex:none;transform:none!important;animation:none!important}
+html body .vz-choice .vz-choice-orb-mark .vz-trophy-asset{width:84%!important;height:94%!important;object-fit:contain!important}
+html body .vz-choice .vz-choice-centre strong{transform:none!important;line-height:1.2;margin:0}
