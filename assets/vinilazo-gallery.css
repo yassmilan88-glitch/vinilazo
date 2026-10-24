@@ -1,4 +1,4 @@
-/* VINILAZO — galleria edizioni (illustrazioni "sul frigo" e "set completo"), non recensioni di clienti. */
+/* VINILAZO — foto sul frigo che cambia squadra (home) e galleria edizioni (pagina prodotto); non recensioni di clienti. */
 .vz-lifestyle-gallery{color:#f3f6fb;background:linear-gradient(145deg,#09172f,#0c2140);border-top:1px solid rgba(255,255,255,.11);border-bottom:1px solid rgba(255,255,255,.11);overflow:hidden}
 .vz-lifestyle-gallery[hidden]{display:none!important}
 .vz-lifestyle-catalog{padding:clamp(50px,7vw,95px) clamp(16px,5vw,70px)}
@@ -45,3 +45,41 @@ body.vz-compact-product .vz-photo-disclosure .vz-lifestyle-photo-group .vz-lifes
 .vz-lifestyle-thumbs{flex-wrap:wrap}
 .vz-lifestyle-thumbs.is-three{gap:8px;flex-wrap:nowrap}.vz-lifestyle-thumbs.is-three .vz-lifestyle-thumb{flex-direction:column;gap:4px;padding:5px 8px 7px;font-size:12px;text-align:center}.vz-lifestyle-thumbs.is-three .vz-lifestyle-thumb img{width:56px;height:60px}
 @media(max-width:520px){.vz-lifestyle-thumbs.is-three{gap:6px}.vz-lifestyle-thumbs.is-three .vz-lifestyle-thumb{padding:5px 6px 7px}}
+
+/* home: una foto sul frigo che cambia squadra da sola */
+.vz-fridge-wrap{display:grid;grid-template-columns:minmax(0,500px) minmax(0,400px);justify-content:center;align-items:center;gap:clamp(26px,5vw,76px);max-width:1080px;margin:0 auto}
+.vz-fridge-stage{min-width:0}
+.vz-fridge-frame{position:relative;display:block;aspect-ratio:1000 / 1080;border-radius:20px;overflow:hidden;background:#1a2638;border:1px solid rgba(255,255,255,.16);box-shadow:0 34px 90px rgba(0,0,0,.42),0 0 0 1px rgba(0,0,0,.2);isolation:isolate}
+.vz-fridge-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.015);transition:opacity .9s ease,transform 3.6s ease-out}
+.vz-fridge-img.is-on{opacity:1;transform:scale(1)}
+.vz-fridge-badge{position:absolute;left:14px;bottom:14px;z-index:2;display:flex;flex-direction:column;gap:1px;max-width:calc(100% - 28px);padding:8px 15px 9px 13px;border-radius:12px;background:rgba(7,17,35,.74);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-left:4px solid var(--vz-photo-accent,#74acdf);color:#fff;line-height:1.15}
+.vz-fridge-badge small{font:800 10px/1.3 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#a9c3e2}
+.vz-fridge-badge strong{font-size:17px;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vz-fridge-progress{height:3px;margin:13px 6px 0;border-radius:3px;background:rgba(255,255,255,.12);overflow:hidden}
+.vz-fridge-progress i{display:block;width:100%;height:100%;background:var(--vz-photo-accent,#74acdf);transform:scaleX(0);transform-origin:left center}
+.vz-fridge-show.is-playing .vz-fridge-progress i{animation:vzFridgeBar 3s linear forwards}
+@keyframes vzFridgeBar{to{transform:scaleX(1)}}
+.vz-fridge-side{min-width:0;text-align:left}
+.vz-fridge-team{display:block;font-family:var(--display,"Arial Narrow",sans-serif);font-size:clamp(34px,4.4vw,58px);line-height:1.02;letter-spacing:.005em;color:#fff;text-shadow:0 0 28px color-mix(in srgb,var(--vz-photo-accent,#74acdf) 45%,transparent)}
+.vz-fridge-goal{margin:10px 0 0;color:#c1d0e4;font-size:16px;line-height:1.45}
+.vz-fridge-side .vz-lifestyle-cta{margin-top:20px;background:var(--vz-photo-accent,#74acdf);color:#08142a}
+.vz-fridge-controls{justify-content:flex-start;margin-top:22px}
+.vz-fridge-toggle{font-size:15px;letter-spacing:-.08em}
+.vz-fridge-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}
+.vz-fridge-chip{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:5px 11px 5px 7px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:#122743;color:#d4e0ef;font:700 13px/1.1 var(--text,system-ui),sans-serif;cursor:pointer;transition:border-color .2s ease,background .2s ease,color .2s ease}
+.vz-fridge-chip i{width:15px;height:15px;flex:none;border-radius:50%;background:linear-gradient(90deg,var(--vz-chip-a) 50%,var(--vz-chip-b) 50%);box-shadow:0 0 0 1px rgba(255,255,255,.3)}
+.vz-fridge-chip:hover{border-color:rgba(255,255,255,.4)}
+.vz-fridge-chip.is-active{border-color:var(--vz-photo-accent,#74acdf);background:#1c3a60;color:#fff}
+.vz-fridge-chip:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.vz-fridge-show .vz-lifestyle-disclaimer{max-width:720px;margin:26px auto 0}
+@media(max-width:860px){
+ .vz-fridge-wrap{grid-template-columns:1fr;gap:22px}
+ .vz-fridge-stage{width:100%;max-width:470px;justify-self:center}
+ .vz-fridge-side{text-align:center}
+ .vz-fridge-badge{display:none}
+ .vz-fridge-controls{justify-content:center}
+ .vz-fridge-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding:2px 2px 6px;margin-left:-15px;margin-right:-15px;padding-left:15px;padding-right:15px;scroll-padding:0 15px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 15px,#000 calc(100% - 15px),transparent);mask-image:linear-gradient(90deg,transparent,#000 15px,#000 calc(100% - 15px),transparent)}
+ .vz-fridge-chips::-webkit-scrollbar{display:none}
+ .vz-fridge-chip{flex:none}
+}
+@media(prefers-reduced-motion:reduce){.vz-fridge-img{transition:none;transform:none}.vz-fridge-show.is-playing .vz-fridge-progress i{animation:none}}

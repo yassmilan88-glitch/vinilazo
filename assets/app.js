@@ -92,7 +92,7 @@
       var top = (opts.top || t.name).toUpperCase();
       var fsT = opts.minute ? 24 : fit(top, 70, 12.5);
       var big = (opts.big || "VINILAZO").toUpperCase(), small = (opts.small || "").toUpperCase();
-      var fsB = fit(big, 90, opts.big ? 21 : 12), fsS = fit(small, 86, 8.4);
+      var fsB = fit(big, 90, opts.big ? 21 : 12), fsS = Math.min(8.4, 84 / (Math.max(1, small.length) * 0.66));
       var yB = small ? 124 : 128;
       s += '<g fill="' + ink + '"' + deco + ' text-anchor="middle">' +
            '<text x="100" y="' + (opts.minute ? 92 : 86) + '" font-family="Big Shoulders Display, Arial Narrow, sans-serif" font-weight="900" font-size="' + fsT.toFixed(1) + '">' + esc(top) + "</text>" +
