@@ -25,13 +25,16 @@
   var TEAMS = {};
   teamsData().forEach(function (x) { TEAMS[x.id] = x; });
   if (argentinaPage && !TEAMS.argentina) TEAMS.argentina = { id: 'argentina', name: 'Argentina', cols: ['#74ACDF', '#FFFFFF', '#F6B40E'], ready: true };
+  // Le pagine Argentina non hanno l'elenco completo delle squadre: lì il carrello viene solo contato, non modificato.
+  var fullList = Object.keys(TEAMS).length > 5;
+  function known(id) { return !!TEAMS[id] || (!fullList && typeof id === 'string' && /^[a-z-]{2,40}$/.test(id)); }
 
   function load() {
     var raw = null;
     try { raw = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { raw = null; }
     var list = Array.isArray(raw) ? raw : memory, out = [], n = 0;
     list.forEach(function (i) {
-      if (!i || !TEAMS[i.id] || out.some(function (o) { return o.id === i.id; })) return;
+      if (!i || !known(i.id) || out.some(function (o) { return o.id === i.id; })) return;
       var q = Math.max(1, Math.min(MAX - n, Math.floor(Number(i.qty) || 0)));
       if (q > 0 && n < MAX) { out.push({ id: i.id, qty: q }); n += q; }
     });
@@ -183,7 +186,8 @@
     drawer.appendChild(ul);
     if (shopMode() && n < MAX) {
       var more = el('button', 'vz-cart-another', t.another); more.type = 'button';
-      more.addEventListener('click', function () { closeDrawer(); var p = document.getElementById('team-pick'); if (p) p.click(); });
+      // Apertura dopo il click: altrimenti il "clic fuori" del selettore lo richiude subito.
+      more.addEventListener('click', function () { closeDrawer(); setTimeout(function () { var p = document.getElementById('team-pick'); if (p) p.click(); }, 0); });
       drawer.appendChild(more);
     }
     var foot = el('div', 'vz-cart-foot');
