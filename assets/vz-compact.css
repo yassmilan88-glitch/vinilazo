@@ -278,3 +278,12 @@ html body .vz-choose-heading{font-family:var(--display,"Big Shoulders Display","
 html body .vz-press-statement::after,html body .vz-press-statement::before,html body .vz-fridge-show .vz-lifestyle-title::after{content:none!important;display:none!important}
 html body .vz-press-statement{padding:11px 22px!important}
 html body .vz-fridge-show .vz-lifestyle-title{animation:none!important;padding-bottom:0!important;text-shadow:none}
+
+/* "Da dove cominciamo?" nei colori del sito (azzurro → oro) e distanze rifatte:
+   l'alone delle icone esce di 24px, quindi più aria sopra e sotto le icone */
+html body .vz-choose-heading{color:#8fd3ff!important;background:linear-gradient(100deg,#8fd3ff 0%,#cfeaff 48%,#ffe1a3 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:40px!important}
+html body .vz-any-team-line{margin-top:36px!important}
+@media(max-width:720px){
+ html body .vz-hero-product{margin-top:18px!important;margin-bottom:36px!important}
+}
+@media(forced-colors:active){html body .vz-choose-heading{background:none;-webkit-text-fill-color:CanvasText}}
