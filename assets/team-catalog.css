@@ -569,3 +569,8 @@ body:not(.vz-catalog-mode) .hero-copy .vz-sub-extra[hidden]{display:none!importa
 .vz-care-note{margin:8px 0 0;font:600 13px/1.45 var(--text,system-ui),sans-serif;color:var(--soft,#cbdbec)}
 .vz-care-note::before{content:'✓ ';color:var(--acc,#7fd1a0);font-weight:900}
 @media(max-width:720px){.vz-any-team-line{font-size:13px;margin:16px auto 0;max-width:330px}}
+
+/* Coppe su palco illuminato (scena intera dentro il tondo, niente ritaglio su sfondo chiaro) */
+.vz-choice-orb{background:#06132a!important;animation:none!important;transform:none!important}
+.vz-choice .vz-choice-orb-mark{width:100%!important;height:100%!important;border-radius:50%;overflow:hidden!important;filter:none!important}
+.vz-choice .vz-choice-orb-mark .vz-trophy-asset{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover;display:block;transform:none!important;filter:none!important}
