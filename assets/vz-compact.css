@@ -162,3 +162,7 @@ html body .vz-about-sign{color:#f4f7fc!important;font-style:normal;line-height:1
 @keyframes vz-quote-light{0%,20%{background-position:100% 50%}75%,100%{background-position:0% 50%}}
 @media(prefers-reduced-motion:reduce){.vz-about-quote{animation:none!important;background:none;color:#f4f7fc;-webkit-text-fill-color:#f4f7fc}}
 @media(forced-colors:active){.vz-about-quote{background:none;color:CanvasText;-webkit-text-fill-color:CanvasText;text-shadow:none}}
+
+/* Keep the closing quotation visible instead of fading it inside a collapsed section. */
+html body #chi-siamo.vz-fold{max-height:none!important;overflow:visible!important;-webkit-mask-image:none!important;mask-image:none!important}
+#chi-siamo.vz-fold + .vz-fold-btn{display:none!important}
