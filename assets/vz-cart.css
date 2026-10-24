@@ -9,8 +9,10 @@ body.pp .pp-hero .buy .vz-add-cart{min-height:46px;font-size:15px}
 @media(max-width:560px){.hero .buy{flex-direction:column;align-items:stretch;gap:10px!important}.hero .buy .btn{width:100%}}
 
 /* barra fissa in basso */
-.vz-sticky-add{flex:none;display:grid;place-items:center;width:54px;height:54px;border-radius:999px;border:2px solid #F6FBFF;background:#F6FBFF;color:#08142A;cursor:pointer}
-.vz-sticky-add svg{width:26px;height:26px}
+.vz-sticky-add{flex:none;display:grid;place-items:center;width:48px;height:48px;border-radius:999px;border:2px solid #F6FBFF;background:#F6FBFF;color:#08142A;cursor:pointer}
+.vz-sticky-add svg{width:24px;height:24px}
+.sticky:has(.vz-sticky-add) .btn{font-size:18px;padding:0 18px;min-height:48px}
+@media(max-width:380px){.sticky:has(.vz-sticky-add) .btn{font-size:16px;padding:0 14px}}
 .vz-sticky-add:focus-visible{outline:3px solid var(--acc,#74acdf);outline-offset:2px}
 
 /* icona nell'intestazione */
@@ -23,6 +25,10 @@ body.pp .pp-hero .buy .vz-add-cart{min-height:46px;font-size:15px}
 .vz-cart-btn.vz-bump{animation:vzCartBump .45s ease}
 @keyframes vzCartBump{0%{transform:scale(1)}40%{transform:scale(1.18)}100%{transform:scale(1)}}
 @media(max-width:480px){.vz-cart-btn{width:40px;height:40px}.vz-cart-btn svg{width:21px;height:21px}}
+/* telefono: l'icona va nella riga della squadra, così la lingua resta in alto */
+@media(max-width:700px){body:not(.vz-catalog-mode) .top .vz-cart-btn{order:4;width:52px;height:52px}body:not(.vz-catalog-mode) header.top:has(.vz-cart-btn:not([hidden])) .team-pick{width:auto;flex:1 1 calc(100% - 80px);min-width:0}body.vz-catalog-mode .top .vz-cart-btn{order:3;width:42px;height:42px}}
+@media(max-width:420px){body.vz-catalog-mode header.top:has(.vz-cart-btn:not([hidden])) .wordmark{font-size:25px}}
+@media(max-width:380px){body:not(.vz-catalog-mode) header.top:has(.vz-cart-btn:not([hidden])) .team-pick b{font-size:18px}}
 
 /* pannello */
 .vz-cart-backdrop{position:fixed;inset:0;z-index:2147483000;background:rgba(3,9,20,.62);opacity:0;transition:opacity .2s ease}
@@ -66,7 +72,7 @@ html.vz-cart-open{overflow:hidden}
 
 /* riepilogo carrello nel modulo d'ordine */
 .vz-cart-review{display:none}
-.vz-cart-mode .vz-cart-review{display:block;margin:4px 0 14px;padding:14px 16px;border:1px solid var(--line,rgba(255,255,255,.14));border-radius:14px}
+.vz-cart-mode .vz-cart-review{display:block;margin:4px 0 14px;padding:14px 16px;border:1px solid rgba(8,20,42,.14);background:rgba(8,20,42,.04);border-radius:14px}
 .vz-cart-review ul{list-style:none;margin:0 0 8px;padding:0}
 .vz-cart-review li{padding:3px 0;font-size:16px}
 .vz-cart-edit{padding:0;border:0;background:none;color:var(--acc,#74acdf);font:700 14px/1.2 var(--text,system-ui),sans-serif;text-decoration:underline;text-underline-offset:3px;cursor:pointer}

@@ -45,6 +45,8 @@ p{margin:0 0 12px;color:var(--soft)}
     en: ['Thank you for choosing VINILAZO', 'Check the confirmation and receipt Stripe sent to the email used for payment. This page on its own does not confirm the charge.', 'If in doubt, ask us to check your order before paying again.', 'Your order reference', 'Message us on WhatsApp', 'Back to the site', 'Hi VINILAZO! I’ve just paid for my order', 'Your payment · VINILAZO'],
     de: ['Danke, dass du dich für VINILAZO entschieden hast', 'Prüfe die Bestätigung und die Quittung, die Stripe an die bei der Zahlung verwendete E-Mail-Adresse geschickt hat. Diese Seite allein bestätigt die Abbuchung nicht.', 'Im Zweifel bitte uns, deine Bestellung zu prüfen, bevor du erneut zahlst.', 'Deine Bestellnummer', 'Schreib uns auf WhatsApp', 'Zurück zur Seite', 'Hallo VINILAZO! Ich habe gerade meine Bestellung bezahlt', 'Deine Zahlung · VINILAZO']
   };
+  // Pagamento completato su Stripe: svuota il carrello.
+  try { localStorage.removeItem('vinilazo-cart'); } catch (e) {}
   var q = (location.search.match(/[?&]lang=([a-z]{2})/) || [])[1];
   var nav = ((navigator.languages && navigator.languages[0]) || navigator.language || 'it').slice(0, 2).toLowerCase();
   var lang = T[q] ? q : (T[nav] ? nav : 'it');

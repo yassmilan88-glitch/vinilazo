@@ -89,8 +89,8 @@
       });
     }, { passive: true });
   }
-  // Computer: "Ordina · prezzo" nell'intestazione quando il pulsante principale esce dallo schermo
-  var CTA = { it: 'Ordina', es: 'Pedir', fr: 'Commander', en: 'Order', de: 'Bestellen' };
+  // Computer: "Compra subito · prezzo" nell'intestazione quando il pulsante principale esce dallo schermo
+  var CTA = { it: 'Compra subito', es: 'Comprar ahora', fr: 'Acheter', en: 'Buy now', de: 'Jetzt kaufen' };
   function headCta() {
     var head = document.querySelector('header.top'), main = document.querySelector('.hero .buy a[data-cta]');
     if (!head || !main || head.querySelector('.vz-head-cta') || !main.offsetParent || !('IntersectionObserver' in window)) return;

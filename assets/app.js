@@ -569,6 +569,7 @@
   }
   function updateSummary() {
     if (!CHECKOUT || !current) return;
+    if (cart) { cartSummary(); return; }
     $("#summary-product").textContent = fill(CHECKOUT.product, { team: current.name });
     $("#summary-unit").textContent = fmt(PRICE);
     $("#summary-qty").textContent = qty;
@@ -594,7 +595,70 @@
   function baseTotal() { return Math.floor(qty / 2) * PAIR_PRICE + (qty % 2) * PRICE; }
   var ADDON = CFG.CUSTOM_PRICE || 10;
   function custom() { var c = $("#f-custom"); return !!(c && c.checked); }
-  function total() { return baseTotal() + (custom() ? ADDON : 0); }
+  function total() { return cart ? cartTotal(cartCount()) : baseTotal() + (custom() ? ADDON : 0); }
+
+  /* ---------- carrello: ordine con più squadre (gestito da vz-cart.js) ---------- */
+  var cart = null, cartWords = {}, CART_MAX = 6;
+  function cartCount() { return cart ? cart.reduce(function (a, i) { return a + i.qty; }, 0) : 0; }
+  function cartTotal(n) { return Math.round((Math.floor(n / 2) * PAIR_PRICE + (n % 2) * PRICE) * 100) / 100; }
+  function cartLabel() { return cart.map(function (i) { return BY_ID[i.id].name + " × " + i.qty; }).join(" · "); }
+  function cartSummary() {
+    var n = cartCount(), f = $("#order-form"), sum = cartTotal(n), saving = Math.round((n * PRICE - sum) * 100) / 100;
+    $("#summary-product").textContent = fill(CHECKOUT.product, { team: cart.length === 1 ? BY_ID[cart[0].id].name : cart.map(function (i) { return BY_ID[i.id].name; }).join(" + ") });
+    $("#summary-unit").textContent = fmt(PRICE);
+    $("#summary-qty").textContent = n;
+    $("#summary-total").textContent = fmt(sum);
+    $("#summary-discount-row").hidden = saving <= 0;
+    $("#summary-discount").textContent = "−" + fmt(saving);
+    $("#summary-editions").textContent = STORE.sum_editions + ": " + cartLabel();
+    f.elements.squadra.value = cartLabel();
+    f.elements.squadra_id.value = cart.map(function (i) { return i.id + ":" + i.qty; }).join(",");
+    f.elements.dischi_storici.value = "";
+    f.elements.quantita.value = n;
+    f.elements.totale.value = fmt(sum);
+    f.elements.seconda_squadra.value = ""; f.elements.squadra_id_2.value = ""; f.elements.quantita_seconda_squadra.value = 0;
+    f.elements.regalo.value = $("#f-gift").checked ? "yes" : "no";
+    var eta = cart.every(function (i) { return BY_ID[i.id].ready; }) ? T.price_ready : T.price_note;
+    $$("[data-eta]", f).forEach(function (el) { el.textContent = eta; });
+    var review = $("#vz-cart-review");
+    if (review) {
+      var list = $("ul", review); list.replaceChildren();
+      cart.forEach(function (i) { var li = document.createElement("li"); var b = document.createElement("b"); b.textContent = BY_ID[i.id].name; li.append(b, document.createTextNode(" × " + i.qty)); list.appendChild(li); });
+    }
+    $("#submit").textContent = fill(T.submit, { total: fmt(sum) });
+  }
+  function applyCart() {
+    var f = $("#order-form"), fs = $(".chosen", f) && $(".chosen", f).closest("fieldset");
+    f.classList.toggle("vz-cart-mode", !!cart);
+    if (fs) {
+      var legend = $("legend", fs), text = legend && legend.lastChild;
+      if (text && text.nodeType === 3) { if (!legend.dataset.vzLabel) legend.dataset.vzLabel = text.textContent; text.textContent = cart && cartWords.legend ? cartWords.legend : legend.dataset.vzLabel; }
+      var review = $("#vz-cart-review");
+      if (!review) {
+        review = document.createElement("div"); review.id = "vz-cart-review"; review.className = "vz-cart-review";
+        review.appendChild(document.createElement("ul"));
+        var edit = document.createElement("button"); edit.type = "button"; edit.className = "vz-cart-edit"; edit.dataset.vzCartEdit = "";
+        review.appendChild(edit);
+        legend.after(review);
+      }
+      $(".vz-cart-edit", review).textContent = cartWords.edit || "";
+    }
+    if (cart) cartSummary(); else setQty(qty);
+  }
+  window.vzShop = {
+    price: PRICE, pairPrice: PAIR_PRICE, max: CART_MAX, fmt: fmt, teams: BY_ID,
+    total: cartTotal,
+    current: function () { return current ? current.id : null; },
+    busy: function () { return submitting; },
+    orderCart: function (items, words) {
+      if (submitting) return false;
+      if (words) cartWords = words;
+      var clean = (items || []).filter(function (i) { return i && BY_ID[i.id] && i.qty > 0; }).map(function (i) { return { id: i.id, qty: Math.min(CART_MAX, Math.floor(i.qty)) }; });
+      cart = clean.length ? clean : null;
+      applyCart();
+      return true;
+    }
+  };
   if ($("#f-custom")) $("#f-custom").addEventListener("change", function () {
     var on = custom();
     $("#custom-field").hidden = !on;
@@ -706,8 +770,15 @@
       bad[0].scrollIntoView({ block: "center", behavior: reduce ? "instant" : "smooth" });
       return;
     }
-    if (qty === 2 && !checkoutReady) return;
+    if (cart && cartCount() > 1 && !checkoutReady) { var ce = $("#form-err"); ce.textContent = T.err_send; ce.hidden = false; return; }
+    if (!cart && qty === 2 && !checkoutReady) return;
     var order = { secondTeamId: secondTeam() ? secondTeam().id : current.id, gift: $("#f-gift").checked, name: form.elements.nome.value.trim().split(/\s+/)[0], team: current.name, teamId: current.id, qty: qty, total: total(), custom: custom(), email: form.elements.email.value.trim() };
+    if (cart) {
+      order.items = cart.map(function (i) { return { teamId: i.id, qty: i.qty }; });
+      order.teamId = cart[0].id; order.secondTeamId = cart[1] ? cart[1].id : cart[0].id;
+      order.team = cart.map(function (i) { return BY_ID[i.id].name + (i.qty > 1 ? " ×" + i.qty : ""); }).join(" + ");
+      order.qty = cartCount(); order.total = cartTotal(order.qty); order.custom = false;
+    }
     updateSummary();
     if (!form.elements.riferimento_ordine.value) {
       var random = new Uint8Array(8); crypto.getRandomValues(random);
@@ -734,7 +805,7 @@
       .then(function (r) { if (!r.ok) throw new Error(r.status); })
       .then(async function () {
         if (!checkoutReady) return;
-        var response = await fetch(CFG.CHECKOUT_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({qty:order.qty,teamId:order.teamId,secondTeamId:order.secondTeamId,reference:order.reference,lang:DATA.lang,gift:order.gift,email:order.email,customer:order.customer}),signal:controller.signal});
+        var response = await fetch(CFG.CHECKOUT_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({items:order.items,qty:order.qty,teamId:order.teamId,secondTeamId:order.secondTeamId,reference:order.reference,lang:DATA.lang,gift:order.gift,email:order.email,customer:order.customer}),signal:controller.signal});
         if (!response.ok) throw new Error("payment_unavailable");
         var session = await response.json();
         if (!/^https:\/\/checkout\.stripe\.com\//.test(session.url || "")) throw new Error("invalid_payment_url");
@@ -756,7 +827,7 @@
         submitting = false; $("#lang-select").disabled = false; pickBtn.disabled = false;
         d.hidden = false; d.focus();
         d.scrollIntoView({ block: "center", behavior: reduce ? "instant" : "smooth" });
-        track("InitiateCheckout", { value: order.total, currency: "EUR", content_ids: order.qty === 2 ? [order.teamId, order.secondTeamId] : [order.teamId], content_type: "product", num_items: order.qty });
+        track("InitiateCheckout", { value: order.total, currency: "EUR", content_ids: order.items ? order.items.map(function (i) { return i.teamId; }) : (order.qty === 2 ? [order.teamId, order.secondTeamId] : [order.teamId]), content_type: "product", num_items: order.qty });
         var link = order.paymentUrl || ((order.custom && CFG.STRIPE_LINK_CUSTOM) ? CFG.STRIPE_LINK_CUSTOM : CFG.STRIPE_LINK);
         if (link) {
           var paymentUrl = new URL(link);
