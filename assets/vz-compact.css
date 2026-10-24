@@ -259,3 +259,7 @@ html body .vz-personal-memory h2,html body .vz-fridge-show .vz-lifestyle-title,h
 html body .vz-fridge-show .vz-lifestyle-title,html body #vz-about-title{margin-left:auto!important;margin-right:auto!important}
 @media(max-width:720px){html body .vz-choose-heading{margin-left:auto;margin-right:auto}}
 html body .vz-personal-memory h2::after,html body .vz-fridge-show .vz-lifestyle-title::after,html body .vz-choose-heading::after,html body #vz-about-title::after{left:0!important;right:0!important;margin:0 auto!important;width:46%!important;min-width:60px;transform-origin:center!important}
+
+/* "Da dove cominciamo?": niente linea né luce, pulsano già le icone sotto */
+html body .vz-choose-heading{animation:none!important;padding-bottom:0!important}
+html body .vz-choose-heading::after{content:none!important;display:none!important}
