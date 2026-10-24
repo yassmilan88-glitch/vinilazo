@@ -319,6 +319,8 @@
     root.style.setProperty("--stripe", stripe(t));
   }
   function setTexts(t) {
+    // Solo le edizioni con audio sul sito (per ora Argentina) mostrano i dischi che girano.
+    root.classList.toggle("vz-no-audio", t.id !== "argentina");
     $$("[data-team-name]").forEach(function (el) { el.textContent = t.name; });
     $$("[data-edition]").forEach(function (el) { el.textContent = T.edition + " " + t.name; });
     $$("[data-eta]").forEach(function (el) { el.textContent = t.ready ? T.price_ready : T.price_note; });
