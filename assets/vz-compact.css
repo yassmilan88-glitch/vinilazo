@@ -270,3 +270,11 @@ html body .vz-personal-memory h2{isolation:isolate;padding-bottom:0!important}
 html body .vz-personal-memory h2::after{content:none!important;display:none!important}
 html body .vz-personal-memory h2::before{content:"";position:absolute;left:-14%;right:-14%;top:-115%;bottom:-115%;z-index:-1;pointer-events:none;border-radius:50%;background:radial-gradient(ellipse closest-side,rgba(74,203,255,.66) 0%,rgba(120,185,255,.36) 40%,rgba(255,210,130,.16) 66%,rgba(0,0,0,0) 100%);filter:blur(9px);animation:vzBehindPulse 2.4s ease-in-out infinite}
 @media(prefers-reduced-motion:reduce){html body .vz-personal-memory h2::before{animation:none!important;opacity:.6}}
+
+/* Icone senza scritte sotto; "Da dove cominciamo?" con lo stesso carattere degli altri titoli */
+html body .vz-choice .vz-choice-caption{display:none!important}
+html body .vz-choose-heading{font-family:var(--display,"Big Shoulders Display","Arial Narrow",sans-serif)!important;font-weight:900!important;letter-spacing:-.005em!important;line-height:1.05!important;color:#fff!important}
+/* Niente pulsazioni su "Le prime pagine del giorno dopo." e "Così sta sul frigo di casa." */
+html body .vz-press-statement::after,html body .vz-press-statement::before,html body .vz-fridge-show .vz-lifestyle-title::after{content:none!important;display:none!important}
+html body .vz-press-statement{padding:11px 22px!important}
+html body .vz-fridge-show .vz-lifestyle-title{animation:none!important;padding-bottom:0!important;text-shadow:none}
