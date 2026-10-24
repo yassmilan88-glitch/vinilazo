@@ -20,8 +20,11 @@ window.VINILAZO_CONFIG = {
   // Solo se riaccendiamo il disco personalizzato (+10 €): link Stripe con il prezzo più alto. Ora non serve.
   STRIPE_LINK_CUSTOM: "",
 
-  // Numero WhatsApp per il bottone verde (con prefisso, senza + e senza spazi)
+  // Numero WhatsApp (per ora NON usato sul sito: i contatti vanno nei DM di Instagram)
   WHATSAPP: "393295865883",
+
+  // Account Instagram dove arrivano i messaggi dei clienti (senza @)
+  INSTAGRAM: "vinilazoo",
 
   // ID del Pixel Meta per misurare le pubblicità (lascia vuoto se non lo usi)
   META_PIXEL_ID: "1621265198920991",
@@ -30,3 +33,51 @@ window.VINILAZO_CONFIG = {
   // Esempio: "Nome Società S.r.l. – Via ..., 12100 Cuneo (CN), Italia – P.IVA 01234567890 – email@esempio.it"
   SELLER: ""
 };
+
+/* Contatti su Instagram: il DM non accetta testo già scritto, quindi al clic
+   copiamo il messaggio (squadra, riferimento ordine…) e il cliente lo incolla. */
+(function () {
+  var TOAST = {
+    it: "Messaggio copiato: incollalo nella chat di Instagram",
+    es: "Mensaje copiado: pegalo en el chat de Instagram",
+    fr: "Message copié : collez-le dans la discussion Instagram",
+    en: "Message copied: paste it into the Instagram chat",
+    de: "Nachricht kopiert: füge sie im Instagram-Chat ein"
+  };
+  function copyText(text) {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).catch(function () {});
+        return;
+      }
+    } catch (e) {}
+    try {
+      var t = document.createElement("textarea");
+      t.value = text; t.setAttribute("readonly", "");
+      t.style.cssText = "position:fixed;top:-1000px;left:0;opacity:0";
+      document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove();
+    } catch (e) {}
+  }
+  function toast(msg) {
+    try {
+      var old = document.getElementById("vz-copy-toast");
+      if (old) old.remove();
+      var el = document.createElement("div");
+      el.id = "vz-copy-toast"; el.setAttribute("role", "status"); el.textContent = msg;
+      el.style.cssText = "position:fixed;left:50%;bottom:96px;transform:translateX(-50%);z-index:9999;max-width:calc(100% - 32px);" +
+        "padding:12px 18px;border-radius:12px;background:#0b1730;color:#fff;font:600 15px/1.3 system-ui,sans-serif;" +
+        "box-shadow:0 8px 24px rgba(0,0,0,.45);text-align:center";
+      document.body.appendChild(el);
+      setTimeout(function () { el.remove(); }, 3500);
+    } catch (e) {}
+  }
+  document.addEventListener("click", function (e) {
+    var a = e.target && e.target.closest && e.target.closest('a[href^="https://ig.me/"]');
+    if (!a) return;
+    var msg = a.getAttribute("data-msg");
+    if (!msg) return;
+    copyText(msg);
+    var lang = (document.documentElement.lang || "it").slice(0, 2);
+    toast(TOAST[lang] || TOAST.en);
+  }, true);
+})();

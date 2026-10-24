@@ -17,11 +17,11 @@
   if(!copy)return;
   // Native, legible field wording instead of cramped display text or long instructions.
   var fieldWords={
-    it:['Nome e cognome','Cellulare (WhatsApp)','Paese di consegna','Indirizzo e numero civico','CAP','Città','Email di contatto','Numero con prefisso internazionale, ad esempio +39.'],
-    es:['Nombre y apellido','Móvil (WhatsApp)','País de entrega','Dirección y número','Código postal','Ciudad','Email de contacto','Número con prefijo internacional, por ejemplo +34.'],
-    fr:['Nom et prénom','Téléphone (WhatsApp)','Pays de livraison','Adresse et numéro','Code postal','Ville','Email de contact','Numéro avec indicatif international, par exemple +33.'],
-    en:['Full name','Mobile (WhatsApp)','Delivery country','Address and house number','Postal code','City','Contact email','Include country code, for example +44.'],
-    de:['Vor- und Nachname','Handynummer (WhatsApp)','Lieferland','Straße und Hausnummer','PLZ','Ort','Kontakt-E-Mail','Mit internationaler Vorwahl, z. B. +49.']
+    it:['Nome e cognome','Cellulare','Paese di consegna','Indirizzo e numero civico','CAP','Città','Email di contatto','Numero con prefisso internazionale, ad esempio +39.'],
+    es:['Nombre y apellido','Móvil','País de entrega','Dirección y número','Código postal','Ciudad','Email de contacto','Número con prefijo internacional, por ejemplo +34.'],
+    fr:['Nom et prénom','Téléphone','Pays de livraison','Adresse et numéro','Code postal','Ville','Email de contact','Numéro avec indicatif international, par exemple +33.'],
+    en:['Full name','Mobile','Delivery country','Address and house number','Postal code','City','Contact email','Include country code, for example +44.'],
+    de:['Vor- und Nachname','Handynummer','Lieferland','Straße und Hausnummer','PLZ','Ort','Kontakt-E-Mail','Mit internationaler Vorwahl, z. B. +49.']
   }[lang];
   ['f-name','f-phone','f-country','f-street','f-cap','f-city','f-email'].forEach(function(id,i){
     var input=document.getElementById(id);
