@@ -18,6 +18,15 @@ var teamParam=params.get('team');
 var teamValid=D.teams&&D.teams.some(function(x){return x.id===teamParam});
 var legacy=location.hash&&/^#(ordina|storie|come-funziona|cosa|idea-regalo|il-mio-ordine|chi-siamo|come-si-usa|storia-\d+)$/.test(location.hash);
 function make(tag,cls,content){var e=document.createElement(tag);if(cls)e.className=cls;if(content!==undefined)e.textContent=content;return e}
+// "Qualsiasi squadra": edizioni personalizzate per club e nazionali non presenti in elenco, con assistenza personale sui gol.
+var anyTeam={
+ it:{hero:'La tua squadra non c’è? Personalizziamo qualsiasi squadra del mondo',eyebrow:'QUALSIASI SQUADRA, QUALSIASI CAMPIONATO',title:'La tua squadra non c’è? La creiamo noi.',text:'Personalizziamo qualsiasi squadra di qualsiasi campionato del mondo. Ti seguiamo uno a uno: scegliamo insieme i 9 gol da mettere sui dischi.',cta:'Crea la tua edizione su WhatsApp',hint:'Qualsiasi squadra',pick:'La tua squadra non c’è?',pickText:'Personalizziamo qualsiasi squadra del mondo e scegliamo insieme i 9 gol.',pickCta:'Scrivici su WhatsApp',care:'Ogni ordine è seguito di persona: su WhatsApp scegli con noi i gol dei tuoi dischi.',wa:'Ciao VINILAZO! Vorrei un’edizione personalizzata della mia squadra: '},
+ es:{hero:'¿Tu equipo no está? Personalizamos cualquier equipo del mundo',eyebrow:'CUALQUIER EQUIPO, CUALQUIER LIGA',title:'¿Tu equipo no está? Lo hacemos nosotros.',text:'Personalizamos cualquier equipo de cualquier liga del mundo. Te acompañamos uno a uno: elegimos juntos los 9 goles de los discos.',cta:'Creá tu edición por WhatsApp',hint:'Cualquier equipo',pick:'¿Tu equipo no está?',pickText:'Personalizamos cualquier equipo del mundo y elegimos juntos los 9 goles.',pickCta:'Escribinos por WhatsApp',care:'Cada pedido lo seguimos en persona: por WhatsApp elegís con nosotros los goles de tus discos.',wa:'¡Hola VINILAZO! Quiero una edición personalizada de mi equipo: '},
+ fr:{hero:'Votre équipe n’y est pas ? Nous personnalisons n’importe quelle équipe du monde',eyebrow:'TOUTE ÉQUIPE, TOUT CHAMPIONNAT',title:'Votre équipe n’y est pas ? On la crée pour vous.',text:'Nous personnalisons n’importe quelle équipe de n’importe quel championnat du monde. On vous accompagne personnellement : nous choisissons ensemble les 9 buts des disques.',cta:'Créer mon édition sur WhatsApp',hint:'Toute équipe',pick:'Votre équipe n’y est pas ?',pickText:'Nous personnalisons n’importe quelle équipe du monde et choisissons ensemble les 9 buts.',pickCta:'Nous écrire sur WhatsApp',care:'Chaque commande est suivie personnellement : sur WhatsApp, vous choisissez avec nous les buts de vos disques.',wa:'Bonjour VINILAZO ! Je voudrais une édition personnalisée de mon équipe : '},
+ en:{hero:'Team not listed? We customise any team in the world',eyebrow:'ANY TEAM, ANY LEAGUE',title:'Team not listed? We’ll make it.',text:'We customise any team from any league in the world. You get one-to-one help: we pick the 9 goals for your discs together.',cta:'Create your edition on WhatsApp',hint:'Any team',pick:'Team not listed?',pickText:'We customise any team in the world and pick the 9 goals with you.',pickCta:'Message us on WhatsApp',care:'Every order gets personal follow-up: on WhatsApp you choose the goals for your discs with us.',wa:'Hi VINILAZO! I’d like a custom edition for my team: '},
+ de:{hero:'Dein Team fehlt? Wir gestalten jedes Team der Welt',eyebrow:'JEDES TEAM, JEDE LIGA',title:'Dein Team fehlt? Wir machen es.',text:'Wir gestalten jedes Team aus jeder Liga der Welt. Wir begleiten dich persönlich und wählen gemeinsam die 9 Tore für deine Platten aus.',cta:'Edition per WhatsApp gestalten',hint:'Jedes Team',pick:'Dein Team fehlt?',pickText:'Wir gestalten jedes Team der Welt und wählen mit dir die 9 Tore aus.',pickCta:'Schreib uns auf WhatsApp',care:'Jede Bestellung wird persönlich betreut: Per WhatsApp wählst du mit uns die Tore deiner Platten.',wa:'Hallo VINILAZO! Ich möchte eine individuelle Edition für mein Team: '}
+}[locale]||null;
+function anyTeamLink(cls,label,text){var a=make('a',cls,label);a.href='https://wa.me/393295865883?text='+encodeURIComponent(text||(anyTeam&&anyTeam.wa)||'');a.target='_blank';a.rel='noopener noreferrer';return a}
 var flags={argentina:'🇦🇷',brasile:'🇧🇷',francia:'🇫🇷',spagna:'🇪🇸',italia:'🇮🇹',germania:'🇩🇪',inghilterra:'🇬🇧',portogallo:'🇵🇹',olanda:'🇳🇱',messico:'🇲🇽'};
 var crestSlugs={
  argentina:'argentina-national-team',brasile:'brazil-national-team',francia:'france-national-team',spagna:'spain-national-team',italia:'italy-national-team',germania:'germany-national-team',inghilterra:'england-national-team',portogallo:'portugal-national-team',olanda:'netherlands-national-team-dutch',messico:'mexico-national-team',
@@ -81,7 +90,24 @@ if(teamValid||params.has('demo')||legacy){
    queueMicrotask(function(){pending=false;refreshHeader()});
   }).observe(picker,{subtree:true,childList:true,characterData:true});
  }
- function detailInit(){foldDescription();detailCrests()}
+ // Nel selettore squadre e vicino al prezzo: qualsiasi squadra + assistenza personale.
+ function detailAnyTeam(){
+  if(!anyTeam)return;
+  var picker=document.getElementById('squadre');
+  if(picker&&!picker.querySelector('.vz-pk-any')){
+   var box=make('div','vz-pk-any');
+   box.append(make('strong','',anyTeam.pick),make('p','',anyTeam.pickText),anyTeamLink('vz-request-button',anyTeam.pickCta+' ↗'));
+   picker.append(box);
+  }
+  placeCare();setTimeout(placeCare,0);setTimeout(placeCare,1600);
+ }
+ // Subito sotto la nota di consegna, anche se altri script inseriscono elementi dopo di essa.
+ function placeCare(){
+  var fine=document.querySelector('.hero-copy .fine[data-eta]');if(!fine)return;
+  var note=document.querySelector('.vz-care-note')||make('p','vz-care-note',anyTeam.care);
+  if(fine.nextElementSibling!==note)fine.insertAdjacentElement('afterend',note);
+ }
+ function detailInit(){foldDescription();detailCrests();detailAnyTeam()}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',detailInit,{once:true});else detailInit();
  return;
 }
@@ -119,6 +145,7 @@ function vinylChoice(group,label,subtitle){
 var natButton=vinylChoice('nat',t.nat,t.natSub);
 var clubButton=vinylChoice('club',t.club,t.clubSub);
 choices.append(natButton,clubButton);choose.append(choices);
+if(anyTeam)choose.append(anyTeamLink('vz-any-team-line',anyTeam.hero+' →'));
 // Original, transparent vector trophies drawn specifically for VINILAZO.
 // No downloaded crest images, no square backgrounds and no rotating logos.
 function setTrophy(button,group){
@@ -544,14 +571,16 @@ function openGroup(group){
  var customPrompt=encodeURIComponent(waText[0]||'');
  var customCard=make('a','vz-flag-card vz-custom-card');
  customCard.href='https://wa.me/393295865883?text='+customPrompt;customCard.target='_blank';customCard.rel='noopener noreferrer';
- customCard.append(make('span','vz-custom-symbol',customIcon),make('strong','vz-flag-name',customName),make('small','vz-custom-hint',customWords[0]+' ↗'));
+ customCard.append(make('span','vz-custom-symbol',customIcon),make('strong','vz-flag-name',customName),make('small','vz-custom-hint',(anyTeam?anyTeam.hint:customWords[0])+' ↗'));
  grid.append(customCard);
  var req=document.getElementById('vz-request-other');
  if(!req){req=make('div','vz-request-other');req.id='vz-request-other';stage.append(req);}
- req.replaceChildren(make('h3','',customWords[1]),make('p','',customWords[2]));
- var wa=make('a','vz-request-button',customWords[3]+' →');
- wa.href='https://wa.me/393295865883?text='+encodeURIComponent(waText[1]||'');
- wa.target='_blank';wa.rel='noopener noreferrer';req.append(wa);
+ if(anyTeam){
+  req.replaceChildren(make('p','vz-request-eyebrow',anyTeam.eyebrow),make('h3','',anyTeam.title),make('p','',anyTeam.text),anyTeamLink('vz-request-button',anyTeam.cta+' →'));
+ }else{
+  req.replaceChildren(make('h3','',customWords[1]),make('p','',customWords[2]));
+  req.append(anyTeamLink('vz-request-button',customWords[3]+' →',waText[1]));
+ }
  stage.hidden=false;
  requestAnimationFrame(function(){stage.scrollIntoView({behavior:'smooth',block:'start'})});
 }
