@@ -68,8 +68,7 @@
     var section = el('section', 'vz-lifestyle-gallery vz-lifestyle-catalog vz-fridge-show');
     section.id = 'vz-lifestyle-gallery';
     section.setAttribute('aria-label', 'Galleria fotografica VINILAZO');
-    var head = el('div', 'vz-lifestyle-heading');
-    // Gallery photos are shown without introductory headings.
+    // Nessun titolo sopra la foto: parla la foto.
 
     var wrap = el('div', 'vz-fridge-wrap');
     var stage = el('div', 'vz-fridge-stage');
@@ -107,7 +106,7 @@
     side.append(name, goal, cta, controls, chips);
     wrap.append(stage, side);
     var disclaimer = el('p', 'vz-lifestyle-disclaimer', tr.showNote);
-    section.append(head, wrap, disclaimer);
+    section.append(wrap, disclaimer);
     var anchor = document.getElementById('vz-fans') || document.getElementById('vz-gift-home') || document.querySelector('.vz-catalog-end');
     if (anchor) anchor.before(section); else main.append(section);
 
