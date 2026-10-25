@@ -83,3 +83,6 @@ body.vz-compact-product .vz-photo-disclosure .vz-lifestyle-photo-group .vz-lifes
  .vz-fridge-chip{flex:none}
 }
 @media(prefers-reduced-motion:reduce){.vz-fridge-img{transition:none;transform:none}.vz-fridge-show.is-playing .vz-fridge-progress i{animation:none}}
+
+/* senza titoli: foto prodotto centrata, una sola colonna */
+.vz-lifestyle-gallery.vz-lifestyle-detail,body.vz-compact-product .vz-photo-disclosure .vz-lifestyle-detail{grid-template-columns:1fr;justify-items:center}
