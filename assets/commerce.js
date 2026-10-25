@@ -13,8 +13,8 @@
   var state = null;
   var api = window.VZCommerce = {
     copy:copy, ready:false,
-    launch:function(){return !!(state && state.campaign && state.campaign.active && Date.now() < state.campaign.endsAt);},
-    goods:function(n){return api.launch() ? n*55.2 : Math.round((Math.floor(n/2)*124.2 + (n%2)*69)*100)/100;},
+    launch:function(){return false;},
+    goods:function(n){return Math.floor(n/2)*78 + (n%2)*49;},
     method:function(){var el=document.getElementById('vz-payment-method');return el ? el.value : 'online';},
     iso:function(){var c=document.getElementById('f-country');return c && c.selectedOptions[0] ? c.selectedOptions[0].dataset.iso : '';},
     fee:function(){return api.method()==='cod' ? ({IT:4,FR:8,CH:14}[api.iso()] || 0) : 0;},
