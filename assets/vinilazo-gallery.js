@@ -201,10 +201,9 @@
     if (!anchor) return;
     var section = el('section', 'vz-lifestyle-gallery vz-lifestyle-detail');
     section.id = 'vz-lifestyle-gallery';
-    section.setAttribute('aria-labelledby', 'vz-lifestyle-title');
+    section.setAttribute('aria-label', tr.photos || tr.detailTitle);
     var copy = el('div', 'vz-lifestyle-detail-copy');
-    copy.append(el('p', 'vz-lifestyle-eyebrow', tr.eyebrow), el('h2', 'vz-lifestyle-title', tr.detailTitle), el('p', 'vz-lifestyle-intro', tr.detailIntro));
-    copy.querySelector('h2').id = 'vz-lifestyle-title';
+    // No promotional heading or subtitle: the product photography leads.
     var teamName = el('strong', 'vz-lifestyle-team-name');
     var cta = el('a', 'vz-lifestyle-cta', tr.detailLink + ' →');
     cta.href = '#ordina';
