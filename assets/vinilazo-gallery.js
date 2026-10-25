@@ -255,7 +255,7 @@
     }
     document.addEventListener('visibilitychange',function(){if(!document.hidden)restartAuto();});
     photoGroup.append(photoLink, thumbs);
-    section.append(photoGroup, copy);
+    section.append(photoGroup);
     anchor.before(section);
     function refresh() {
       var team = activeTeam();
