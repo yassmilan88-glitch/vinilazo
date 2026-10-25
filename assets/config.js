@@ -6,6 +6,9 @@ window.VINILAZO_CONFIG = {
   // Prezzo in euro, spedizione inclusa in tutto il mondo
   PRICE: 69,
 
+  // Set only after verifying the official VINILAZO business profile.
+  TRUSTPILOT_URL: "",
+
   // Due prodotti: 69 × 2 meno 10%, anche squadre diverse.
   PAIR_PRICE: 124.20,
 

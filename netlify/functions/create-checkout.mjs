@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import teams from './teams.json' with { type: 'json' };
+import { campaign, reserve, pricing, store, digest } from './lib/commerce.mjs';
 const SITE = 'https://vinilazo.eu';
 const ALLOWED_ORIGINS = new Set([SITE, 'https://www.vinilazo.eu', 'https://vinilazo.netlify.app']);
 const json = (body, status = 200) => new Response(JSON.stringify(body), {status, headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
@@ -26,10 +27,10 @@ export function normalizeItems(order) {
   return secondId === teamId ? [{ id: teamId, qty: 2 }] : [{ id: teamId, qty: 1 }, { id: secondId, qty: 1 }];
 }
 // Righe Stripe: prezzo di coppia per tutti i pezzi tranne l'ultimo se il totale è dispari.
-export function priceLines(items) {
+export function priceLines(items, launch = false) {
   const units = items.flatMap((i) => Array(i.qty).fill(i.id)), n = units.length, lines = [];
   units.forEach((id, idx) => {
-    const unit = n === 1 || (n % 2 === 1 && idx === n - 1) ? UNIT : PAIR_UNIT;
+    const unit = launch ? 5520 : n === 1 || (n % 2 === 1 && idx === n - 1) ? UNIT : PAIR_UNIT;
     const last = lines[lines.length - 1];
     if (last && last.id === id && last.unit === unit) last.qty++; else lines.push({ id, qty: 1, unit });
   });
@@ -38,7 +39,7 @@ export function priceLines(items) {
 export default async function handler(request) {
   const key = process.env.STRIPE_SECRET_KEY;
   const ready = process.env.VINILAZO_CHECKOUT_ENABLED === 'true' && /^(sk|rk)_live_/.test(key || '');
-  if (request.method === 'GET') return json({ready});
+  if (request.method === 'GET') return json({ready, version:'launch-v1'});
   if (request.method !== 'POST') return json({error:'method_not_allowed'},405);
   if (!ALLOWED_ORIGINS.has(request.headers.get('origin'))) return json({error:'origin_not_allowed'},403);
   if (!ready) return json({error:'checkout_not_configured'},503);
@@ -46,23 +47,70 @@ export default async function handler(request) {
   try { const raw = await request.text(); if (raw.length > 4096) return json({error:'invalid_order'},400); order=JSON.parse(raw); } catch { return json({error:'invalid_order'},400); }
   if (!order || typeof order !== 'object') return json({error:'invalid_order'},400);
   const {reference,lang,gift}=order;
+  const method = order.method || 'online';
+  if (!['online','cod'].includes(method)) return json({error:'invalid_payment_method'},400);
   const items = normalizeItems(order);
   if (!items || !/^VZ-[A-F0-9]{16}$/.test(reference || '') || !['it','en','es','fr','de'].includes(lang) || typeof gift !== 'boolean') return json({error:'invalid_order'},400);
   // All amounts are computed here in cents; client-supplied totals are ignored.
-  const qty = items.reduce((a, i) => a + i.qty, 0), expected = totalFor(qty), teamId = items[0].id;
+  const qty = items.reduce((a, i) => a + i.qty, 0), teamId = items[0].id;
+  const customerInput = order.customer || {};
+  if (method === 'cod' && (!['IT','FR','CH'].includes(customerInput.iso) || !['name','phone','address','cap','city'].every(k => typeof customerInput[k] === 'string' && customerInput[k].trim().length > 0) || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(order.email || ''))) return json({error:'invalid_customer'},400);
+  let quote, launch, db, record, fingerprint;
+  try {
+    db = store();
+    fingerprint = digest({items, method, customer:customerInput, email:order.email, gift, lang});
+    const existing = await db.get('orders/' + reference, {type:'json'});
+    if (existing) {
+      if (existing.fingerprint !== fingerprint) return json({error:'reference_conflict'},409);
+      if (existing.result) return json(existing.result);
+      record = existing;
+    }
+    const available = await campaign(db);
+    launch = record ? record.quote.launch : available.active;
+    quote = record ? record.quote : pricing(qty, launch, method, customerInput.iso);
+    if (order.quoteOnly === true) return json({quote});
+    if (order.expectedTotal !== undefined && order.expectedTotal !== quote.total) return json({error:'price_changed',quote},409);
+    if (!record) {
+      launch = launch && await reserve(reference, db);
+      quote = pricing(qty, launch, method, customerInput.iso);
+      if (order.expectedTotal !== undefined && order.expectedTotal !== quote.total) return json({error:'price_changed',quote},409);
+      record = {reference, fingerprint, items, method, customer:customerInput, email:order.email, gift, lang, quote, createdAt:new Date().toISOString(), status:method === 'cod' ? 'awaiting_collection' : 'awaiting_payment'};
+      const saved = await db.setJSON('orders/' + reference, record, {onlyIfNew:true});
+      if (!saved.modified) {
+        record = await db.get('orders/' + reference, {type:'json'});
+        if (record.fingerprint !== fingerprint) return json({error:'reference_conflict'},409);
+        if (record.result) return json(record.result);
+        quote = record.quote; launch = quote.launch;
+      }
+    }
+    if (method === 'cod') {
+      // Persist the authoritative order before acknowledging it. Mirror it into
+      // Netlify Forms for fulfilment using a dedicated server-calculated form.
+      const fields = new URLSearchParams({'form-name':'ordine-contrassegno', riferimento_ordine:reference, stato:'DA INCASSARE - NON PAGATO', nome:customerInput.name, email:order.email, telefono:customerInput.phone, indirizzo:customerInput.address, cap:customerInput.cap, citta:customerInput.city, paese:customerInput.iso, articoli:items.map(i => teams[i.id]+' x'+i.qty).join(', '), totale_eur:(quote.total/100).toFixed(2), supplemento_eur:(quote.fee/100).toFixed(2), sconto_eur:(quote.discount/100).toFixed(2), lingua:lang});
+      if (!record.formSaved) {
+        const submitted = await fetch(SITE + '/cod-form.html', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:fields, signal:AbortSignal.timeout(15000)});
+        if (!submitted.ok) return json({error:'order_registration_pending'},503);
+        record.formSaved = true;
+      }
+      const result = {cod:true, reference, quote, status:'awaiting_collection'};
+      await db.setJSON('orders/' + reference, {...record, result});
+      return json(result);
+    }
+  } catch { return json({error:'order_storage_unavailable'},503); }
+  const expected = quote.total;
   const params = new URLSearchParams({mode:'payment',locale:lang,client_reference_id:reference,
     success_url:`${SITE}/payment-return.html?lang=${lang}&session_id={CHECKOUT_SESSION_ID}`,cancel_url:`${SITE}/${lang}/?team=${encodeURIComponent(teamId)}#ordina`,
     'automatic_tax[enabled]':'false','adaptive_pricing[enabled]':'false',
     'metadata[order_reference]':reference,'metadata[quantity]':String(qty),'metadata[first_team]':teamId,
     'metadata[second_team]':items[1] ? items[1].id : (qty>=2 ? teamId : ''), 'metadata[items]':items.map((i)=>`${i.id}:${i.qty}`).join(','),
-    'metadata[gift]':gift?'yes':'no','metadata[discount_percent]':qty>=2?'10':'0'});
-  priceLines(items).forEach((line,i)=>{
+    'metadata[gift]':gift?'yes':'no','metadata[discount_percent]':launch?'20':qty>=2?'10':'0', 'metadata[launch]':launch?'yes':'no'});
+  priceLines(items, launch).forEach((line,i)=>{
     params.set(`line_items[${i}][quantity]`,String(line.qty));
     params.set(`line_items[${i}][price_data][currency]`,'eur');
     params.set(`line_items[${i}][price_data][unit_amount]`,String(line.unit));
     params.set(`line_items[${i}][price_data][tax_behavior]`,'inclusive');
     params.set(`line_items[${i}][price_data][product_data][name]`,`VINILAZO · ${teams[line.id]}`);
-    params.set(`line_items[${i}][price_data][product_data][description]`,line.unit===PAIR_UNIT?'Sconto coppia 10% già incluso. Spedizione inclusa.':'Spedizione inclusa.');
+    params.set(`line_items[${i}][price_data][product_data][description]`,launch?'Offerta lancio -20% inclusa. Non cumulabile. Spedizione inclusa.':line.unit===PAIR_UNIT?'Sconto coppia 10% già incluso. Spedizione inclusa.':'Spedizione inclusa.');
   });
   params.set('payment_intent_data[metadata][order_reference]',reference);
   // Shipping details typed on the site, kept with the payment for the confirmation messages (optional, never blocks the payment).
@@ -80,6 +128,8 @@ export default async function handler(request) {
     if (!response.ok && params.has('customer_email')) { params.delete('customer_email'); response=await createSession(params); }
     const session=await response.json();
     if (!response.ok || session.livemode !== true || session.amount_total !== expected || !/^https:\/\/checkout\.stripe\.com\//.test(session.url || '')) return json({error:'checkout_unavailable'},502);
-    return json({url:session.url});
+    const result = {url:session.url, quote};
+    await db.setJSON('orders/' + reference, {...record, sessionId:session.id, result});
+    return json(result);
   } catch { return json({error:'checkout_unavailable'},502); }
 }

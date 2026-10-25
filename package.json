@@ -1,0 +1,25 @@
+{
+  "name": "vinilazo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --experimental-test-module-mocks --test tests/*.test.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yassmilan88-glitch/vinilazo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/yassmilan88-glitch/vinilazo/issues"
+  },
+  "homepage": "https://github.com/yassmilan88-glitch/vinilazo#readme",
+  "dependencies": {
+    "@netlify/blobs": "11.1.6"
+  },
+  "private": true
+}

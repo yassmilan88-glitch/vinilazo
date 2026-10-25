@@ -45,7 +45,7 @@
     try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) {}
   }
   function count(list) { return list.reduce(function (a, i) { return a + i.qty; }, 0); }
-  function totalOf(n) { return Math.round((Math.floor(n / 2) * PAIR + (n % 2) * PRICE) * 100) / 100; }
+  function totalOf(n) { return window.VZCommerce.goods(n); }
   function fmt(n) {
     if (window.vzShop) return window.vzShop.fmt(n);
     try { return new Intl.NumberFormat(lang, { style: 'currency', currency: 'EUR', minimumFractionDigits: Number.isInteger(n) ? 0 : 2, maximumFractionDigits: 2 }).format(n); } catch (e) { return n + ' €'; }
@@ -191,9 +191,9 @@
       drawer.appendChild(more);
     }
     var foot = el('div', 'vz-cart-foot');
-    foot.appendChild(el('p', 'vz-cart-hint' + (n % 2 ? '' : ' on'), n % 2 ? (n < MAX ? t.pairHint : '') : t.pairOn));
+    foot.appendChild(el('p', 'vz-cart-hint' + (n % 2 ? '' : ' on'), window.VZCommerce.launch() ? '−20% · '+window.VZCommerce.copy[2] : n % 2 ? (n < MAX ? t.pairHint : '') : t.pairOn));
     var dl = el('dl', 'vz-cart-lines');
-    if (saving > 0) { var d = el('div'); d.append(el('dt', '', t.discount), el('dd', '', '−' + fmt(saving))); dl.appendChild(d); }
+    if (saving > 0) { var d = el('div'); d.append(el('dt', '', window.VZCommerce.copy[11]), el('dd', '', '−' + fmt(saving))); dl.appendChild(d); }
     var tt = el('div', 'vz-cart-total'); tt.append(el('dt', '', t.total), el('dd', '', fmt(sum))); dl.appendChild(tt);
     foot.appendChild(dl);
     foot.appendChild(el('p', 'vz-cart-ship', '✓ ' + t.shipping));
@@ -262,6 +262,7 @@
     })();
   }
   function start() {
+    window.addEventListener('vz-commerce-change',function(){if(drawer && !drawer.hidden)render();});
     header(); refreshBadge(false); buttons(); wire(); fromUrl();
     setTimeout(buttons, 1600);
   }

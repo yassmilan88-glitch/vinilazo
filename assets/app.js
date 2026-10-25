@@ -1,41 +1,6 @@
 /* VINILAZO — scelta squadra, colori della squadra come accenti, grande vinile di transizione, dischi, modulo d'ordine */
 (function () {
   "use strict";
-  /* Promozione lancio integrata nel sito; prezzi definitivi da confermare nel checkout. */
-  document.addEventListener("DOMContentLoaded", function () {
-    var lang=document.documentElement.lang||"it";
-    var t={
-      it:["OFFERTA LANCIO","−20%","Primi 100 ordini · massimo 7 giorni","6 ordini oggi","Prezzo promozionale soggetto a conferma nel checkout. Non cumulabile."],
-      fr:["OFFRE DE LANCEMENT","−20 %","100 premières commandes · 7 jours maximum","6 commandes aujourd’hui","Prix promotionnel à confirmer lors du paiement. Non cumulable."],
-      en:["LAUNCH OFFER","−20%","First 100 orders · up to 7 days","6 orders today","Promotional price subject to checkout confirmation. Cannot be combined."],
-      es:["OFERTA DE LANZAMIENTO","−20 %","Primeros 100 pedidos · hasta 7 días","6 pedidos hoy","Precio promocional sujeto a confirmación. No acumulable."],
-      de:["STARTANGEBOT","−20 %","Erste 100 Bestellungen · bis zu 7 Tage","6 Bestellungen heute","Aktionspreis muss beim Checkout bestätigt werden. Nicht kombinierbar."]
-    }[lang]||["OFFERTA LANCIO","−20%","Primi 100 ordini · massimo 7 giorni","6 ordini oggi","Prezzo promozionale soggetto a conferma nel checkout. Non cumulabile."];
-    var section=document.createElement("section");
-    section.className="vz-launch-offer";
-    section.setAttribute("aria-label",t[0]);
-    section.style.cssText="margin:0;padding:20px clamp(16px,4vw,48px);background:linear-gradient(110deg,#0b1a35,#102446 70%,#08142a);color:#f3f6fb;border-block:1px solid rgba(116,172,223,.35);font-family:inherit";
-    section.innerHTML='<div style="max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px"><div><div style="font-size:13px;font-weight:800;letter-spacing:.16em;color:#74acdf">'+t[0]+'</div><div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap"><strong style="font-family:Big Shoulders Display,Arial,sans-serif;font-size:clamp(42px,7vw,76px);line-height:1;color:#fff">'+t[1]+'</strong><span style="font-size:16px;color:#b4c3da">'+t[2]+'</span></div><small style="display:block;color:#b4c3da;font-size:12px;max-width:540px">'+t[4]+'</small></div><div style="min-width:190px;padding:12px 18px;border:1px solid rgba(116,172,223,.5);border-radius:14px;background:rgba(255,255,255,.05)"><div style="font-size:13px;color:#b4c3da">'+t[3]+'</div><div style="display:flex;align-items:baseline;gap:8px"><strong style="font-family:Big Shoulders Display,Arial,sans-serif;font-size:40px;line-height:1.2">6</strong><span style="font-size:13px;color:#b4c3da">/ 100</span></div><div style="height:5px;border-radius:5px;background:rgba(255,255,255,.15);overflow:hidden"><div style="height:100%;width:6%;background:#74acdf;border-radius:5px"></div></div></div></div>';
-    var header=document.querySelector(".top");
-    if(header&&header.parentNode)header.parentNode.insertBefore(section,header.nextSibling);
-    else document.body.insertBefore(section,document.body.firstChild);
-  });
-  /* Informazione contrassegno: disponibilità da confermare prima dell'ordine. */
-  document.addEventListener("DOMContentLoaded", function () {
-    var lang = document.documentElement.lang || "it";
-    var labels = {
-      it:"🚚 Pagamento alla consegna su richiesta: Italia +4 €, Francia +8 €, Svizzera +14 €. Disponibilità da confermare prima dell’ordine.",
-      fr:"🚚 Paiement à la livraison sur demande : Italie +4 €, France +8 €, Suisse +14 €. Disponibilité à confirmer avant commande.",
-      en:"🚚 Cash on delivery on request: Italy +€4, France +€8, Switzerland +€14. Availability must be confirmed before ordering.",
-      es:"🚚 Pago contra entrega bajo solicitud: Italia +4 €, Francia +8 €, Suiza +14 €. Disponibilidad pendiente de confirmación.",
-      de:"🚚 Nachnahme auf Anfrage: Italien +4 €, Frankreich +8 €, Schweiz +14 €. Verfügbarkeit vor Bestellung bestätigen."
-    };
-    var banner=document.createElement("div");
-    banner.setAttribute("role","note");
-    banner.style.cssText="background:#102446;color:#fff;text-align:center;padding:9px 16px;font:600 14px/1.5 system-ui,sans-serif;border-bottom:1px solid rgba(255,255,255,.2)";
-    banner.textContent=labels[lang]||labels.it;
-    document.body.insertBefore(banner,document.body.firstChild);
-  });
   var DATA = JSON.parse(document.getElementById("data").textContent);
   var CFG = window.VINILAZO_CONFIG || {};
   var PRICE = CFG.PRICE || 69;
@@ -44,6 +9,7 @@
   var STORE = DATA.store;
   var PAIR_PRICE = Number(CFG.PAIR_PRICE) > 0 && Number(CFG.PAIR_PRICE) < PRICE * 2 ? Number(CFG.PAIR_PRICE) : PRICE * 2;
   var checkoutReady = false;
+  var COM = window.VZCommerce;
   var MAX_QTY = CFG.STRIPE_LINK ? Math.max(1, Math.min(10, Number(CFG.STRIPE_MAX_QTY) || 1)) : 10;
   var TEAMS = DATA.teams;
   var BY_ID = {};
@@ -609,6 +575,12 @@
   }
   function updateSummary() {
     if (!CHECKOUT || !current) return;
+    var feeRow = $('#vz-fee-row');
+    if (feeRow) { feeRow.hidden = !COM.fee(); $('dd', feeRow).textContent = fmt(COM.fee()); }
+    var paymentButton = $('#submit');
+    paymentButton.textContent = COM.method() === 'cod' ? COM.copy[8] + ' · ' + fmt(total()) : fill(T.submit,{total:fmt(total())});
+    $('#pay-note').textContent = COM.method() === 'cod' ? COM.copy[9] + ': ' + fmt(total()) : T.pay_stripe;
+    $('#checkout-next-p').textContent = COM.method() === 'cod' ? COM.copy[10] : T.pay_stripe;
     if (cart) { cartSummary(); return; }
     $("#summary-product").textContent = fill(CHECKOUT.product, { team: current.name });
     $("#summary-unit").textContent = fmt(PRICE);
@@ -632,18 +604,18 @@
     var id = $("#f-second-team").value;
     return qty >= 2 && id && current && id !== current.id ? BY_ID[id] : null;
   }
-  function baseTotal() { return Math.floor(qty / 2) * PAIR_PRICE + (qty % 2) * PRICE; }
+  function baseTotal() { return COM.goods(qty); }
   var ADDON = CFG.CUSTOM_PRICE || 10;
   function custom() { var c = $("#f-custom"); return !!(c && c.checked); }
-  function total() { return cart ? cartTotal(cartCount()) : baseTotal() + (custom() ? ADDON : 0); }
+  function total() { return Math.round(((cart ? cartTotal(cartCount()) : baseTotal() + (custom() ? ADDON : 0)) + COM.fee()) * 100) / 100; }
 
   /* ---------- carrello: ordine con più squadre (gestito da vz-cart.js) ---------- */
   var cart = null, cartWords = {}, CART_MAX = 6;
   function cartCount() { return cart ? cart.reduce(function (a, i) { return a + i.qty; }, 0) : 0; }
-  function cartTotal(n) { return Math.round((Math.floor(n / 2) * PAIR_PRICE + (n % 2) * PRICE) * 100) / 100; }
+  function cartTotal(n) { return COM.goods(n); }
   function cartLabel() { return cart.map(function (i) { return BY_ID[i.id].name + " × " + i.qty; }).join(" · "); }
   function cartSummary() {
-    var n = cartCount(), f = $("#order-form"), sum = cartTotal(n), saving = Math.round((n * PRICE - sum) * 100) / 100;
+    var n = cartCount(), f = $("#order-form"), sum = total(), saving = Math.round((n * PRICE - cartTotal(n)) * 100) / 100;
     $("#summary-product").textContent = fill(CHECKOUT.product, { team: cart.length === 1 ? BY_ID[cart[0].id].name : cart.map(function (i) { return BY_ID[i.id].name; }).join(" + ") });
     $("#summary-unit").textContent = fmt(PRICE);
     $("#summary-qty").textContent = n;
@@ -665,7 +637,7 @@
       var list = $("ul", review); list.replaceChildren();
       cart.forEach(function (i) { var li = document.createElement("li"); var b = document.createElement("b"); b.textContent = BY_ID[i.id].name; li.append(b, document.createTextNode(" × " + i.qty)); list.appendChild(li); });
     }
-    $("#submit").textContent = fill(T.submit, { total: fmt(sum) });
+    $("#submit").textContent = COM.method() === "cod" ? COM.copy[8] + " · " + fmt(sum) : fill(T.submit, { total: fmt(sum) });
   }
   function applyCart() {
     var f = $("#order-form"), fs = $(".chosen", f) && $(".chosen", f).closest("fieldset");
@@ -699,6 +671,12 @@
       return true;
     }
   };
+  window.addEventListener('vz-commerce-change', function () {
+    if (submitting) return;
+    updateSummary();
+    var f = $('#order-form'); if (f) f.elements.totale.value = fmt(total());
+    $$('.bundle-offer, .gift-pair').forEach(function(el){ el.hidden = COM.launch() || !checkoutReady; });
+  });
   if ($("#f-custom")) $("#f-custom").addEventListener("change", function () {
     var on = custom();
     $("#custom-field").hidden = !on;
@@ -756,7 +734,7 @@
     fetch(CFG.CHECKOUT_ENDPOINT, typeof AbortSignal.timeout === "function" ? {signal:AbortSignal.timeout(5000)} : {}).then(function (r) { if (!r.ok) throw new Error("unavailable"); return r.json(); }).then(function (state) {
       if (state.ready !== true || submitting) return;
       checkoutReady = true; MAX_QTY = 2;
-      $$(".bundle-offer, .gift-pair").forEach(function (el) { el.hidden = false; });
+      $$(".bundle-offer, .gift-pair").forEach(function (el) { el.hidden = COM.launch(); });
       $("#qty-out").parentElement.hidden = false; setQty(qty);
     }).catch(function () {});
   }
@@ -813,14 +791,13 @@
       bad[0].scrollIntoView({ block: "center", behavior: reduce ? "instant" : "smooth" });
       return;
     }
-    if (cart && cartCount() > 1 && !checkoutReady) { var ce = $("#form-err"); ce.textContent = T.err_send; ce.hidden = false; return; }
-    if (!cart && qty === 2 && !checkoutReady) return;
+    if (!checkoutReady || !COM.ready) { $('#form-err').textContent=T.err_send; $('#form-err').hidden=false; COM.refresh(); return; }
     var order = { secondTeamId: secondTeam() ? secondTeam().id : current.id, gift: $("#f-gift").checked, name: form.elements.nome.value.trim().split(/\s+/)[0], team: current.name, teamId: current.id, qty: qty, total: total(), custom: custom(), email: form.elements.email.value.trim() };
     if (cart) {
       order.items = cart.map(function (i) { return { teamId: i.id, qty: i.qty }; });
       order.teamId = cart[0].id; order.secondTeamId = cart[1] ? cart[1].id : cart[0].id;
       order.team = cart.map(function (i) { return BY_ID[i.id].name + (i.qty > 1 ? " ×" + i.qty : ""); }).join(" + ");
-      order.qty = cartCount(); order.total = cartTotal(order.qty); order.custom = false;
+      order.qty = cartCount(); order.total = total(); order.custom = false;
     }
     updateSummary();
     if (!form.elements.riferimento_ordine.value) {
@@ -828,6 +805,7 @@
       form.elements.riferimento_ordine.value = "VZ-" + Array.from(random, function (n) { return n.toString(16).padStart(2, "0"); }).join("").toUpperCase();
     }
     order.reference = form.elements.riferimento_ordine.value;
+    order.method = COM.method();
     order.editions = $("#summary-editions").textContent;
     var countrySel = $("#f-country"), countryOpt = countrySel.options[countrySel.selectedIndex];
     order.customer = { name: form.elements.nome.value.trim(), phone: form.elements.telefono.value.trim(), address: form.elements.indirizzo.value.trim(), cap: form.elements.cap.value.trim(), city: form.elements.citta.value.trim(), country: countryOpt ? countryOpt.value : "", iso: countryOpt && countryOpt.dataset.iso || "" };
@@ -842,15 +820,20 @@
     $("#form-err").hidden = true;
     var controller = new AbortController();
     var timeout = setTimeout(function () { controller.abort(); }, 20000);
-    var send = CFG.PREVIEW ? Promise.resolve({ ok: true }) :
+    var send = CFG.PREVIEW || order.method === 'cod' ? Promise.resolve({ ok: true }) :
       fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body, signal: controller.signal });
     send
       .then(function (r) { if (!r.ok) throw new Error(r.status); })
       .then(async function () {
         if (!checkoutReady) return;
-        var response = await fetch(CFG.CHECKOUT_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({items:order.items,qty:order.qty,teamId:order.teamId,secondTeamId:order.secondTeamId,reference:order.reference,lang:DATA.lang,gift:order.gift,email:order.email,customer:order.customer}),signal:controller.signal});
-        if (!response.ok) throw new Error("payment_unavailable");
+        var response = await fetch(CFG.CHECKOUT_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({items:order.items,qty:order.qty,teamId:order.teamId,secondTeamId:order.secondTeamId,reference:order.reference,lang:DATA.lang,gift:order.gift,email:order.email,customer:order.customer,method:order.method,expectedTotal:Math.round(order.total*100)}),signal:controller.signal});
         var session = await response.json();
+        if (!response.ok) {
+          if (session.error === 'price_changed') { COM.applyQuote(session.quote); var changed = new Error('price_changed'); throw changed; }
+          if (session.error === 'reference_conflict') form.elements.riferimento_ordine.value = '';
+          throw new Error('payment_unavailable');
+        }
+        if (session.cod === true && order.method === 'cod') { order.total = session.quote.total/100; return; }
         if (!/^https:\/\/checkout\.stripe\.com\//.test(session.url || "")) throw new Error("invalid_payment_url");
         order.paymentUrl = session.url;
       })
@@ -859,19 +842,19 @@
         form.removeAttribute("aria-busy");
         form.hidden = true;
         var d = $("#done");
-        $("#done-p").textContent = (CFG.STRIPE_LINK ? T.done_stripe : fill(T.done_p, { name: order.name, team: order.team })) +
+        $("#done-p").textContent = order.method === "cod" ? COM.copy[10] : (CFG.STRIPE_LINK ? T.done_stripe : fill(T.done_p, { name: order.name, team: order.team })) +
           (CFG.PREVIEW ? " (Anteprima: l'ordine non è stato inviato.)" : "");
         $("#done-summary").textContent = fill(CHECKOUT.product, { team: order.team }) + " · " + CHECKOUT.quantity + ": " + order.qty + " · " + CHECKOUT.total + ": " + fmt(order.total);
         $("#done-summary").textContent += " · " + order.editions;
         $("#done-reference").textContent = order.reference;
         try { sessionStorage.setItem("vinilazo-last-ref", order.reference); } catch (err) {}
         statusReference.value = order.reference; statusLink();
-        $("#done-unpaid").hidden = false;
+        $("#done-unpaid").hidden = order.method === "cod";
         submitting = false; $("#lang-select").disabled = false; pickBtn.disabled = false;
         d.hidden = false; d.focus();
         d.scrollIntoView({ block: "center", behavior: reduce ? "instant" : "smooth" });
         track("InitiateCheckout", { value: order.total, currency: "EUR", content_ids: order.items ? order.items.map(function (i) { return i.teamId; }) : (order.qty === 2 ? [order.teamId, order.secondTeamId] : [order.teamId]), content_type: "product", num_items: order.qty });
-        var link = order.paymentUrl || ((order.custom && CFG.STRIPE_LINK_CUSTOM) ? CFG.STRIPE_LINK_CUSTOM : CFG.STRIPE_LINK);
+        var link = order.method === "cod" ? null : order.paymentUrl;
         if (link) {
           var paymentUrl = new URL(link);
           if (!order.paymentUrl) paymentUrl.searchParams.set("client_reference_id", order.reference);
@@ -884,13 +867,13 @@
 
         }
       })
-      .catch(function () {
+      .catch(function (error) {
         clearTimeout(timeout);
         submitting = false; form.removeAttribute("aria-busy");
         locked.forEach(function (el) { el.disabled = false; });
         $("#lang-select").disabled = false; pickBtn.disabled = false;
         btn.disabled = false; setQty(qty);
-        var fe = $("#form-err"); fe.textContent = T.err_send; fe.hidden = false;
+        var fe = $("#form-err"); fe.textContent = error.message === "price_changed" ? COM.copy[14] : T.err_send; fe.hidden = false;
       });
   });
 

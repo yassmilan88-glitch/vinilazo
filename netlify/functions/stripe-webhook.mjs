@@ -59,7 +59,7 @@ export function buildOrder(s) {
   const cd = s.customer_details || {};
   const addr = cd.address || {};
   return {
-    lang, qty, product, gift: m.gift === 'yes', pair: qty >= 2, cart: items.length > 0,
+    lang, qty, product, gift: m.gift === 'yes', pair: qty >= 2 && m.launch !== 'yes', cart: items.length > 0,
     ready: ids.length > 0 && ids.every((id) => READY.has(id)),
     reference: m.order_reference || s.client_reference_id || s.id,
     amount: (s.amount_total || 0) / 100,
