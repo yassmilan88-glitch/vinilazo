@@ -85,7 +85,7 @@
     if (argentinaPage) {
       document.querySelectorAll('.buy a.btn-acc[href*="#ordina"]').forEach(function (main) {
         if (main.parentNode.querySelector('.vz-add-cart')) return;
-        main.textContent = t.buy + ' · ' + fmt(PRICE);
+        main.textContent = t.buy + ' · ' + fmt(window.VZCommerce.goods(1));
         var add = el('a', 'btn vz-add-cart'); add.href = base + '?team=argentina&add=1';
         add.innerHTML = ICON_ADD; add.appendChild(el('span', '', t.add));
         main.after(add);
@@ -95,7 +95,7 @@
     if (!shopMode()) return;
     var main = document.querySelector('.hero .buy a[data-cta]');
     if (main && !main.parentNode.querySelector('.vz-add-cart')) {
-      main.textContent = t.buy + ' · ' + fmt(PRICE);
+      main.textContent = t.buy + ' · ' + fmt(window.VZCommerce.goods(1));
       var add = el('button', 'btn vz-add-cart'); add.type = 'button';
       add.innerHTML = ICON_ADD; add.appendChild(el('span', '', t.add));
       add.addEventListener('click', function () { addCurrent(); });
@@ -262,7 +262,7 @@
     })();
   }
   function start() {
-    window.addEventListener('vz-commerce-change',function(){if(drawer && !drawer.hidden)render();});
+    window.addEventListener('vz-commerce-change',function(){if(drawer && !drawer.hidden)render(); var buy=document.querySelector('.hero .buy a[data-cta]');if(buy)buy.textContent=t.buy+' · '+fmt(window.VZCommerce.goods(1));});
     header(); refreshBadge(false); buttons(); wire(); fromUrl();
     setTimeout(buttons, 1600);
   }

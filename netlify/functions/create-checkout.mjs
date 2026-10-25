@@ -39,7 +39,7 @@ export function priceLines(items, launch = false) {
 export default async function handler(request) {
   const key = process.env.STRIPE_SECRET_KEY;
   const ready = process.env.VINILAZO_CHECKOUT_ENABLED === 'true' && /^(sk|rk)_live_/.test(key || '');
-  if (request.method === 'GET') return json({ready, version:'launch-v1'});
+  if (request.method === 'GET') return json({ready, version:'launch-v2'});
   if (request.method !== 'POST') return json({error:'method_not_allowed'},405);
   if (!ALLOWED_ORIGINS.has(request.headers.get('origin'))) return json({error:'origin_not_allowed'},403);
   if (!ready) return json({error:'checkout_not_configured'},503);
@@ -59,11 +59,17 @@ export default async function handler(request) {
   try {
     db = store();
     fingerprint = digest({items, method, customer:customerInput, email:order.email, gift, lang});
-    const existing = await db.get('orders/' + reference, {type:'json'});
+    const entry = await db.getWithMetadata('orders/' + reference, {type:'json'});
+    const existing = entry?.data;
     if (existing) {
       if (existing.fingerprint !== fingerprint) return json({error:'reference_conflict'},409);
       if (existing.result) return json(existing.result);
-      record = existing;
+      if (existing.processingUntil > Date.now()) return json({error:'order_in_progress'},409);
+      record = {...existing, processingUntil:Date.now()+60000};
+      if (order.quoteOnly !== true) {
+        const lease = await db.setJSON('orders/' + reference, record, {onlyIfMatch:entry.etag});
+        if (!lease.modified) return json({error:'order_in_progress'},409);
+      }
     }
     const available = await campaign(db);
     launch = record ? record.quote.launch : available.active;
@@ -74,13 +80,13 @@ export default async function handler(request) {
       launch = launch && await reserve(reference, db);
       quote = pricing(qty, launch, method, customerInput.iso);
       if (order.expectedTotal !== undefined && order.expectedTotal !== quote.total) return json({error:'price_changed',quote},409);
-      record = {reference, fingerprint, items, method, customer:customerInput, email:order.email, gift, lang, quote, createdAt:new Date().toISOString(), status:method === 'cod' ? 'awaiting_collection' : 'awaiting_payment'};
+      record = {processingUntil:Date.now()+60000, reference, fingerprint, items, method, customer:customerInput, email:order.email, gift, lang, quote, createdAt:new Date().toISOString(), status:method === 'cod' ? 'awaiting_collection' : 'awaiting_payment'};
       const saved = await db.setJSON('orders/' + reference, record, {onlyIfNew:true});
       if (!saved.modified) {
         record = await db.get('orders/' + reference, {type:'json'});
         if (record.fingerprint !== fingerprint) return json({error:'reference_conflict'},409);
         if (record.result) return json(record.result);
-        quote = record.quote; launch = quote.launch;
+        return json({error:'order_in_progress'},409);
       }
     }
     if (method === 'cod') {

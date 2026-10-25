@@ -2,6 +2,7 @@ import { test, mock } from 'node:test';
 import assert from 'node:assert/strict';
 const rows = new Map();
 const memory = {
+ getWithMetadata: async k => rows.has(k) ? {data:structuredClone(rows.get(k)),etag:'test'} : null,
  get: async k => structuredClone(rows.get(k) || null),
  list: async ({prefix}) => ({blobs:[...rows.keys()].filter(k=>k.startsWith(prefix)).map(key=>({key}))}),
  setJSON: async (k,v,opts={}) => {if(opts.onlyIfNew && rows.has(k)) return {modified:false};rows.set(k,structuredClone(v));return {modified:true};}
