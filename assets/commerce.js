@@ -25,7 +25,7 @@
   function update(){
     var promo=document.getElementById('vz-launch');if(promo)promo.hidden=!api.launch();
     var sales=document.getElementById('vz-sales');
-    if(sales && state && state.sales){
+    if(sales && state && state.sales && state.sales.quantity>0){
       sales.hidden=false;sales.querySelector('strong').textContent=String(state.sales.quantity);
       var list=sales.querySelector('.vz-sales-teams');list.replaceChildren();
       var names={argentina:'Argentina',inter:'Inter',spagna:lang==='en'?'Spain':lang==='fr'?'Espagne':lang==='es'?'España':lang==='de'?'Spanien':'Spagna'};
@@ -45,9 +45,11 @@
     var wrap=el('div','vz-commerce');
     var cod=el('div','vz-cod-banner','🚚 '+copy[7]+' · '+copy[13]);wrap.append(cod);
     var promo=el('section','vz-launch');promo.id='vz-launch';promo.hidden=true;
-    var offer=el('div');offer.append(el('span','vz-commerce-eyebrow',copy[0]),el('strong','vz-offer-value','−20%'));
-    var terms=el('div');terms.append(el('b','',copy[1]),el('p','',copy[2]),el('small','',copy[16]+' '+new Intl.DateTimeFormat(lang,{dateStyle:'medium',timeStyle:'short',timeZone:'Europe/Rome'}).format(new Date('2026-11-01T12:00:00Z'))+' (Roma)'));
-    promo.append(offer,terms);wrap.append(promo);
+    var head=el('div','vz-launch-head');var title=el('div','vz-launch-title');
+    title.append(el('span','vz-commerce-eyebrow',copy[0]),el('b','',copy[1]));
+    head.append(el('strong','vz-offer-value','−20%'),title);
+    var terms=el('div','vz-launch-terms');terms.append(el('p','',copy[2]),el('small','',copy[16]+' '+new Intl.DateTimeFormat(lang,{dateStyle:'medium',timeStyle:'short',timeZone:'Europe/Rome'}).format(new Date('2026-11-01T12:00:00Z'))+' (Roma)'));
+    promo.append(head,terms);wrap.append(promo);
     var sales=el('section','vz-sales');sales.id='vz-sales';sales.hidden=true;
     var value=el('div','vz-sales-value');value.append(el('span','',copy[3]+':'),el('strong','','—'));
     var details=el('div');details.append(el('small','',copy[4]),el('div','vz-sales-teams'));
