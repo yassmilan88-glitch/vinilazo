@@ -218,8 +218,10 @@
     photoLink.append(img, el('span', 'vz-lifestyle-zoom', '↗'));
     var photoGroup = el('div', 'vz-lifestyle-photo-group');
     var thumbs = el('div', 'vz-lifestyle-thumbs');
-    var current = null;
+    var current = null, autoTimer = null, activeKind = null;
+    var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function show(kind) {
+      activeKind = kind;
       if (!current) return;
       setImage(img, current, kind);
       photoLink.href = imageSrc(current.id, kind);
@@ -238,11 +240,21 @@
         thumb.loading = 'lazy'; thumb.decoding = 'async'; thumb.width = 80; thumb.height = 86;
         setImage(thumb, team, kind);
         button.append(thumb, el('span', '', tr[kind]));
-        button.addEventListener('click', function () { show(kind); });
+        button.addEventListener('click', function () { show(kind); restartAuto(); });
         thumbs.append(button);
       });
       return list[0];
     }
+    function restartAuto(){
+      clearInterval(autoTimer);
+      if(reducedMotion)return;
+      autoTimer=setInterval(function(){
+        if(document.hidden || !current || section.hidden)return;
+        var list=kindsFor(current.id), idx=list.indexOf(activeKind);
+        show(list[(idx+1)%list.length]);
+      },4000);
+    }
+    document.addEventListener('visibilitychange',function(){if(!document.hidden)restartAuto();});
     photoGroup.append(photoLink, thumbs);
     section.append(photoGroup, copy);
     anchor.before(section);
@@ -253,6 +265,7 @@
       if (!current || current.id !== team.id) {
         current = team;
         show(buildThumbs(team));
+        restartAuto();
       }
       teamName.textContent = team.name;
       section.style.setProperty('--vz-photo-accent', team.th && team.th.acc || team.cols && team.cols[0] || '#74acdf');
