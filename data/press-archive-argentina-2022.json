@@ -1,0 +1,31 @@
+{
+  "event": "Argentina — Coppa del Mondo 2022",
+  "date": "2022-12-18",
+  "status": "fonti individuate; immagini da autorizzare prima della pubblicazione commerciale",
+  "sources": [
+    {
+      "publisher": "Sky Sport",
+      "url": "https://sport.sky.it/calcio/mondiali/2022/12/19/rassegna-stampa-argentina-campione-del-mondo",
+      "reportedCovers": 25
+    },
+    {
+      "publisher": "Periodismo",
+      "url": "https://www.periodismo.com/2022/12/18/las-portadas-de-los-diarios-reflejan-el-titulo-de-argentina/",
+      "reportedCovers": 30
+    },
+    {
+      "publisher": "Worldcrunch",
+      "url": "https://worldcrunch.com/in-the-news/worldcup-newspaper-front-pages-argentina-france/",
+      "reportedCovers": 28
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.co.uk/sport/football/64024082"
+    },
+    {
+      "publisher": "La Nación",
+      "url": "https://www.lanacion.com.ar/deportes/futbol/mundial-qatar-2022-argentina-campeon-y-como-titulan-los-diarios-en-todo-el-mundo-el-triunfo-nid18122022/"
+    }
+  ],
+  "implementationNotes": "Deduplicare per giornale, data e immagine; acquisire licenza o permesso prima di ospitare o riprodurre copertine; immagini ottimizzate webp con lazy loading e scorrimento accessibile; non confondere screenshot di homepage con prime pagine cartacee."
+}
