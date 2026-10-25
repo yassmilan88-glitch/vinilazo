@@ -1,5 +1,6 @@
 import { getStore } from '@netlify/blobs';
 import { createHash } from 'node:crypto';
+import marketplace from './marketplace-sales.json' with { type: 'json' };
 export const START = Date.parse('2026-10-25T12:00:00Z');
 export const END = START + 7 * 86400000;
 export const LIMIT = 100;
@@ -67,7 +68,11 @@ export async function salesToday() {
         teams[id] = (teams[id] || 0) + Number(q); quantity += Number(q);
       }
     }
-    if (!result.has_more) return { day, quantity, teams };
+    if (!result.has_more) {
+      // Real off-site sales (marketplace) entered by the owner for this day only.
+      const extra = Number(marketplace[day]?.quantity) || 0;
+      return { day, quantity: quantity + extra, teams };
+    }
     after = result.data.at(-1).id;
   }
   throw new Error('stats_incomplete');
