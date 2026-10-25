@@ -10,11 +10,11 @@
   try { data = JSON.parse(node.textContent); } catch (e) { return; }
   var lang = data.lang || 'it';
   var tr = {
-    it: {eyebrow:'',title:'Quei gol, proprio lì sul tuo frigo.',intro:'Tutte le edizioni, da vicino: sul frigo e nel set completo.',illustrative:'Immagini illustrative: grafiche e colori dei dischi possono variare leggermente.',detailTitle:'',detailIntro:'',detailLink:'Scegli questa edizione',open:'Apri la foto a grandezza naturale',prev:'Foto precedenti',next:'Foto successive',view:'Scopri l’edizione',frigo:'Sul frigo',set:'Il set completo',casa:'A casa',tavolo:'Sul tavolo',showTitle:'Così sta sul frigo di casa.',showIntro:'Ogni tre secondi cambia squadra: colori e gol diversi, stesso giradischi magnetico.',showNote:'Foto vera con l’edizione Italia; per le altre squadre abbiamo cambiato colori ed etichette sulla stessa foto. I dettagli possono variare leggermente.',pause:'Ferma',play:'Riprendi',pick:'Scegli la squadra',showing:'In foto'},
-    es: {eyebrow:'VINILAZO EN CASA',title:'Ese gol, ahí mismo en tu nevera.',intro:'Todas las ediciones, de cerca: en la nevera y en el set completo.',illustrative:'Imágenes ilustrativas: los diseños y colores de los discos pueden variar ligeramente.',detailTitle:'VINILAZO, desde todos los ángulos.',detailIntro:'Tu VINILAZO con los colores y goles de tu equipo.',detailLink:'Elegí esta edición',open:'Abrir imagen a tamaño completo',prev:'Fotos anteriores',next:'Fotos siguientes',view:'Descubrí la edición',frigo:'En la nevera',set:'El set completo',casa:'En casa',tavolo:'En la mesa',showTitle:'Así queda en la nevera de casa.',showIntro:'Cada tres segundos cambia de equipo: otros colores y otros goles, el mismo tocadiscos magnético.',showNote:'Foto real con la edición Italia; para los demás equipos cambiamos colores y etiquetas sobre la misma foto. Los detalles pueden variar ligeramente.',pause:'Pausa',play:'Seguir',pick:'Elegí el equipo',showing:'En la foto'},
-    fr: {eyebrow:'VINILAZO CHEZ VOUS',title:'Ces buts, juste là sur votre frigo.',intro:'Toutes les éditions, de près : sur le frigo et en coffret complet.',illustrative:'Images d’illustration : les visuels et couleurs des disques peuvent légèrement varier.',detailTitle:'VINILAZO sous tous les angles.',detailIntro:'Votre VINILAZO aux couleurs et aux buts de votre équipe.',detailLink:'Choisir cette édition',open:'Ouvrir la photo en plein format',prev:'Photos précédentes',next:'Photos suivantes',view:'Découvrir l’édition',frigo:'Sur le frigo',set:'Le coffret complet',casa:'Chez vous',tavolo:'Sur la table',showTitle:'Voilà ce que ça donne sur le frigo.',showIntro:'Toutes les trois secondes, une autre équipe : d’autres couleurs, d’autres buts, la même platine magnétique.',showNote:'Photo réelle avec l’édition Italie ; pour les autres équipes, nous avons changé les couleurs et les étiquettes sur la même photo. Les détails peuvent légèrement varier.',pause:'Pause',play:'Reprendre',pick:'Choisir l’équipe',showing:'Sur la photo'},
-    en: {eyebrow:'VINILAZO AT HOME',title:'That goal, right there on your fridge.',intro:'Every edition, up close: on the fridge and as a complete set.',illustrative:'Illustrative images: disc artwork and colours may vary slightly.',detailTitle:'VINILAZO, from every angle.',detailIntro:'Your VINILAZO in your team’s colours, with its unforgettable goals.',detailLink:'Choose this edition',open:'Open full-size photo',prev:'Previous photos',next:'Next photos',view:'Explore this edition',frigo:'On the fridge',set:'The complete set',casa:'At home',tavolo:'On the table',showTitle:'This is how it looks on a fridge.',showIntro:'Every three seconds it switches team: different colours and goals, the same magnetic turntable.',showNote:'Real photo of the Italy edition; for the other teams we changed the colours and labels on the same photo. Details may vary slightly.',pause:'Pause',play:'Play',pick:'Choose the team',showing:'In the photo'},
-    de: {eyebrow:'VINILAZO ZU HAUSE',title:'Dieses Tor, direkt an deinem Kühlschrank.',intro:'Alle Editionen aus der Nähe: am Kühlschrank und als komplettes Set.',illustrative:'Illustrationen: Motive und Farben der Scheiben können leicht abweichen.',detailTitle:'VINILAZO aus jedem Blickwinkel.',detailIntro:'Dein VINILAZO mit den Farben und Toren deiner Mannschaft.',detailLink:'Diese Edition wählen',open:'Foto in voller Größe öffnen',prev:'Vorherige Fotos',next:'Nächste Fotos',view:'Edition ansehen',frigo:'Am Kühlschrank',set:'Das komplette Set',casa:'Zu Hause',tavolo:'Auf dem Tisch',showTitle:'So sieht es am Kühlschrank aus.',showIntro:'Alle drei Sekunden eine andere Mannschaft: andere Farben, andere Tore, derselbe magnetische Plattenspieler.',showNote:'Echtes Foto der Italien-Edition; für die anderen Mannschaften haben wir Farben und Etiketten auf demselben Foto geändert. Details können leicht abweichen.',pause:'Pause',play:'Weiter',pick:'Mannschaft wählen',showing:'Im Foto'}
+    it: {eyebrow:'',title:'Quei gol, proprio lì sul tuo frigo.',intro:'Tutte le edizioni, da vicino: sul frigo e nel set completo.',illustrative:'Immagini illustrative: grafiche e colori dei dischi possono variare leggermente.',detailTitle:'',detailIntro:'',detailLink:'Scegli questa edizione',open:'Apri la foto a grandezza naturale',prev:'Foto precedenti',next:'Foto successive',view:'Scopri l’edizione',frigo:'Sul frigo',set:'Il set completo',casa:'A casa',tavolo:'Sul tavolo',showTitle:'Così sta sul frigo di casa.',showIntro:'Ogni tre secondi cambia squadra: colori e gol diversi, stesso giradischi magnetico.',showNote:'Foto vere: edizioni Argentina e Italia. Le altre immagini sono ricostruzioni grafiche dello stesso prodotto: i dettagli possono variare leggermente.',real:'Foto vera',pause:'Ferma',play:'Riprendi',pick:'Scegli la squadra',showing:'In foto'},
+    es: {eyebrow:'VINILAZO EN CASA',title:'Ese gol, ahí mismo en tu nevera.',intro:'Todas las ediciones, de cerca: en la nevera y en el set completo.',illustrative:'Imágenes ilustrativas: los diseños y colores de los discos pueden variar ligeramente.',detailTitle:'VINILAZO, desde todos los ángulos.',detailIntro:'Tu VINILAZO con los colores y goles de tu equipo.',detailLink:'Elegí esta edición',open:'Abrir imagen a tamaño completo',prev:'Fotos anteriores',next:'Fotos siguientes',view:'Descubrí la edición',frigo:'En la nevera',set:'El set completo',casa:'En casa',tavolo:'En la mesa',showTitle:'Así queda en la nevera de casa.',showIntro:'Cada tres segundos cambia de equipo: otros colores y otros goles, el mismo tocadiscos magnético.',showNote:'Fotos reales: ediciones Argentina e Italia. Las demás imágenes son recreaciones gráficas del mismo producto: los detalles pueden variar ligeramente.',real:'Foto real',pause:'Pausa',play:'Seguir',pick:'Elegí el equipo',showing:'En la foto'},
+    fr: {eyebrow:'VINILAZO CHEZ VOUS',title:'Ces buts, juste là sur votre frigo.',intro:'Toutes les éditions, de près : sur le frigo et en coffret complet.',illustrative:'Images d’illustration : les visuels et couleurs des disques peuvent légèrement varier.',detailTitle:'VINILAZO sous tous les angles.',detailIntro:'Votre VINILAZO aux couleurs et aux buts de votre équipe.',detailLink:'Choisir cette édition',open:'Ouvrir la photo en plein format',prev:'Photos précédentes',next:'Photos suivantes',view:'Découvrir l’édition',frigo:'Sur le frigo',set:'Le coffret complet',casa:'Chez vous',tavolo:'Sur la table',showTitle:'Voilà ce que ça donne sur le frigo.',showIntro:'Toutes les trois secondes, une autre équipe : d’autres couleurs, d’autres buts, la même platine magnétique.',showNote:'Photos réelles : éditions Argentine et Italie. Les autres images sont des reconstitutions graphiques du même produit : les détails peuvent légèrement varier.',real:'Photo réelle',pause:'Pause',play:'Reprendre',pick:'Choisir l’équipe',showing:'Sur la photo'},
+    en: {eyebrow:'VINILAZO AT HOME',title:'That goal, right there on your fridge.',intro:'Every edition, up close: on the fridge and as a complete set.',illustrative:'Illustrative images: disc artwork and colours may vary slightly.',detailTitle:'VINILAZO, from every angle.',detailIntro:'Your VINILAZO in your team’s colours, with its unforgettable goals.',detailLink:'Choose this edition',open:'Open full-size photo',prev:'Previous photos',next:'Next photos',view:'Explore this edition',frigo:'On the fridge',set:'The complete set',casa:'At home',tavolo:'On the table',showTitle:'This is how it looks on a fridge.',showIntro:'Every three seconds it switches team: different colours and goals, the same magnetic turntable.',showNote:'Real photos: Argentina and Italy editions. The other images are graphic reconstructions of the same product: details may vary slightly.',real:'Real photo',pause:'Pause',play:'Play',pick:'Choose the team',showing:'In the photo'},
+    de: {eyebrow:'VINILAZO ZU HAUSE',title:'Dieses Tor, direkt an deinem Kühlschrank.',intro:'Alle Editionen aus der Nähe: am Kühlschrank und als komplettes Set.',illustrative:'Illustrationen: Motive und Farben der Scheiben können leicht abweichen.',detailTitle:'VINILAZO aus jedem Blickwinkel.',detailIntro:'Dein VINILAZO mit den Farben und Toren deiner Mannschaft.',detailLink:'Diese Edition wählen',open:'Foto in voller Größe öffnen',prev:'Vorherige Fotos',next:'Nächste Fotos',view:'Edition ansehen',frigo:'Am Kühlschrank',set:'Das komplette Set',casa:'Zu Hause',tavolo:'Auf dem Tisch',showTitle:'So sieht es am Kühlschrank aus.',showIntro:'Alle drei Sekunden eine andere Mannschaft: andere Farben, andere Tore, derselbe magnetische Plattenspieler.',showNote:'Echte Fotos: Editionen Argentinien und Italien. Die anderen Bilder sind grafische Nachbildungen desselben Produkts: Details können leicht abweichen.',real:'Echtes Foto',pause:'Pause',play:'Weiter',pick:'Mannschaft wählen',showing:'Im Foto'}
   }[lang] || null;
   if (!tr) return;
 
@@ -28,6 +28,11 @@
   // Ordine della foto che cambia squadra in home: si parte dalla foto vera (Italia).
   var showOrder = ['italia', 'napoli', 'inter', 'milan', 'juventus', 'argentina', 'real-madrid', 'barcelona', 'psg', 'bayern', 'liverpool',
     'manchester-city', 'manchester-united', 'brasile', 'francia', 'spagna', 'portogallo', 'germania', 'inghilterra', 'olanda', 'messico'];
+  // Foto in più nel carosello: si parte dalla foto vera dell'edizione Argentina;
+  // per la Spagna la foto in cucina prende il posto della vecchia ricostruzione. g = gol del disco al centro.
+  var shots = [{ id: 'argentina', src: 'argentina-foto-vera.webp', g: 2, real: 1 }].concat(showOrder.map(function (id) {
+    return id === 'spagna' ? { id: id, src: 'spagna-cucina.webp', g: 2 } : { id: id, src: id + '.webp', g: 0 };
+  }));
   var STEP = 3000;
   var assetBase = (data.assets || '../assets/') + 'gallery/';
   var byId = {};
@@ -62,8 +67,10 @@
   function insertCatalogGallery() {
     var main = document.getElementById('vz-catalog-main');
     if (!main) return;
-    var list = showOrder.filter(function (id) { return byId[id]; });
+    var list = shots.filter(function (s) { return byId[s.id]; });
     if (!list.length) return;
+    var teamIds = [];
+    list.forEach(function (s) { if (teamIds.indexOf(s.id) < 0) teamIds.push(s.id); });
     var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     var section = el('section', 'vz-lifestyle-gallery vz-lifestyle-catalog vz-fridge-show');
     section.id = 'vz-lifestyle-gallery';
@@ -94,8 +101,9 @@
     controls.append(prev, toggle, next);
     var chips = el('div', 'vz-fridge-chips');
     chips.setAttribute('role', 'group'); chips.setAttribute('aria-label', tr.pick);
-    list.forEach(function (id, i) {
+    teamIds.forEach(function (id) {
       var team = byId[id], chip = el('button', 'vz-fridge-chip');
+      var i = list.findIndex(function (s) { return s.id === id; });
       chip.type = 'button';
       chip.style.setProperty('--vz-chip-a', team.cols && team.cols[0] || '#74acdf');
       chip.style.setProperty('--vz-chip-b', team.cols && (team.cols[1] || team.cols[0]) || '#ffffff');
@@ -111,17 +119,20 @@
     if (anchor) anchor.before(section); else main.append(section);
 
     var index = -1, front = 0, timer = 0, visible = false, hover = false, userPaused = reduce, token = 0;
-    function teamAt(i) { return byId[list[(i + list.length) % list.length]]; }
+    function shotAt(i) { return list[(i + list.length) % list.length]; }
+    function teamAt(i) { return byId[shotAt(i).id]; }
+    function shotSrc(i) { return assetBase + 'frigo/' + shotAt(i).src; }
     function paint(i) {
-      var team = teamAt(i), acc = team.th && team.th.acc || team.cols && team.cols[0] || '#74acdf';
+      var shot = shotAt(i), team = teamAt(i), acc = team.th && team.th.acc || team.cols && team.cols[0] || '#74acdf';
       section.style.setProperty('--vz-photo-accent', acc);
       frame.href = cta.href = '?team=' + encodeURIComponent(team.id);
       frame.setAttribute('aria-label', tr.view + ': ' + team.name);
       badgeName.textContent = name.textContent = team.name;
-      var g = team.goals && team.goals[0];
+      badgeSmall.textContent = shot.real ? tr.real : tr.showing;
+      var g = team.goals && (team.goals[shot.g] || team.goals[0]);
       goal.textContent = g ? g[0] + ' · ' + g[1] : '';
       chips.querySelectorAll('button').forEach(function (b, k) {
-        var on = k === (i + list.length) % list.length;
+        var on = teamIds[k] === shot.id;
         b.classList.toggle('is-active', on); b.setAttribute('aria-pressed', on ? 'true' : 'false');
         if (on && chips.scrollWidth > chips.clientWidth) chips.scrollTo({ left: b.offsetLeft - (chips.clientWidth - b.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' });
       });
@@ -132,7 +143,7 @@
       front = 1 - front;
       img.classList.add('is-on'); old.classList.remove('is-on');
       paint(i); restartBar(); schedule();
-      var pre = new Image(); pre.decoding = 'async'; pre.src = fridgeSrc(teamAt(i + 1).id);
+      var pre = new Image(); pre.decoding = 'async'; pre.src = shotSrc(i + 1);
     }
     function go(i) {
       i = (i + list.length) % list.length;
@@ -140,8 +151,8 @@
       index = i;
       var team = teamAt(i), img = layers[1 - front], tk = ++token;
       clearTimeout(timer);
-      img.alt = 'VINILAZO ' + team.name + ' – ' + tr.frigo;
-      img.src = fridgeSrc(team.id);
+      img.alt = 'VINILAZO ' + team.name + ' – ' + (shotAt(i).real ? tr.real : tr.frigo);
+      img.src = shotSrc(i);
       if (img.decode) img.decode().then(function () { swap(img, i, tk); }, function () { swap(img, i, tk); });
       else if (img.complete) swap(img, i, tk);
       else img.onload = img.onerror = function () { swap(img, i, tk); };
@@ -183,7 +194,7 @@
       }, { threshold: 0.35 }).observe(stage);
     } else { visible = true; }
     // primo fotogramma subito (senza aspettare lo scroll), così la sezione non resta vuota
-    layers[0].src = fridgeSrc(list[0]); layers[0].alt = 'VINILAZO ' + teamAt(0).name + ' – ' + tr.frigo;
+    layers[0].src = shotSrc(0); layers[0].alt = 'VINILAZO ' + teamAt(0).name + ' – ' + (shotAt(0).real ? tr.real : tr.frigo);
     index = 0; paint(0); schedule();
   }
   function activeTeam() {
