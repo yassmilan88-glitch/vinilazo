@@ -37,14 +37,15 @@
       window.addEventListener('hashchange',function(){if(location.hash==='#storie'||/^#storia-\d+$/.test(location.hash))ensureOpen();});
     }
     var gallery=document.querySelector('.vz-lifestyle-detail');
-    if(gallery&&!gallery.closest('.vz-photo-disclosure')){
-      var photo=el('details','vz-photo-disclosure');
-      var photosum=el('summary','vz-compact-summary');
-      var photosumtext=el('span','vz-compact-summary-copy');
-      photosumtext.append(el('strong','',tr.photos),el('small','',tr.photosHint));
-      photosum.append(el('span','vz-compact-icon','▧'),photosumtext,el('span','vz-compact-arrow','⌄'));
-      gallery.before(photo);photo.append(photosum,gallery);
+    // Galleria sempre visibile, senza tendina, posizionata prima nella pagina.
+    if(gallery){
+      var old=gallery.closest('.vz-photo-disclosure');
+      if(old){old.before(gallery);old.remove();}
+      var target=document.querySelector('.hero') || document.getElementById('idea-regalo');
+      if(target && target.parentNode) target.after(gallery);
+      gallery.classList.add('vz-auto-product-gallery');
     }
+
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
