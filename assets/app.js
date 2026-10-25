@@ -1,6 +1,25 @@
 /* VINILAZO — scelta squadra, colori della squadra come accenti, grande vinile di transizione, dischi, modulo d'ordine */
 (function () {
   "use strict";
+  /* Promozione lancio integrata nel sito; prezzi definitivi da confermare nel checkout. */
+  document.addEventListener("DOMContentLoaded", function () {
+    var lang=document.documentElement.lang||"it";
+    var t={
+      it:["OFFERTA LANCIO","−20%","Primi 100 ordini · massimo 7 giorni","6 ordini oggi","Prezzo promozionale soggetto a conferma nel checkout. Non cumulabile."],
+      fr:["OFFRE DE LANCEMENT","−20 %","100 premières commandes · 7 jours maximum","6 commandes aujourd’hui","Prix promotionnel à confirmer lors du paiement. Non cumulable."],
+      en:["LAUNCH OFFER","−20%","First 100 orders · up to 7 days","6 orders today","Promotional price subject to checkout confirmation. Cannot be combined."],
+      es:["OFERTA DE LANZAMIENTO","−20 %","Primeros 100 pedidos · hasta 7 días","6 pedidos hoy","Precio promocional sujeto a confirmación. No acumulable."],
+      de:["STARTANGEBOT","−20 %","Erste 100 Bestellungen · bis zu 7 Tage","6 Bestellungen heute","Aktionspreis muss beim Checkout bestätigt werden. Nicht kombinierbar."]
+    }[lang]||["OFFERTA LANCIO","−20%","Primi 100 ordini · massimo 7 giorni","6 ordini oggi","Prezzo promozionale soggetto a conferma nel checkout. Non cumulabile."];
+    var section=document.createElement("section");
+    section.className="vz-launch-offer";
+    section.setAttribute("aria-label",t[0]);
+    section.style.cssText="margin:0;padding:20px clamp(16px,4vw,48px);background:linear-gradient(110deg,#0b1a35,#102446 70%,#08142a);color:#f3f6fb;border-block:1px solid rgba(116,172,223,.35);font-family:inherit";
+    section.innerHTML='<div style="max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px"><div><div style="font-size:13px;font-weight:800;letter-spacing:.16em;color:#74acdf">'+t[0]+'</div><div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap"><strong style="font-family:Big Shoulders Display,Arial,sans-serif;font-size:clamp(42px,7vw,76px);line-height:1;color:#fff">'+t[1]+'</strong><span style="font-size:16px;color:#b4c3da">'+t[2]+'</span></div><small style="display:block;color:#b4c3da;font-size:12px;max-width:540px">'+t[4]+'</small></div><div style="min-width:190px;padding:12px 18px;border:1px solid rgba(116,172,223,.5);border-radius:14px;background:rgba(255,255,255,.05)"><div style="font-size:13px;color:#b4c3da">'+t[3]+'</div><div style="display:flex;align-items:baseline;gap:8px"><strong style="font-family:Big Shoulders Display,Arial,sans-serif;font-size:40px;line-height:1.2">6</strong><span style="font-size:13px;color:#b4c3da">/ 100</span></div><div style="height:5px;border-radius:5px;background:rgba(255,255,255,.15);overflow:hidden"><div style="height:100%;width:6%;background:#74acdf;border-radius:5px"></div></div></div></div>';
+    var header=document.querySelector(".top");
+    if(header&&header.parentNode)header.parentNode.insertBefore(section,header.nextSibling);
+    else document.body.insertBefore(section,document.body.firstChild);
+  });
   /* Informazione contrassegno: disponibilità da confermare prima dell'ordine. */
   document.addEventListener("DOMContentLoaded", function () {
     var lang = document.documentElement.lang || "it";
