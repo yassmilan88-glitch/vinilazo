@@ -810,3 +810,23 @@ textarea::placeholder,.field input::placeholder{color:#6b6b6b}
 .ix-list .ix-goal-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.32;z-index:-1;pointer-events:none;filter:saturate(.7)}
 .ix-list a.has-goal-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,20,42,.9),transparent 70%);z-index:-1;pointer-events:none}
 @media(max-width:700px){.story-goal-photo{opacity:.26}.story.has-goal-photo::before{background:linear-gradient(90deg,rgba(8,20,42,.87),rgba(8,20,42,.65))}.pp-disc>.pp-goal-photo{opacity:.23}}
+
+/* VINILAZO — Come funziona: larger demonstrations, aligned to top */
+@media (max-width:900px){
+  .how .steps{gap:20px}
+  .how .step{grid-template-columns:minmax(160px,48%) minmax(0,1fr);align-items:start;gap:16px}
+  .how .step .vid{align-self:start;width:100%}
+  .how .step video{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:16px}
+  .how .step>div:last-child{align-self:start;padding-top:2px}
+  .how .step h3{margin:0 0 10px;font-size:clamp(22px,3.7vw,29px);line-height:1.12}
+  .how .step p{font-size:clamp(15px,2.4vw,19px);line-height:1.42}
+}
+@media (max-width:540px){
+  .how{padding-top:38px;padding-bottom:46px}
+  .how h2{margin-bottom:22px}
+  .how .steps{gap:18px}
+  .how .step{grid-template-columns:minmax(0,48%) minmax(0,1fr);gap:12px}
+  .how .step h3{font-size:clamp(19px,5vw,25px);gap:8px;flex-wrap:wrap}
+  .how .step-n{width:34px;height:34px;font-size:22px}
+  .how .step p{font-size:clamp(14px,3.5vw,17px)}
+}
