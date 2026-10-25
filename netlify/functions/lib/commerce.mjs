@@ -7,14 +7,14 @@ export const LIMIT = 100;
 export const COD = { IT: 400, FR: 800, CH: 1400 };
 export const store = () => getStore({ name: 'vinilazo-orders-v1', consistency: 'strong' });
 export const digest = (value) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
-export const activeAt = (now = Date.now()) => now >= START && now < END;
+export const activeAt = (now = Date.now()) => false;
 export function pricing(qty, launch, method = 'online', iso = '') {
   if (!Number.isInteger(qty) || qty < 1 || qty > 6) throw new Error('invalid_quantity');
   if (!['online','cod'].includes(method) || (method === 'cod' && !COD[iso])) throw new Error('invalid_payment_method');
-  const subtotal = qty * 6900;
-  const goods = launch ? qty * 5520 : Math.floor(qty / 2) * 12420 + (qty % 2) * 6900;
+  const subtotal = qty * 4900;
+  const goods = Math.floor(qty / 2) * 7800 + (qty % 2) * 4900;
   const fee = method === 'cod' ? COD[iso] : 0;
-  return { subtotal, discount: subtotal - goods, goods, fee, total: goods + fee, launch, currency: 'EUR' };
+  return { subtotal, discount: subtotal - goods, goods, fee, total: goods + fee, launch: false, currency: 'EUR' };
 }
 export async function campaign(s = store(), now = Date.now()) {
   if (!activeAt(now)) return { active: false, endsAt: END, limit: LIMIT };
