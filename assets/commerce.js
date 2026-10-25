@@ -37,7 +37,6 @@
   function init(){
     var header=document.querySelector('.top');if(!header)return;
     var wrap=el('div','vz-commerce');
-    var cod=el('div','vz-cod-banner','🚚 '+copy[7]+' · '+copy[13]);wrap.append(cod);
     var promo=el('section','vz-launch');promo.id='vz-launch';promo.hidden=true;
     var ends=new Intl.DateTimeFormat(lang,{day:'numeric',month:'short',timeZone:'Europe/Rome'}).format(new Date('2026-11-01T12:00:00Z'));
     var text=el('div','vz-launch-text');
