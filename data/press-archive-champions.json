@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "purpose": "Editorial research for authentic historic newspaper covers. NOT a licensed image gallery.",
+  "publicationStatus": "research_only",
+  "rules": [
+    "Use only real covers tied to the exact victory and team",
+    "Verify copyright permission before copying or embedding cover images on the commercial website",
+    "Deduplicate by newspaper, edition date and visual",
+    "Do not show defeated team as winner",
+    "Use responsive carousel, lazy loading, and accessible captions"
+  ],
+  "events": [
+    {
+      "team": "PSG",
+      "competition": "UEFA Champions League",
+      "year": 2025,
+      "won": true,
+      "sourcePages": [
+        "https://www.mundodeportivo.com/vaya-mundo/20250601/1002475644/luis-enrique-proclamacion-psg-ganador-champions-league-protagonistas-portadas-deportivas-dct.html",
+        "https://www.gazzetta.it/Calcio/Champions-League/storie/01-06-2025/psg-inter-5-0-la-rassegna-stampa-sulla-finale-di-champions/lequipe.shtml",
+        "https://www.corriere.it/sport/calcio/champions-league/cards/l-inter-e-la-sconfitta-in-finale-di-champions-league-sui-giornali/la-rassegna-stampa-dopo-psg-inter-5-0_principale.shtml"
+      ]
+    },
+    {
+      "team": "Real Madrid",
+      "competition": "UEFA Champions League",
+      "year": 2024,
+      "won": true,
+      "sourcePages": [
+        "https://www.elnacional.cat/es/politica/portadas-en-blanco_1227246_102.html"
+      ]
+    },
+    {
+      "team": "Real Madrid",
+      "competition": "UEFA Champions League",
+      "year": 2016,
+      "won": true,
+      "sourcePages": [
+        "https://www.skysports.com/football/news/10298081/real-madrids-champions-league-win-over-atletico-madrid-how-the-spanish-and-world-media-saw-it"
+      ]
+    },
+    {
+      "team": "Inter",
+      "competition": "UEFA Champions League",
+      "year": 2010,
+      "won": true,
+      "sourcePages": []
+    },
+    {
+      "team": "Milan",
+      "competition": "UEFA Champions League",
+      "year": 2007,
+      "won": true,
+      "sourcePages": []
+    },
+    {
+      "team": "Barcelona",
+      "competition": "UEFA Champions League",
+      "year": 2015,
+      "won": true,
+      "sourcePages": []
+    },
+    {
+      "team": "Bayern Monaco",
+      "competition": "UEFA Champions League",
+      "year": 2020,
+      "won": true,
+      "sourcePages": []
+    },
+    {
+      "team": "Arsenal",
+      "competition": "UEFA Champions League",
+      "won": false,
+      "sourcePages": [],
+      "note": "Never label Arsenal as a men's UCL winner; use real trophies relevant to its product."
+    }
+  ]
+}
