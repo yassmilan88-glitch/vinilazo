@@ -5,7 +5,7 @@ const SITE = 'https://vinilazo.eu';
 const ALLOWED_ORIGINS = new Set([SITE, 'https://www.vinilazo.eu', 'https://vinilazo.netlify.app']);
 const json = (body, status = 200) => new Response(JSON.stringify(body), {status, headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
 // Carrello: fino a 6 pezzi, anche squadre diverse. Ogni coppia ha il 10% di sconto (2 × 62,10 €); un pezzo dispari resta a 69 €.
-export const MAX_ITEMS = 6, UNIT = 6900, PAIR_UNIT = 6210;
+export const MAX_ITEMS = 6, UNIT = 4900, PAIR_UNIT = 3900;
 export const totalFor = (n) => Math.floor(n / 2) * PAIR_UNIT * 2 + (n % 2) * UNIT;
 // Accetta il nuovo formato {items:[{teamId,qty}]} e quello vecchio {qty,teamId,secondTeamId}.
 export function normalizeItems(order) {
@@ -30,7 +30,7 @@ export function normalizeItems(order) {
 export function priceLines(items, launch = false) {
   const units = items.flatMap((i) => Array(i.qty).fill(i.id)), n = units.length, lines = [];
   units.forEach((id, idx) => {
-    const unit = launch ? 5520 : n === 1 || (n % 2 === 1 && idx === n - 1) ? UNIT : PAIR_UNIT;
+    const unit = n === 1 || (n % 2 === 1 && idx === n - 1) ? UNIT : PAIR_UNIT;
     const last = lines[lines.length - 1];
     if (last && last.id === id && last.unit === unit) last.qty++; else lines.push({ id, qty: 1, unit });
   });
@@ -109,14 +109,14 @@ export default async function handler(request) {
     'automatic_tax[enabled]':'false','adaptive_pricing[enabled]':'false',
     'metadata[order_reference]':reference,'metadata[quantity]':String(qty),'metadata[first_team]':teamId,
     'metadata[second_team]':items[1] ? items[1].id : (qty>=2 ? teamId : ''), 'metadata[items]':items.map((i)=>`${i.id}:${i.qty}`).join(','),
-    'metadata[gift]':gift?'yes':'no','metadata[discount_percent]':launch?'20':qty>=2?'10':'0', 'metadata[launch]':launch?'yes':'no'});
+    'metadata[gift]':gift?'yes':'no','metadata[discount_percent]':qty>=2?'bundle':'0', 'metadata[launch]':launch?'yes':'no'});
   priceLines(items, launch).forEach((line,i)=>{
     params.set(`line_items[${i}][quantity]`,String(line.qty));
     params.set(`line_items[${i}][price_data][currency]`,'eur');
     params.set(`line_items[${i}][price_data][unit_amount]`,String(line.unit));
     params.set(`line_items[${i}][price_data][tax_behavior]`,'inclusive');
     params.set(`line_items[${i}][price_data][product_data][name]`,`VINILAZO · ${teams[line.id]}`);
-    params.set(`line_items[${i}][price_data][product_data][description]`,launch?'Offerta lancio -20% inclusa. Non cumulabile. Spedizione inclusa.':line.unit===PAIR_UNIT?'Sconto coppia 10% già incluso. Spedizione inclusa.':'Spedizione inclusa.');
+    params.set(`line_items[${i}][price_data][product_data][description]`,line.unit===PAIR_UNIT?'Offerta 2 pezzi: 39 euro ciascuno. Spedizione inclusa.':'Spedizione inclusa.');
   });
   params.set('payment_intent_data[metadata][order_reference]',reference);
   // Shipping details typed on the site, kept with the payment for the confirmation messages (optional, never blocks the payment).
