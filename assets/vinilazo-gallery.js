@@ -29,9 +29,11 @@
   var showOrder = ['italia', 'napoli', 'inter', 'milan', 'juventus', 'argentina', 'real-madrid', 'barcelona', 'psg', 'bayern', 'liverpool',
     'manchester-city', 'manchester-united', 'brasile', 'francia', 'spagna', 'portogallo', 'germania', 'inghilterra', 'olanda', 'messico'];
   // Foto in più nel carosello: si parte dalla foto vera dell'edizione Argentina;
-  // per la Spagna la foto in cucina prende il posto della vecchia ricostruzione. g = gol del disco al centro.
+  // per Spagna e Milan le foto nuove (cucina, Natale) prendono il posto delle vecchie ricostruzioni. g = gol del disco al centro.
+  var replaced = { spagna: { src: 'spagna-cucina.webp', g: 2 }, milan: { src: 'milan-natale.webp', g: 0 } };
   var shots = [{ id: 'argentina', src: 'argentina-foto-vera.webp', g: 2, real: 1 }].concat(showOrder.map(function (id) {
-    return id === 'spagna' ? { id: id, src: 'spagna-cucina.webp', g: 2 } : { id: id, src: id + '.webp', g: 0 };
+    var r = replaced[id];
+    return r ? { id: id, src: r.src, g: r.g } : { id: id, src: id + '.webp', g: 0 };
   }));
   var STEP = 3000;
   var assetBase = (data.assets || '../assets/') + 'gallery/';
