@@ -1,6 +1,22 @@
 /* VINILAZO — scelta squadra, colori della squadra come accenti, grande vinile di transizione, dischi, modulo d'ordine */
 (function () {
   "use strict";
+  /* Informazione contrassegno: disponibilità da confermare prima dell'ordine. */
+  document.addEventListener("DOMContentLoaded", function () {
+    var lang = document.documentElement.lang || "it";
+    var labels = {
+      it:"🚚 Pagamento alla consegna su richiesta: Italia +4 €, Francia +8 €, Svizzera +14 €. Disponibilità da confermare prima dell’ordine.",
+      fr:"🚚 Paiement à la livraison sur demande : Italie +4 €, France +8 €, Suisse +14 €. Disponibilité à confirmer avant commande.",
+      en:"🚚 Cash on delivery on request: Italy +€4, France +€8, Switzerland +€14. Availability must be confirmed before ordering.",
+      es:"🚚 Pago contra entrega bajo solicitud: Italia +4 €, Francia +8 €, Suiza +14 €. Disponibilidad pendiente de confirmación.",
+      de:"🚚 Nachnahme auf Anfrage: Italien +4 €, Frankreich +8 €, Schweiz +14 €. Verfügbarkeit vor Bestellung bestätigen."
+    };
+    var banner=document.createElement("div");
+    banner.setAttribute("role","note");
+    banner.style.cssText="background:#102446;color:#fff;text-align:center;padding:9px 16px;font:600 14px/1.5 system-ui,sans-serif;border-bottom:1px solid rgba(255,255,255,.2)";
+    banner.textContent=labels[lang]||labels.it;
+    document.body.insertBefore(banner,document.body.firstChild);
+  });
   var DATA = JSON.parse(document.getElementById("data").textContent);
   var CFG = window.VINILAZO_CONFIG || {};
   var PRICE = CFG.PRICE || 69;
