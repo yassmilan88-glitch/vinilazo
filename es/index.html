@@ -27,6 +27,7 @@ document.documentElement.classList.add("js");
 if(c){var s=document.documentElement.style;s.setProperty("--acc",c[0]);s.setProperty("--onAcc",c[1]);s.setProperty("--c0",c[2]);s.setProperty("--c1",c[3]);s.setProperty("--c2",c[4]);}}catch(e){}})();
 </script>
 <link rel="stylesheet" href="../assets/commerce.css?v=launch4">
+<link rel="stylesheet" href="../assets/goal-personalization.css?v=1">
 </head>
 <body>
 <a class="skip" href="#main">Ir al contenido</a>
@@ -197,7 +198,7 @@ if(c){var s=document.documentElement.style;s.setProperty("--acc",c[0]);s.setProp
     <div class="ticket">
       <h2 id="order-h">Pídelo en 3 pasos</h2>
       <p class="checkout-intro" id="checkout-intro">Tras confirmar tus datos, pasas directamente a Stripe para pagar de forma segura. Los métodos disponibles se muestran al pagar.</p>
-      <form aria-describedby="checkout-intro" name="ordine" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="order-form" novalidate="">
+      <form aria-describedby="checkout-intro" name="ordine" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="order-form" novalidate=""><input type="hidden" name="gol_personalizzati" value="">
         <input type="hidden" name="form-name" value="ordine">
         <input type="hidden" name="squadra" value="España">
         <input type="hidden" name="squadra_id" value="spagna">
@@ -318,7 +319,7 @@ if(c){var s=document.documentElement.style;s.setProperty("--acc",c[0]);s.setProp
 <script src="../assets/config.js?v=ig20261024"></script>
 <script src="../assets/commerce.js?v=price49"></script>
 <script src="../assets/privacy-controls.js?v=meta20261023b"></script>
-<script src="../assets/app.js?v=launch1"></script>
+<script src="../assets/app.js?goals=1&amp;v=launch1"></script>
 
 
 
@@ -327,4 +328,4 @@ if(c){var s=document.documentElement.style;s.setProperty("--acc",c[0]);s.setProp
 <link rel="stylesheet" href="../assets/vz-compact.css?v=impulso7">
 <link rel="stylesheet" href="../assets/vz-cart.css?v=1"><script src="../assets/vz-checkout-sheet.js?v=ig20261024"></script>
 <script src="../assets/vz-compact.js?v=ig20261024"></script>
-<script src="../assets/vz-cart.js?v=price49" defer></script></body></html>
+<script src="../assets/vz-cart.js?v=price49" defer></script><script src="../assets/goal-personalization.js?v=1" defer></script></body></html>

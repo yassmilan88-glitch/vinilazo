@@ -1,3 +1,4 @@
+import { normalizeWishes, wishesText } from './lib/goal-wishes.mjs';
 import { createHash } from 'node:crypto';
 import teams from './teams.json' with { type: 'json' };
 import { campaign, reserve, pricing, store, digest } from './lib/commerce.mjs';
@@ -44,13 +45,15 @@ export default async function handler(request) {
   if (!ALLOWED_ORIGINS.has(request.headers.get('origin'))) return json({error:'origin_not_allowed'},403);
   if (!ready) return json({error:'checkout_not_configured'},503);
   let order;
-  try { const raw = await request.text(); if (raw.length > 4096) return json({error:'invalid_order'},400); order=JSON.parse(raw); } catch { return json({error:'invalid_order'},400); }
+  try { const raw = await request.text(); if (raw.length > 8192) return json({error:'invalid_order'},400); order=JSON.parse(raw); } catch { return json({error:'invalid_order'},400); }
   if (!order || typeof order !== 'object') return json({error:'invalid_order'},400);
   const {reference,lang,gift}=order;
   const method = order.method || 'online';
   if (!['online','cod'].includes(method)) return json({error:'invalid_payment_method'},400);
   const items = normalizeItems(order);
   if (!items || !/^VZ-[A-F0-9]{16}$/.test(reference || '') || !['it','en','es','fr','de'].includes(lang) || typeof gift !== 'boolean') return json({error:'invalid_order'},400);
+  const goalWishes = normalizeWishes(order.goalWishes, items);
+  if (!goalWishes) return json({error:'invalid_goal_wishes'},400);
   // All amounts are computed here in cents; client-supplied totals are ignored.
   const qty = items.reduce((a, i) => a + i.qty, 0), teamId = items[0].id;
   const customerInput = order.customer || {};
@@ -58,7 +61,7 @@ export default async function handler(request) {
   let quote, launch, db, record, fingerprint;
   try {
     db = store();
-    fingerprint = digest({items, method, customer:customerInput, email:order.email, gift, lang});
+    fingerprint = digest({items, method, customer:customerInput, email:order.email, gift, lang, ...(goalWishes.length ? {goalWishes} : {})});
     const entry = await db.getWithMetadata('orders/' + reference, {type:'json'});
     const existing = entry?.data;
     if (existing) {
@@ -80,7 +83,7 @@ export default async function handler(request) {
       launch = launch && await reserve(reference, db);
       quote = pricing(qty, launch, method, customerInput.iso);
       if (order.expectedTotal !== undefined && order.expectedTotal !== quote.total) return json({error:'price_changed',quote},409);
-      record = {processingUntil:Date.now()+60000, reference, fingerprint, items, method, customer:customerInput, email:order.email, gift, lang, quote, createdAt:new Date().toISOString(), status:method === 'cod' ? 'awaiting_collection' : 'awaiting_payment'};
+      record = {processingUntil:Date.now()+60000, reference, fingerprint, items, goalWishes, method, customer:customerInput, email:order.email, gift, lang, quote, createdAt:new Date().toISOString(), status:method === 'cod' ? 'awaiting_collection' : 'awaiting_payment'};
       const saved = await db.setJSON('orders/' + reference, record, {onlyIfNew:true});
       if (!saved.modified) {
         record = await db.get('orders/' + reference, {type:'json'});
@@ -92,7 +95,7 @@ export default async function handler(request) {
     if (method === 'cod') {
       // Persist the authoritative order before acknowledging it. Mirror it into
       // Netlify Forms for fulfilment using a dedicated server-calculated form.
-      const fields = new URLSearchParams({'form-name':'ordine-contrassegno', riferimento_ordine:reference, stato:'DA INCASSARE - NON PAGATO', nome:customerInput.name, email:order.email, telefono:customerInput.phone, indirizzo:customerInput.address, cap:customerInput.cap, citta:customerInput.city, paese:customerInput.iso, articoli:items.map(i => teams[i.id]+' x'+i.qty).join(', '), totale_eur:(quote.total/100).toFixed(2), supplemento_eur:(quote.fee/100).toFixed(2), sconto_eur:(quote.discount/100).toFixed(2), lingua:lang});
+      const fields = new URLSearchParams({'form-name':'ordine-contrassegno', riferimento_ordine:reference, stato:'DA INCASSARE - NON PAGATO', nome:customerInput.name, email:order.email, telefono:customerInput.phone, indirizzo:customerInput.address, cap:customerInput.cap, citta:customerInput.city, paese:customerInput.iso, articoli:items.map(i => teams[i.id]+' x'+i.qty).join(', '), totale_eur:(quote.total/100).toFixed(2), supplemento_eur:(quote.fee/100).toFixed(2), sconto_eur:(quote.discount/100).toFixed(2), lingua:lang, gol_personalizzati:goalWishes.map(w=>teams[w.teamId]+': '+wishesText(w)).join('\n')});
       if (!record.formSaved) {
         const submitted = await fetch(SITE + '/cod-form.html', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:fields, signal:AbortSignal.timeout(15000)});
         if (!submitted.ok) return json({error:'order_registration_pending'},503);
@@ -110,6 +113,7 @@ export default async function handler(request) {
     'metadata[order_reference]':reference,'metadata[quantity]':String(qty),'metadata[first_team]':teamId,
     'metadata[second_team]':items[1] ? items[1].id : (qty>=2 ? teamId : ''), 'metadata[items]':items.map((i)=>`${i.id}:${i.qty}`).join(','),
     'metadata[gift]':gift?'yes':'no','metadata[discount_percent]':qty>=2?'bundle':'0', 'metadata[launch]':launch?'yes':'no'});
+  goalWishes.forEach((w,i)=>params.set(`metadata[goal_wish_${i}]`, `${teams[w.teamId]}: ${wishesText(w)}`));
   priceLines(items, launch).forEach((line,i)=>{
     params.set(`line_items[${i}][quantity]`,String(line.qty));
     params.set(`line_items[${i}][price_data][currency]`,'eur');

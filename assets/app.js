@@ -661,6 +661,7 @@
     price: PRICE, pairPrice: PAIR_PRICE, max: CART_MAX, fmt: fmt, teams: BY_ID,
     total: cartTotal,
     current: function () { return current ? current.id : null; },
+    orderItems: function () { return cart ? cart.map(i=>({teamId:i.id,qty:i.qty})) : [{teamId:current.id,qty:qty}].concat(secondTeam() && secondTeam().id !== current.id ? [{teamId:secondTeam().id,qty:1}] : []); },
     busy: function () { return submitting; },
     orderCart: function (items, words) {
       if (submitting) return false;
@@ -668,6 +669,7 @@
       var clean = (items || []).filter(function (i) { return i && BY_ID[i.id] && i.qty > 0; }).map(function (i) { return { id: i.id, qty: Math.min(CART_MAX, Math.floor(i.qty)) }; });
       cart = clean.length ? clean : null;
       applyCart();
+      window.dispatchEvent(new CustomEvent("vinilazo:order-items"));
       return true;
     }
   };
@@ -804,6 +806,7 @@
       var random = new Uint8Array(8); crypto.getRandomValues(random);
       form.elements.riferimento_ordine.value = "VZ-" + Array.from(random, function (n) { return n.toString(16).padStart(2, "0"); }).join("").toUpperCase();
     }
+    order.goalWishes = window.VZGoalWishes ? window.VZGoalWishes.collect(window.vzShop.orderItems()) : [];
     order.reference = form.elements.riferimento_ordine.value;
     order.method = COM.method();
     order.editions = $("#summary-editions").textContent;
@@ -826,7 +829,7 @@
       .then(function (r) { if (!r.ok) throw new Error(r.status); })
       .then(async function () {
         if (!checkoutReady) return;
-        var response = await fetch(CFG.CHECKOUT_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({items:order.items,qty:order.qty,teamId:order.teamId,secondTeamId:order.secondTeamId,reference:order.reference,lang:DATA.lang,gift:order.gift,email:order.email,customer:order.customer,method:order.method,expectedTotal:Math.round(order.total*100)}),signal:controller.signal});
+        var response = await fetch(CFG.CHECKOUT_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({goalWishes:order.goalWishes,items:order.items,qty:order.qty,teamId:order.teamId,secondTeamId:order.secondTeamId,reference:order.reference,lang:DATA.lang,gift:order.gift,email:order.email,customer:order.customer,method:order.method,expectedTotal:Math.round(order.total*100)}),signal:controller.signal});
         var session = await response.json();
         if (!response.ok) {
           if (session.error === 'price_changed') { COM.applyQuote(session.quote); var changed = new Error('price_changed'); throw changed; }

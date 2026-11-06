@@ -1,0 +1,188 @@
+{
+  "real-madrid": [
+    {
+      "id": "cr7-torino-2018",
+      "player": "Cristiano Ronaldo",
+      "match": "Juventus · 2018",
+      "source": "https://www.uefa.com/uefachampionsleague/news/0252-0cda3893724d-2a7ddeda52e9-1000--cristiano-ronaldo-wins-uefa-com-goal-of-the-season-vote/"
+    }
+  ],
+  "barcelona": [
+    {
+      "id": "messi-bayern-2015",
+      "player": "Messi",
+      "match": "Bayern · 2015",
+      "source": "https://www.uefa.com/uefachampionsleague/news/0221-0e909116af7b-fe3ef95b6374-1000--messi-double-puts-barca-in-control-against-bayern/"
+    }
+  ],
+  "milan": [
+    {
+      "id": "kaka-united-2007",
+      "player": "Kaká",
+      "match": "Manchester United · Old Trafford 2007",
+      "source": "https://www.acmilan.com/en/news/videos/history/2023-04-24/onthisday-2007-the-kaka-show-at-old-trafford"
+    }
+  ],
+  "inter": [
+    {
+      "id": "milito-siena-2010",
+      "player": "Milito",
+      "match": "Siena · 2010",
+      "source": "https://it.uefa.com/news-media/news/01e5-0e748ac3547e-f4715969fad0-1000--milito-regala-lo-scudetto-all-inter/"
+    },
+    {
+      "id": "stankovic-schalke-2011",
+      "player": "Stanković",
+      "match": "Schalke 04 · 2011",
+      "source": "https://schalke04.de/verein/tradition/alle-spiele-alle-tore/europapokal/champions-league-20102011/"
+    }
+  ],
+  "manchester-united": [
+    {
+      "id": "cr7-porto-2009",
+      "player": "Cristiano Ronaldo",
+      "match": "Porto · 2009",
+      "source": "https://www.manutd.com/en/mutv/videos/detail/match-rewind-full-90-porto-0-united-1-from-200809-ucl"
+    }
+  ],
+  "liverpool": [
+    {
+      "id": "alisson-wba-2021",
+      "player": "Alisson",
+      "match": "West Brom · 2021",
+      "source": "https://www.liverpoolfc.com/news/first-team/434274-alisson-becker-west-brom-premier-league-match-report"
+    }
+  ],
+  "bayern": [
+    {
+      "id": "robben-united-2010",
+      "player": "Robben",
+      "match": "Manchester United · 2010",
+      "source": "https://www.uefa.com/uefachampionsleague/news/0250-0c50f3b81a1b-4c43e12a6520-1000--2009-10-inter-back-on-top-at-last/"
+    }
+  ],
+  "juventus": [
+    {
+      "id": "trezeguet-real-2003",
+      "player": "Trezeguet",
+      "match": "Real Madrid · Torino 2003",
+      "source": "https://it.uefa.com/uefachampionsleague/match/71037--juventus-vs-real-madrid/"
+    }
+  ],
+  "psg": [
+    {
+      "id": "pastore-chelsea-2014",
+      "player": "Pastore",
+      "match": "Chelsea · 2014",
+      "source": "https://www.uefa.com/uefachampionsleague/news/025a-0ea7f2a64631-f91b84d59815-1000--pastore-strike-puts-paris-clear-of-chelsea/"
+    }
+  ],
+  "manchester-city": [
+    {
+      "id": "bernardo-real-2023",
+      "player": "Bernardo Silva",
+      "match": "Real Madrid · 2023",
+      "source": "https://www.uefa.com/uefachampionsleague/news/0281-18096cb89d5d-7ee3fd883927-1000--report-city-ease-past-real-madrid/"
+    }
+  ],
+  "napoli": [
+    {
+      "id": "mertens-lazio-2017",
+      "player": "Mertens",
+      "match": "Lazio · 2017",
+      "source": "https://sport.sky.it/calcio/serie-a/2017/09/20/lazio-napoli-risultato-gol"
+    }
+  ],
+  "argentina": [
+    {
+      "id": "maxi-mexico-2006",
+      "player": "Maxi Rodríguez",
+      "match": "México · 2006",
+      "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/maxi-rodriguez-goal-argentina-mexico-2006"
+    },
+    {
+      "id": "dimaria-swiss-2014",
+      "player": "Di María",
+      "match": "Switzerland · 2014",
+      "source": "https://www.plus.fifa.com/en/showcase/goals/6697c569-9045-4e0b-b702-4b91354dce2e"
+    }
+  ],
+  "brasile": [
+    {
+      "id": "richarlison-serbia-2022",
+      "player": "Richarlison",
+      "match": "Serbia · 2022",
+      "source": "https://www.fifa.com/en/tournaments/mens/worldcup/qatar2022/articles/richarlison-brazil-serbia-bicycle-kick-wins-goal-of-the-tournament-award-fifa-world-cup-qatar-2022"
+    }
+  ],
+  "francia": [
+    {
+      "id": "pavard-argentina-2018",
+      "player": "Pavard",
+      "match": "Argentina · 2018",
+      "source": "https://inside.fifa.com/tournaments/mens/worldcup/2018russia/news/pavard-s-stunner-voted-hyundai-goal-of-the-tournament"
+    },
+    {
+      "id": "griezmann-germany-2016",
+      "player": "Griezmann",
+      "match": "Germany · 2016",
+      "source": "https://www.uefa.com/uefaeuro/history/news/0253-0d81c0b95b22-7bdc89454309-1000--griezmann-double-against-germany-takes-france-to-euro-2016-fina/"
+    }
+  ],
+  "spagna": [
+    {
+      "id": "villa-honduras-2010",
+      "player": "David Villa",
+      "match": "Honduras · 2010",
+      "source": "https://datencenter.dfb.de/en/data-center/fifa-world-cup/2010-in-south-africa/group-h/spain-honduras-116175"
+    }
+  ],
+  "italia": [
+    {
+      "id": "grosso-dortmund-2006",
+      "player": "Grosso",
+      "match": "Germany · Dortmund 2006",
+      "source": "https://www.fifa.com/it/tournaments/mens/worldcup/articles/germania-italia-semifinale-2006"
+    }
+  ],
+  "germania": [
+    {
+      "id": "schurrle-brasil-2014",
+      "player": "Schürrle",
+      "match": "Brazil · 2014",
+      "source": "https://www.plus.fifa.com/en/content/andre-schuerrle-goal-68-brazil-v-germany-2014-fifa-world-cup-brazil/543bad6e-c4bd-42a8-8aae-2cd3dba023f5"
+    }
+  ],
+  "inghilterra": [
+    {
+      "id": "watkins-netherlands-2024",
+      "player": "Watkins",
+      "match": "Netherlands · 2024",
+      "source": "https://www.uefa.com/uefaeuro/history/news/028f-1b564f65d2fa-ecbc29accb5e-1000--netherlands-1-2-england-watkins-added-time-winner-seals-/"
+    }
+  ],
+  "portogallo": [
+    {
+      "id": "cr7-hungary-2016",
+      "player": "Cristiano Ronaldo",
+      "match": "Hungary · 2016",
+      "source": "https://www.uefa.com/uefaeuro/match/2017964--hungary-vs-portugal/events/"
+    }
+  ],
+  "olanda": [
+    {
+      "id": "robben-spain-2014",
+      "player": "Robben",
+      "match": "Spain · 2014",
+      "source": "https://www.fifa.com/en/articles/arjen-robben-netherlands-spain-goal-2014"
+    }
+  ],
+  "messico": [
+    {
+      "id": "chavez-saudi-2022",
+      "player": "Luis Chávez",
+      "match": "Saudi Arabia · 2022",
+      "source": "https://www.fifa.com/en/tournaments/mens/worldcup/qatar2022/articles/richarlison-brazil-serbia-bicycle-kick-wins-goal-of-the-tournament-award-fifa-world-cup-qatar-2022"
+    }
+  ]
+}

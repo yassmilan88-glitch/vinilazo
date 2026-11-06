@@ -28,6 +28,7 @@ if(c){var s=document.documentElement.style;s.setProperty("--acc",c[0]);s.setProp
 </script>
 <link rel="stylesheet" href="../assets/usage-guide.css?v=1">
 <link rel="stylesheet" href="../assets/commerce.css?v=launch4">
+<link rel="stylesheet" href="../assets/goal-personalization.css?v=1">
 </head>
 <body>
 <a class="skip" href="#main">Vai al contenuto</a>
@@ -198,7 +199,7 @@ if(c){var s=document.documentElement.style;s.setProperty("--acc",c[0]);s.setProp
     <div class="ticket">
       <h2 id="order-h">Ordina in 3 passi</h2>
       <p class="checkout-intro" id="checkout-intro">Dopo aver confermato i dati, passi direttamente a Stripe per pagare in sicurezza. I metodi disponibili sono mostrati al pagamento.</p>
-      <form aria-describedby="checkout-intro" name="ordine" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="order-form" novalidate="">
+      <form aria-describedby="checkout-intro" name="ordine" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="order-form" novalidate=""><input type="hidden" name="gol_personalizzati" value="">
         <input type="hidden" name="form-name" value="ordine">
         <input type="hidden" name="squadra" value="Italia">
         <input type="hidden" name="squadra_id" value="italia">
@@ -320,7 +321,7 @@ if(c){var s=document.documentElement.style;s.setProperty("--acc",c[0]);s.setProp
 <script src="../assets/config.js?v=ig20261024"></script>
 <script src="../assets/commerce.js?v=price49"></script>
 <script src="../assets/privacy-controls.js?v=meta20261023b"></script>
-<script src="../assets/app.js?v=launch1"></script>
+<script src="../assets/app.js?goals=1&amp;v=launch1"></script>
 
 
 
@@ -329,4 +330,4 @@ if(c){var s=document.documentElement.style;s.setProperty("--acc",c[0]);s.setProp
 <link rel="stylesheet" href="../assets/vz-compact.css?v=impulso7">
 <link rel="stylesheet" href="../assets/vz-cart.css?v=1"><script src="../assets/vz-checkout-sheet.js?v=ig20261024"></script>
 <script src="../assets/vz-compact.js?v=ig20261024"></script>
-<script src="../assets/vz-cart.js?v=price49" defer></script></body></html>
+<script src="../assets/vz-cart.js?v=price49" defer></script><script src="../assets/goal-personalization.js?v=1" defer></script></body></html>

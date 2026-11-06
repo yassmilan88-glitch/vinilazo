@@ -1,3 +1,4 @@
+import { wishesLabel } from './lib/goal-wishes.mjs';
 // VINILAZO — dopo un pagamento confermato da Stripe invia:
 //   1. email di conferma al cliente (5 lingue)
 //   2. WhatsApp di conferma al cliente (se ha lasciato un numero valido)
@@ -59,6 +60,7 @@ export function buildOrder(s) {
   const cd = s.customer_details || {};
   const addr = cd.address || {};
   return {
+    goalWishes: Array.from({length:6},(_,i)=>m['goal_wish_'+i]).filter(v=>typeof v==='string').join(' | '),
     lang, qty, product, gift: m.gift === 'yes', pair: qty >= 2 && m.launch !== 'yes', cart: items.length > 0,
     ready: ids.length > 0 && ids.every((id) => READY.has(id)),
     reference: m.order_reference || s.client_reference_id || s.id,
@@ -89,7 +91,7 @@ export function customerEmail(o) {
 <p style="margin:0 0 14px;font-size:18px;font-weight:700">${esc(t.hi)}${firstName ? ' ' + esc(firstName) : ''}, ${esc(t.thanks)}</p>
 <p style="margin:0 0 18px;padding:12px 14px;background:#eef5fc;border-radius:10px;font-size:14px">${esc(t.ref)}: <b style="font-size:16px;letter-spacing:.03em;white-space:nowrap">${esc(o.reference)}</b></p>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #e3e8ef;border-bottom:1px solid #e3e8ef">
-${row(t.product, o.product)}${row(t.qty, String(o.qty) + (o.pair ? ' · ' + t.pair : ''))}${o.gift ? row(t.gift, '✓') : ''}${row(t.ship, t.shipIncl)}${row(t.total, money(o))}
+${row(t.product, o.product)}${o.goalWishes ? row(wishesLabel[o.lang], o.goalWishes) : ''}${row(t.qty, String(o.qty) + (o.pair ? ' · ' + t.pair : ''))}${o.gift ? row(t.gift, '✓') : ''}${row(t.ship, t.shipIncl)}${row(t.total, money(o))}
 </table>
 ${o.address ? `<p style="margin:18px 0 4px;color:#5b6b82;font-size:14px">${esc(t.address)}</p><p style="margin:0;font-size:15px">${esc(o.name)}<br>${esc(o.address)}</p>` : ''}
 <p style="margin:18px 0 0;font-size:15px">${esc(o.ready ? t.ready : t.made)}</p>
@@ -99,7 +101,7 @@ ${o.address ? `<p style="margin:18px 0 4px;color:#5b6b82;font-size:14px">${esc(t
 </td></tr>
 <tr><td style="padding:16px 26px;background:#f6f8fb;font-size:11px;color:#7a889c">${esc(SELLER)} · <a href="${SITE}/${o.lang}/" style="color:#7a889c">vinilazo.eu</a></td></tr>
 </table></td></tr></table></body></html>`;
-  const text = [`${t.hi}${firstName ? ' ' + firstName : ''}, ${t.thanks}`, '', `${t.ref}: ${o.reference}`, `${t.product}: ${o.product}`, `${t.qty}: ${o.qty}${o.pair ? ' (' + t.pair + ')' : ''}`, o.gift ? `${t.gift}: ✓` : '', `${t.ship}: ${t.shipIncl}`, `${t.total}: ${money(o)}`, o.address ? `\n${t.address}: ${o.name}, ${o.address}` : '', '', o.ready ? t.ready : t.made, '', `${t.help} https://wa.me/${OWNER_WHATSAPP.slice(1)}`, '', t.receipt, '', SELLER].filter((l) => l !== '').join('\n');
+  const text = [`${t.hi}${firstName ? ' ' + firstName : ''}, ${t.thanks}`, '', `${t.ref}: ${o.reference}`, `${t.product}: ${o.product}`, o.goalWishes ? `${wishesLabel[o.lang]}: ${o.goalWishes}` : '', `${t.qty}: ${o.qty}${o.pair ? ' (' + t.pair + ')' : ''}`, o.gift ? `${t.gift}: ✓` : '', `${t.ship}: ${t.shipIncl}`, `${t.total}: ${money(o)}`, o.address ? `\n${t.address}: ${o.name}, ${o.address}` : '', '', o.ready ? t.ready : t.made, '', `${t.help} https://wa.me/${OWNER_WHATSAPP.slice(1)}`, '', t.receipt, '', SELLER].filter((l) => l !== '').join('\n');
   return { subject: `${t.subject} · VINILAZO ${o.reference}`, html, text };
 }
 
@@ -128,7 +130,7 @@ export async function notify(o, key, ownerEmail) {
   const ownerRef = [o.reference, o.cart ? `${o.product} (${o.qty} pz)` : `${o.product} x${o.qty}`, o.name, o.city].filter(Boolean).join(' · ').slice(0, 300);
   jobs.push(bird(key, '/v1/whatsapp/messages', waTemplate(OWNER_WHATSAPP, ownerRef, amount), `vz-${o.sessionId}-owner-wa`));
   if (ownerEmail) {
-    const lines = [`Nuovo ordine pagato: ${o.reference}`, `Prodotto: ${o.product} · quantità ${o.qty}${o.gift ? ' · regalo' : ''}`, `Totale: ${money({ ...o, lang: 'it' })}`, `Cliente: ${o.name || '—'} · ${o.email || '—'} · ${o.phone || '—'}`, `Spedire a: ${o.address || 'vedi modulo Netlify'}`, `Lingua: ${o.lang}`, o.paymentIntent ? `Stripe: https://dashboard.stripe.com/payments/${o.paymentIntent}` : ''].filter(Boolean);
+    const lines = [`Nuovo ordine pagato: ${o.reference}`, o.goalWishes ? `PERSONALIZZAZIONE DA CONFERMARE: ${o.goalWishes}` : '', `Prodotto: ${o.product} · quantità ${o.qty}${o.gift ? ' · regalo' : ''}`, `Totale: ${money({ ...o, lang: 'it' })}`, `Cliente: ${o.name || '—'} · ${o.email || '—'} · ${o.phone || '—'}`, `Spedire a: ${o.address || 'vedi modulo Netlify'}`, `Lingua: ${o.lang}`, o.paymentIntent ? `Stripe: https://dashboard.stripe.com/payments/${o.paymentIntent}` : ''].filter(Boolean);
     jobs.push(bird(key, '/v1/email/messages', { from: FROM, to: [ownerEmail], subject: `Nuovo ordine ${o.reference} · ${money({ ...o, lang: 'it' })}`, text: lines.join('\n'), category: 'transactional', track_opens: false, track_clicks: false }, `vz-${o.sessionId}-owner-mail`));
   }
   const failed = (await Promise.allSettled(jobs)).filter((r) => r.status === 'rejected').map((r) => r.reason || {});
