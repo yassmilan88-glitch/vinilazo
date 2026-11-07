@@ -10,7 +10,7 @@ import teams from './teams.json' with { type: 'json' };
 
 const SITE = 'https://vinilazo.eu';
 const OWNER_WHATSAPP = '+393295865883';
-const FROM = { email: 'ordini@vinilazo.eu', name: 'VINILAZO' };
+const FROM = { email: 'client@vinilazo.eu', name: 'VINILAZO' };
 const READY = new Set(['argentina']);
 const SELLER = 'AC Distribuzione S.r.l. · Via Pascal 7, 12100 Cuneo (CN), Italia · P.IVA 03660590047';
 const LOCALES = { it: 'it-IT', es: 'es-ES', fr: 'fr-FR', en: 'en-GB', de: 'de-DE' };
@@ -95,13 +95,13 @@ ${row(t.product, o.product)}${o.goalWishes ? row(wishesLabel[o.lang], o.goalWish
 </table>
 ${o.address ? `<p style="margin:18px 0 4px;color:#5b6b82;font-size:14px">${esc(t.address)}</p><p style="margin:0;font-size:15px">${esc(o.name)}<br>${esc(o.address)}</p>` : ''}
 <p style="margin:18px 0 0;font-size:15px">${esc(o.ready ? t.ready : t.made)}</p>
-<p style="margin:14px 0 20px;font-size:14px;color:#5b6b82">${esc(t.help)}</p>
+<p style="margin:14px 0 20px;font-size:14px;color:#5b6b82">${esc(t.help)} <a href="mailto:client@vinilazo.eu" style="color:#0b3521">client@vinilazo.eu</a></p>
 <a href="https://wa.me/${OWNER_WHATSAPP.slice(1)}?text=${waText}" style="display:inline-block;background:#25D366;color:#06210f;text-decoration:none;font-weight:800;padding:12px 20px;border-radius:999px">${esc(t.wa)}</a>
 <p style="margin:22px 0 0;font-size:12px;color:#7a889c">${esc(t.receipt)}</p>
 </td></tr>
 <tr><td style="padding:16px 26px;background:#f6f8fb;font-size:11px;color:#7a889c">${esc(SELLER)} · <a href="${SITE}/${o.lang}/" style="color:#7a889c">vinilazo.eu</a></td></tr>
 </table></td></tr></table></body></html>`;
-  const text = [`${t.hi}${firstName ? ' ' + firstName : ''}, ${t.thanks}`, '', `${t.ref}: ${o.reference}`, `${t.product}: ${o.product}`, o.goalWishes ? `${wishesLabel[o.lang]}: ${o.goalWishes}` : '', `${t.qty}: ${o.qty}${o.pair ? ' (' + t.pair + ')' : ''}`, o.gift ? `${t.gift}: ✓` : '', `${t.ship}: ${t.shipIncl}`, `${t.total}: ${money(o)}`, o.address ? `\n${t.address}: ${o.name}, ${o.address}` : '', '', o.ready ? t.ready : t.made, '', `${t.help} https://wa.me/${OWNER_WHATSAPP.slice(1)}`, '', t.receipt, '', SELLER].filter((l) => l !== '').join('\n');
+  const text = [`${t.hi}${firstName ? ' ' + firstName : ''}, ${t.thanks}`, '', `${t.ref}: ${o.reference}`, `${t.product}: ${o.product}`, o.goalWishes ? `${wishesLabel[o.lang]}: ${o.goalWishes}` : '', `${t.qty}: ${o.qty}${o.pair ? ' (' + t.pair + ')' : ''}`, o.gift ? `${t.gift}: ✓` : '', `${t.ship}: ${t.shipIncl}`, `${t.total}: ${money(o)}`, o.address ? `\n${t.address}: ${o.name}, ${o.address}` : '', '', o.ready ? t.ready : t.made, '', `${t.help} https://wa.me/${OWNER_WHATSAPP.slice(1)} · client@vinilazo.eu`, '', t.receipt, '', SELLER].filter((l) => l !== '').join('\n');
   return { subject: `${t.subject} · VINILAZO ${o.reference}`, html, text };
 }
 
