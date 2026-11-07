@@ -24,14 +24,14 @@
   var kinds = ['tavolo', 'frigo', 'set'];
   // Foto vere in casa (prima immagine) per le edizioni che le hanno: lì basta casa + tavolo + set.
   var homes = { italia: 1, spagna: 1 };
-  function kindsFor(id) { return id === 'argentina' ? ['tavolo', 'dettaglio', 'frigo', 'casa'] : (homes[id] ? ['casa', 'tavolo', 'set'] : kinds); }
+  function kindsFor(id) { return id === 'argentina' ? ['tavolo', 'dettaglio', 'casa'] : (homes[id] ? ['casa', 'tavolo', 'set'] : kinds); }
   // Ordine della foto che cambia squadra in home: si parte dalla foto vera (Italia).
   var showOrder = ['italia', 'napoli', 'inter', 'milan', 'juventus', 'argentina', 'real-madrid', 'barcelona', 'psg', 'bayern', 'liverpool',
     'manchester-city', 'manchester-united', 'brasile', 'francia', 'spagna', 'portogallo', 'germania', 'inghilterra', 'olanda', 'messico'];
   // Foto in più nel carosello: si parte dalla foto vera dell'edizione Argentina;
   // per Spagna e Milan le foto nuove (cucina, Natale) prendono il posto delle vecchie ricostruzioni. g = gol del disco al centro.
-  var replaced = { argentina: { src: 'argentina-real-frigo.jpg', g: 2 }, spagna: { src: 'spagna-cucina.webp', g: 2 }, milan: { src: 'milan-natale.webp', g: 0 } };
-  var shots = ['tavolo', 'dettaglio', 'frigo', 'casa'].map(function (kind) {
+  var replaced = { spagna: { src: 'spagna-cucina.webp', g: 2 }, milan: { src: 'milan-natale.webp', g: 0 } };
+  var shots = ['tavolo', 'dettaglio', 'casa'].map(function (kind) {
     return { id: 'argentina', src: 'argentina-real-' + kind + '.jpg', g: 2, real: 1, kind: kind };
   }).concat(showOrder.filter(function (id) { return id !== 'argentina'; }).map(function (id) {
     var r = replaced[id];
@@ -50,7 +50,7 @@
   }
   function imageSrc(id, kind) {
     if (id === 'argentina') {
-      var photos = {tavolo:'argentina-real-tavolo.jpg', dettaglio:'argentina-real-dettaglio.jpg', frigo:'argentina-real-frigo.jpg', casa:'argentina-real-casa.jpg'};
+      var photos = {tavolo:'argentina-real-tavolo.jpg', dettaglio:'argentina-real-dettaglio.jpg', casa:'argentina-real-casa.jpg'};
       if (photos[kind]) return assetBase + photos[kind];
     }
     return kind === 'frigo' ? fridgeSrc(id) : assetBase + id + '-' + kind + '.webp';
