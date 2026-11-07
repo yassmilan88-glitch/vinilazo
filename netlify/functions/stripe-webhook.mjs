@@ -3,13 +3,14 @@ import { wishesLabel } from './lib/goal-wishes.mjs';
 //   1. email di conferma al cliente (5 lingue)
 //   2. WhatsApp di conferma al cliente (se ha lasciato un numero valido)
 //   3. WhatsApp al titolare con i dati essenziali dell'ordine
-//   4. email al titolare, solo se è impostata ORDER_NOTIFY_EMAIL
-// Variabili da impostare su Netlify (mai nel codice): STRIPE_WEBHOOK_SECRET, BIRD_API_KEY. Facoltativa: ORDER_NOTIFY_EMAIL.
+//   4. email al titolare su info@vinilazo.eu
+// Variabili da impostare su Netlify (mai nel codice): STRIPE_WEBHOOK_SECRET, BIRD_API_KEY.
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import teams from './teams.json' with { type: 'json' };
 
 const SITE = 'https://vinilazo.eu';
 const OWNER_WHATSAPP = '+393295865883';
+const OWNER_EMAIL = 'info@vinilazo.eu';
 const FROM = { email: 'client@vinilazo.eu', name: 'VINILAZO' };
 const READY = new Set(['argentina']);
 const SELLER = 'AC Distribuzione S.r.l. · Via Pascal 7, 12100 Cuneo (CN), Italia · P.IVA 03660590047';
@@ -140,7 +141,7 @@ export async function notify(o, key, ownerEmail) {
 
 export default async function handler(request) {
   const secret = process.env.STRIPE_WEBHOOK_SECRET, key = process.env.BIRD_API_KEY;
-  if (request.method === 'GET') return json({ webhook: !!secret, messages: !!key, ownerEmail: !!process.env.ORDER_NOTIFY_EMAIL });
+  if (request.method === 'GET') return json({ webhook: !!secret, messages: !!key, ownerEmail: !!OWNER_EMAIL });
   if (request.method !== 'POST') return json({ error: 'method_not_allowed' }, 405);
   if (!secret) return json({ error: 'not_configured' }, 503);
   const raw = await request.text();
@@ -151,7 +152,7 @@ export default async function handler(request) {
   if (!paid) return json({ ignored: event && event.type });
   if (s.livemode !== true && process.env.VINILAZO_ALLOW_TEST !== 'true') return json({ ignored: 'test_mode' });
   if (!key) return json({ error: 'messages_not_configured' }, 503); // Stripe riprova: i messaggi partono appena la chiave è impostata
-  const res = await notify(buildOrder(s), key, process.env.ORDER_NOTIFY_EMAIL || '');
+  const res = await notify(buildOrder(s), key, OWNER_EMAIL);
   if (res.permanent.length) console.error('vinilazo notify permanent errors', s.id, res.permanent);
   if (res.transient.length) { console.error('vinilazo notify transient errors', s.id, res.transient); return json({ error: 'retry', failed: res.transient.length }, 500); }
   return json({ ok: true, skipped: res.permanent.length });
