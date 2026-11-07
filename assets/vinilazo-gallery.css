@@ -86,3 +86,11 @@ body.vz-compact-product .vz-photo-disclosure .vz-lifestyle-photo-group .vz-lifes
 
 /* senza titoli: foto prodotto centrata, una sola colonna */
 .vz-lifestyle-gallery.vz-lifestyle-detail,body.vz-compact-product .vz-photo-disclosure .vz-lifestyle-detail{grid-template-columns:1fr;justify-items:center}
+
+/* Fotografie autentiche Argentina, verticale 9:16 e quattro miniature responsive. */
+.vz-real-argentina .vz-lifestyle-photo-group{max-width:460px}
+.vz-real-argentina .vz-lifestyle-feature{aspect-ratio:9/16;object-fit:contain}
+.vz-real-argentina .vz-lifestyle-thumbs.is-four{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.vz-real-argentina .vz-lifestyle-thumbs.is-four .vz-lifestyle-thumb{display:flex;flex-direction:column;gap:5px;min-width:0;padding:5px 3px 7px;font-size:11px;text-align:center}
+.vz-real-argentina .vz-lifestyle-thumbs.is-four .vz-lifestyle-thumb img{width:100%;max-width:64px;height:66px;object-fit:cover}
+@media(max-width:380px){.vz-real-argentina .vz-lifestyle-thumbs.is-four .vz-lifestyle-thumb{font-size:10px}}

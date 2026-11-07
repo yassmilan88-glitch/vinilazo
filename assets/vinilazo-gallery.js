@@ -23,15 +23,15 @@
     'manchester-united', 'italia', 'brasile', 'francia', 'spagna', 'portogallo', 'germania', 'inghilterra', 'olanda', 'messico'];
   var kinds = ['tavolo', 'frigo', 'set'];
   // Foto vere in casa (prima immagine) per le edizioni che le hanno: lì basta casa + tavolo + set.
-  var homes = { italia: 1, argentina: 1, spagna: 1 };
-  function kindsFor(id) { return homes[id] ? ['casa', 'tavolo', 'set'] : kinds; }
+  var homes = { italia: 1, spagna: 1 };
+  function kindsFor(id) { return id === 'argentina' ? ['tavolo', 'dettaglio', 'frigo', 'casa'] : (homes[id] ? ['casa', 'tavolo', 'set'] : kinds); }
   // Ordine della foto che cambia squadra in home: si parte dalla foto vera (Italia).
   var showOrder = ['italia', 'napoli', 'inter', 'milan', 'juventus', 'argentina', 'real-madrid', 'barcelona', 'psg', 'bayern', 'liverpool',
     'manchester-city', 'manchester-united', 'brasile', 'francia', 'spagna', 'portogallo', 'germania', 'inghilterra', 'olanda', 'messico'];
   // Foto in più nel carosello: si parte dalla foto vera dell'edizione Argentina;
   // per Spagna e Milan le foto nuove (cucina, Natale) prendono il posto delle vecchie ricostruzioni. g = gol del disco al centro.
-  var replaced = { spagna: { src: 'spagna-cucina.webp', g: 2 }, milan: { src: 'milan-natale.webp', g: 0 } };
-  var shots = [{ id: 'argentina', src: 'argentina-foto-vera.webp', g: 2, real: 1 }].concat(showOrder.map(function (id) {
+  var replaced = { argentina: { src: 'argentina-real-frigo.jpg', g: 2 }, spagna: { src: 'spagna-cucina.webp', g: 2 }, milan: { src: 'milan-natale.webp', g: 0 } };
+  var shots = [{ id: 'argentina', src: 'argentina-real-tavolo.jpg', g: 2, real: 1 }].concat(showOrder.map(function (id) {
     var r = replaced[id];
     return r ? { id: id, src: r.src, g: r.g } : { id: id, src: id + '.webp', g: 0 };
   }));
@@ -46,11 +46,21 @@
     if (txt !== undefined) n.textContent = txt;
     return n;
   }
-  function imageSrc(id, kind) { return kind === 'frigo' ? fridgeSrc(id) : assetBase + id + '-' + kind + '.webp'; }
+  function imageSrc(id, kind) {
+    if (id === 'argentina') {
+      var photos = {tavolo:'argentina-real-tavolo.jpg', dettaglio:'argentina-real-dettaglio.jpg', frigo:'argentina-real-frigo.jpg', casa:'argentina-real-casa.jpg'};
+      if (photos[kind]) return assetBase + photos[kind];
+    }
+    return kind === 'frigo' ? fridgeSrc(id) : assetBase + id + '-' + kind + '.webp';
+  }
+  function kindLabel(kind) {
+    if (kind === 'dettaglio') return ({it:'Dettaglio',es:'Detalle',fr:'Détail',en:'Detail',de:'Detail'})[lang] || 'Dettaglio';
+    return tr[kind];
+  }
   function fridgeSrc(id) { return assetBase + 'frigo/' + id + '.webp'; }
   function setImage(img, team, kind) {
     img.src = imageSrc(team.id, kind);
-    img.alt = 'VINILAZO – ' + team.name + ' – ' + tr[kind];
+    img.alt = 'VINILAZO – ' + team.name + ' – ' + kindLabel(kind);
   }
   function productImage(team, kind, className) {
     var img = el('img', className);
@@ -123,7 +133,7 @@
     var index = -1, front = 0, timer = 0, visible = false, hover = false, userPaused = reduce, token = 0;
     function shotAt(i) { return list[(i + list.length) % list.length]; }
     function teamAt(i) { return byId[shotAt(i).id]; }
-    function shotSrc(i) { return assetBase + 'frigo/' + shotAt(i).src; }
+    function shotSrc(i) { var src = shotAt(i).src; return /^argentina-real-/.test(src) ? assetBase + src : assetBase + 'frigo/' + src; }
     function paint(i) {
       var shot = shotAt(i), team = teamAt(i), acc = team.th && team.th.acc || team.cols && team.cols[0] || '#74acdf';
       section.style.setProperty('--vz-photo-accent', acc);
@@ -240,16 +250,17 @@
     function buildThumbs(team) {
       thumbs.replaceChildren();
       var list = kindsFor(team.id);
-      thumbs.classList.toggle('is-three', list.length > 2);
+      thumbs.classList.toggle('is-three', list.length === 3);
+      thumbs.classList.toggle('is-four', list.length === 4);
       list.forEach(function (kind) {
         var button = el('button', 'vz-lifestyle-thumb');
         button.type = 'button';
         button.dataset.kind = kind;
-        button.setAttribute('aria-label', tr[kind]);
+        button.setAttribute('aria-label', kindLabel(kind));
         var thumb = el('img');
         thumb.loading = 'lazy'; thumb.decoding = 'async'; thumb.width = 80; thumb.height = 86;
         setImage(thumb, team, kind);
-        button.append(thumb, el('span', '', tr[kind]));
+        button.append(thumb, el('span', '', kindLabel(kind)));
         button.addEventListener('click', function () { show(kind); restartAuto(); });
         thumbs.append(button);
       });
@@ -271,6 +282,7 @@
     function refresh() {
       var team = activeTeam();
       section.hidden = !(team && has(team.id));
+      section.classList.toggle('vz-real-argentina', !!(team && team.id === 'argentina'));
       if (section.hidden) return;
       if (!current || current.id !== team.id) {
         current = team;
