@@ -14,7 +14,7 @@
   var api = window.VZCommerce = {
     copy:copy, ready:false,
     launch:function(){return false;},
-    goods:function(n){return Math.floor(n/2)*78 + (n%2)*49;},
+    goods:function(n){return (Math.floor(n/2)*12420 + (n%2)*6900)/100;},
     method:function(){var el=document.getElementById('vz-payment-method');return el ? el.value : 'online';},
     iso:function(){var c=document.getElementById('f-country');return c && c.selectedOptions[0] ? c.selectedOptions[0].dataset.iso : '';},
     fee:function(){return api.method()==='cod' ? ({IT:4,FR:8,CH:14}[api.iso()] || 0) : 0;},

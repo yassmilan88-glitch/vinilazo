@@ -6,7 +6,7 @@ const SITE = 'https://vinilazo.eu';
 const ALLOWED_ORIGINS = new Set([SITE, 'https://www.vinilazo.eu', 'https://vinilazo.netlify.app']);
 const json = (body, status = 200) => new Response(JSON.stringify(body), {status, headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
 // Carrello: fino a 6 pezzi, anche squadre diverse. Ogni coppia ha il 10% di sconto (2 × 62,10 €); un pezzo dispari resta a 69 €.
-export const MAX_ITEMS = 6, UNIT = 4900, PAIR_UNIT = 3900;
+export const MAX_ITEMS = 6, UNIT = 6900, PAIR_UNIT = 6210;
 export const totalFor = (n) => Math.floor(n / 2) * PAIR_UNIT * 2 + (n % 2) * UNIT;
 // Accetta il nuovo formato {items:[{teamId,qty}]} e quello vecchio {qty,teamId,secondTeamId}.
 export function normalizeItems(order) {
@@ -120,7 +120,7 @@ export default async function handler(request) {
     params.set(`line_items[${i}][price_data][unit_amount]`,String(line.unit));
     params.set(`line_items[${i}][price_data][tax_behavior]`,'inclusive');
     params.set(`line_items[${i}][price_data][product_data][name]`,`VINILAZO · ${teams[line.id]}`);
-    params.set(`line_items[${i}][price_data][product_data][description]`,line.unit===PAIR_UNIT?'Offerta 2 pezzi: 39 euro ciascuno. Spedizione inclusa.':'Spedizione inclusa.');
+    params.set(`line_items[${i}][price_data][product_data][description]`,line.unit===PAIR_UNIT?'Offerta 2 pezzi: 62,10 euro ciascuno. Spedizione inclusa.':'Spedizione inclusa.');
   });
   params.set('payment_intent_data[metadata][order_reference]',reference);
   // Shipping details typed on the site, kept with the payment for the confirmation messages (optional, never blocks the payment).

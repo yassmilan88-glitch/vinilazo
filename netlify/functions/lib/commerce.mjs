@@ -11,8 +11,8 @@ export const activeAt = (now = Date.now()) => false;
 export function pricing(qty, launch, method = 'online', iso = '') {
   if (!Number.isInteger(qty) || qty < 1 || qty > 6) throw new Error('invalid_quantity');
   if (!['online','cod'].includes(method) || (method === 'cod' && !COD[iso])) throw new Error('invalid_payment_method');
-  const subtotal = qty * 4900;
-  const goods = Math.floor(qty / 2) * 7800 + (qty % 2) * 4900;
+  const subtotal = qty * 6900;
+  const goods = Math.floor(qty / 2) * 12420 + (qty % 2) * 6900;
   const fee = method === 'cod' ? COD[iso] : 0;
   return { subtotal, discount: subtotal - goods, goods, fee, total: goods + fee, launch: false, currency: 'EUR' };
 }

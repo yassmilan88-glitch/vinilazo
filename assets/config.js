@@ -4,13 +4,13 @@
    ============================================================ */
 window.VINILAZO_CONFIG = {
   // Prezzo in euro, spedizione inclusa in tutto il mondo
-  PRICE: 49,
+  PRICE: 69,
 
   // Set only after verifying the official VINILAZO business profile.
   TRUSTPILOT_URL: "",
 
-  // Due prodotti a 39 euro ciascuno, anche squadre diverse.
-  PAIR_PRICE: 78,
+  // Due prodotti a 62,10 euro ciascuno, anche squadre diverse.
+  PAIR_PRICE: 124.20,
 
   // Link di pagamento Stripe (Payment Link). Se è vuoto, l'ordine arriva su Netlify e mandi tu il link di pagamento su WhatsApp.
   // Se lo inserisci, dopo il modulo il cliente va dritto al pagamento (il riferimento ordine arriva in Stripe come "client_reference_id").
