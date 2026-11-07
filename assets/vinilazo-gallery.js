@@ -31,7 +31,9 @@
   // Foto in più nel carosello: si parte dalla foto vera dell'edizione Argentina;
   // per Spagna e Milan le foto nuove (cucina, Natale) prendono il posto delle vecchie ricostruzioni. g = gol del disco al centro.
   var replaced = { argentina: { src: 'argentina-real-frigo.jpg', g: 2 }, spagna: { src: 'spagna-cucina.webp', g: 2 }, milan: { src: 'milan-natale.webp', g: 0 } };
-  var shots = [{ id: 'argentina', src: 'argentina-real-tavolo.jpg', g: 2, real: 1 }].concat(showOrder.map(function (id) {
+  var shots = ['tavolo', 'dettaglio', 'frigo', 'casa'].map(function (kind) {
+    return { id: 'argentina', src: 'argentina-real-' + kind + '.jpg', g: 2, real: 1, kind: kind };
+  }).concat(showOrder.filter(function (id) { return id !== 'argentina'; }).map(function (id) {
     var r = replaced[id];
     return r ? { id: id, src: r.src, g: r.g } : { id: id, src: id + '.webp', g: 0 };
   }));
@@ -163,7 +165,7 @@
       index = i;
       var team = teamAt(i), img = layers[1 - front], tk = ++token;
       clearTimeout(timer);
-      img.alt = 'VINILAZO ' + team.name + ' – ' + (shotAt(i).real ? tr.real : tr.frigo);
+      img.alt = 'VINILAZO ' + team.name + ' – ' + (shotAt(i).real ? tr.real + ' – ' + kindLabel(shotAt(i).kind) : tr.frigo);
       img.src = shotSrc(i);
       if (img.decode) img.decode().then(function () { swap(img, i, tk); }, function () { swap(img, i, tk); });
       else if (img.complete) swap(img, i, tk);
@@ -206,7 +208,7 @@
       }, { threshold: 0.35 }).observe(stage);
     } else { visible = true; }
     // primo fotogramma subito (senza aspettare lo scroll), così la sezione non resta vuota
-    layers[0].src = shotSrc(0); layers[0].alt = 'VINILAZO ' + teamAt(0).name + ' – ' + (shotAt(0).real ? tr.real : tr.frigo);
+    layers[0].src = shotSrc(0); layers[0].alt = 'VINILAZO ' + teamAt(0).name + ' – ' + (shotAt(0).real ? tr.real + ' – ' + kindLabel(shotAt(0).kind) : tr.frigo);
     index = 0; paint(0); schedule();
   }
   function activeTeam() {
