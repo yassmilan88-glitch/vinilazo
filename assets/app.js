@@ -3,7 +3,7 @@
   "use strict";
   var DATA = JSON.parse(document.getElementById("data").textContent);
   var CFG = window.VINILAZO_CONFIG || {};
-  var PRICE = CFG.PRICE || 69;
+  var PRICE = CFG.PRICE || 49;
   var T = DATA.t;
   var CHECKOUT = DATA.checkout;
   var STORE = DATA.store;
