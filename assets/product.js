@@ -3,7 +3,7 @@
   "use strict";
   var DATA = JSON.parse(document.getElementById("data").textContent);
   var CFG = window.VINILAZO_CONFIG || {};
-  var PRICE = CFG.PRICE || 69;
+  var PRICE = CFG.PRICE || 49;
   var t = DATA.team;
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var $ = function (s, el) { return (el || document).querySelector(s); };
@@ -79,7 +79,7 @@
   $$(".wm-disc").forEach(function (svg) {
     svg.innerHTML = '<circle cx="100" cy="100" r="92" fill="#141414" stroke="currentColor" stroke-width="10"/><circle cx="100" cy="100" r="44" fill="' + t.cols[0] + '" stroke="' + t.cols[1] + '" stroke-width="10"/><circle cx="100" cy="100" r="9" fill="#141414"/>';
   });
-  $$("[data-price]").forEach(function (el) { el.textContent = fmt(PRICE); });
+  $("[data-price]").forEach(function (el) { var old = document.createElement("del"); old.className = "vz-old-price"; old.textContent = fmt(69); el.replaceChildren(old, document.createTextNode(" " + fmt(PRICE))); });
 
   /* ---------- animazioni allo scorrimento ---------- */
   var io = ("IntersectionObserver" in window) ? new IntersectionObserver(function (en) {
