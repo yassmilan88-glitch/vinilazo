@@ -5,8 +5,8 @@ import { campaign, reserve, pricing, store, digest } from './lib/commerce.mjs';
 const SITE = 'https://vinilazo.eu';
 const ALLOWED_ORIGINS = new Set([SITE, 'https://www.vinilazo.eu', 'https://vinilazo.netlify.app']);
 const json = (body, status = 200) => new Response(JSON.stringify(body), {status, headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
-// Carrello: fino a 6 pezzi, anche squadre diverse. Ogni coppia ha il 10% di sconto (2 × 62,10 €); un pezzo dispari resta a 69 €.
-export const MAX_ITEMS = 6, UNIT = 6900, PAIR_UNIT = 6210;
+// Carrello: fino a 6 pezzi, anche squadre diverse. Ogni coppia costa 78 € (39 € ciascuno); un pezzo dispari costa 49 €.
+export const MAX_ITEMS = 6, UNIT = 4900, PAIR_UNIT = 3900;
 export const totalFor = (n) => Math.floor(n / 2) * PAIR_UNIT * 2 + (n % 2) * UNIT;
 // Accetta il nuovo formato {items:[{teamId,qty}]} e quello vecchio {qty,teamId,secondTeamId}.
 export function normalizeItems(order) {
