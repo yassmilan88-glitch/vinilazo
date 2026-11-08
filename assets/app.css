@@ -830,3 +830,22 @@ textarea::placeholder,.field input::placeholder{color:#6b6b6b}
   .how .step-n{width:34px;height:34px;font-size:22px}
   .how .step p{font-size:clamp(14px,3.5vw,17px)}
 }
+
+/* VINILAZO 2026-11: scie neon della squadra, senza alterare il layout */
+body::before{
+ content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+ background:
+  radial-gradient(ellipse 65% 35% at 105% 42%,color-mix(in srgb,var(--acc,#e21a2c) 17%,transparent),transparent 75%),
+  radial-gradient(ellipse 60% 35% at -10% 78%,color-mix(in srgb,var(--c0,#e21a2c) 13%,transparent),transparent 75%);
+}
+body::after{
+ content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.72;
+ background:
+  linear-gradient(151deg,transparent 34%,color-mix(in srgb,var(--acc,#e21a2c) 75%,transparent) 34.15%,transparent 34.5%),
+  linear-gradient(155deg,transparent 36%,color-mix(in srgb,var(--acc,#e21a2c) 45%,transparent) 36.15%,transparent 36.5%),
+  linear-gradient(154deg,transparent 72%,color-mix(in srgb,var(--c0,#e21a2c) 70%,transparent) 72.15%,transparent 72.5%);
+ filter:drop-shadow(0 0 8px var(--acc,#e21a2c));
+}
+body > *{position:relative;z-index:1}
+.vz-old-price{text-decoration:line-through;opacity:.7;margin-right:.3em}
+@media(prefers-reduced-motion:reduce){body::after{transition:none}}
