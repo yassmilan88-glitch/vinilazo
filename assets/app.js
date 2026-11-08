@@ -688,7 +688,7 @@
     setQty(qty);
   });
   /* prezzo da config.js (spedizione inclusa) */
-  $$("[data-price]").forEach(function (el) { el.textContent = fmt(PRICE); });
+  $("[data-price]").forEach(function (el) { el.replaceChildren(); var old = document.createElement("del"); old.className = "vz-old-price"; old.textContent = fmt(69); el.append(old, document.createTextNode(" " + fmt(PRICE))); });
   $$("[data-price-cta]").forEach(function (el) { el.textContent = T.cta.replace(/\d+\s?€|€\s?\d+/, fmt(PRICE)); });
   $$("[data-qty]").forEach(function (b) { b.addEventListener("click", function () { setQty(qty + Number(b.dataset.qty)); }); });
 
