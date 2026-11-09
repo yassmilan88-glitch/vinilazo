@@ -848,3 +848,15 @@ body::after{
 }
 .vz-old-price{text-decoration:line-through;opacity:.7;margin-right:.3em}
 @media(prefers-reduced-motion:reduce){body::after{transition:none}}
+
+/* Offer shown at the point of purchase in the order popup. */
+.vz-price-offer{margin:12px 0 14px;padding:13px 15px;border:1.5px solid color-mix(in srgb,var(--acc,#74acdf) 68%,transparent);border-radius:14px;background:linear-gradient(135deg,color-mix(in srgb,var(--acc,#74acdf) 16%,#0d1d36),rgba(6,17,36,.9));box-shadow:0 8px 24px rgba(0,0,0,.16)}
+.vz-price-offer-title{display:block;margin:0 0 9px;color:var(--acc,#9dcaf0);font:900 12px/1.2 var(--text,system-ui),sans-serif;letter-spacing:.12em}
+.vz-price-offer-options{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.vz-price-offer-option{display:grid;gap:4px;min-width:0;padding:9px 10px;border-radius:10px;background:rgba(255,255,255,.06)}
+.vz-price-offer-name{font:750 12px/1.2 var(--text,system-ui),sans-serif;color:#d4e1f2}
+.vz-price-offer-values{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.vz-price-offer-values del{color:#c4cfe0;font:600 13px/1.2 var(--text,system-ui),sans-serif;opacity:.82}
+.vz-price-offer-values b{color:#fff;font:900 22px/1 var(--display,"Arial Narrow"),sans-serif}
+.vz-price-offer-option small{color:#a9c7e8;font:650 11px/1.2 var(--text,system-ui),sans-serif}
+@media(max-width:420px){.vz-price-offer{padding:11px}.vz-price-offer-options{gap:6px}.vz-price-offer-option{padding:8px}.vz-price-offer-values{gap:5px}.vz-price-offer-values b{font-size:20px}}
