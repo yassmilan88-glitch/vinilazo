@@ -1,0 +1,98 @@
+/* VINILAZO launch offer: compact iPhone-style notification */
+.vz-promo-notice {
+  position: fixed;
+  z-index: 99999;
+  top: calc(env(safe-area-inset-top, 0px) + 8px);
+  left: 50%;
+  width: min(390px, calc(100vw - 24px));
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 42px 11px 11px;
+  border: 1px solid rgba(126, 177, 224, .82);
+  border-radius: 21px;
+  background: rgba(8, 20, 41, .96);
+  color: #f5f8fc;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, .34), 0 0 0 1px rgba(110, 169, 220, .08);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+  backdrop-filter: blur(22px) saturate(135%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, calc(-100% - 18px));
+  transition: transform .46s cubic-bezier(.18, .88, .28, 1.08), opacity .22s ease, visibility 0s linear .46s;
+  font-family: inherit;
+}
+.vz-promo-notice.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+  transition: transform .46s cubic-bezier(.18, .88, .28, 1.08), opacity .22s ease, visibility 0s;
+}
+.vz-promo-notice-link {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: inherit;
+  text-decoration: none;
+  flex: 1;
+}
+.vz-promo-notice-icon {
+  display: block;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border-radius: 13px;
+}
+.vz-promo-notice-copy { min-width: 0; display: grid; gap: 2px; }
+.vz-promo-notice-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  color: #e8f1fa;
+  font-size: 10px;
+  line-height: 1.2;
+}
+.vz-promo-notice-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 800;
+  letter-spacing: .045em;
+}
+.vz-promo-notice-time { margin-left: auto; color: #a8c8e6; font-size: 10px; font-weight: 500; }
+.vz-promo-notice-price { display: flex; align-items: baseline; gap: 9px; line-height: 1; }
+.vz-promo-notice-price del { color: #aebed0; font-size: 13px; font-weight: 500; }
+.vz-promo-notice-price strong { color: #fff; font-size: 22px; font-weight: 850; letter-spacing: -.035em; }
+.vz-promo-notice-shipping { color: #b9d7f1; font-size: 10px; line-height: 1.2; }
+.vz-promo-notice-close {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(172, 201, 227, .35);
+  border-radius: 50%;
+  background: rgba(18, 38, 67, .9);
+  color: #e8f1fa;
+  font: 18px/1 Arial, sans-serif;
+  cursor: pointer;
+}
+.vz-promo-notice-close:focus-visible,
+.vz-promo-notice-link:focus-visible { outline: 2px solid #9ed0ff; outline-offset: 3px; border-radius: 5px; }
+@media (max-width: 360px) {
+  .vz-promo-notice { width: calc(100vw - 18px); padding-left: 9px; gap: 8px; }
+  .vz-promo-notice-link { gap: 8px; }
+  .vz-promo-notice-icon { width: 40px; height: 40px; flex-basis: 40px; }
+  .vz-promo-notice-price strong { font-size: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vz-promo-notice, .vz-promo-notice.is-visible { transition: opacity .18s ease; transform: translate(-50%, 0); }
+}
