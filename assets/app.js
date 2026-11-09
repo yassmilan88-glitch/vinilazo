@@ -367,6 +367,16 @@
   }
   function swapTo(t) {
     current = t;
+    // Mostra la foto della squadra selezionata: il vecchio scatto generico mostrava sempre Argentina.
+    var heroImage = $(".hero-stage .product > img");
+    if (heroImage) {
+      if (!heroImage.dataset.defaultSrc) heroImage.dataset.defaultSrc = heroImage.getAttribute("src") || "";
+      heroImage.onerror = function () {
+        this.onerror = null;
+        this.src = this.dataset.defaultSrc;
+      };
+      heroImage.src = (DATA.assets || "../assets/") + "gallery/frigo/" + encodeURIComponent(t.id) + ".webp";
+    }
     // Meta Pixel: prodotto visto anche al primo caricamento della pagina (?team=...), non solo cambiando squadra
     window.VINILAZO_CURRENT_PRODUCT = { content_name: t.name, content_ids: [t.id], content_type: "product", value: PRICE, currency: "EUR" };
     window.dispatchEvent(new CustomEvent("vinilazo:product"));
@@ -573,8 +583,57 @@
     $$("[data-qty]").forEach(function (b) { b.disabled = submitting || (Number(b.dataset.qty) < 0 ? qty === 1 : qty === MAX_QTY); });
     updateSummary();
   }
+  function ensurePriceOffer() {
+    var summary = $(".order-summary");
+    if (!summary) return;
+    var box = $("#vz-price-offer", summary);
+    if (box) return;
+    var copy = ({
+      it: { title: "SCONTO ATTIVO", single: "1 VINILAZO", pair: "2 VINILAZO", each: "ciascuno" },
+      es: { title: "DESCUENTO ACTIVO", single: "1 VINILAZO", pair: "2 VINILAZO", each: "cada uno" },
+      fr: { title: "REMISE ACTIVE", single: "1 VINILAZO", pair: "2 VINILAZO", each: "chacun" },
+      en: { title: "DISCOUNT APPLIED", single: "1 VINILAZO", pair: "2 VINILAZO", each: "each" },
+      de: { title: "RABATT AKTIV", single: "1 VINILAZO", pair: "2 VINILAZO", each: "je Stück" }
+    })[DATA.lang] || { title: "DISCOUNT APPLIED", single: "1 VINILAZO", pair: "2 VINILAZO", each: "each" };
+    box = document.createElement("aside");
+    box.className = "vz-price-offer";
+    box.id = "vz-price-offer";
+    box.setAttribute("aria-label", copy.title);
+    var heading = document.createElement("strong");
+    heading.className = "vz-price-offer-title";
+    heading.textContent = copy.title;
+    var options = document.createElement("div");
+    options.className = "vz-price-offer-options";
+    function addOption(label, oldAmount, newAmount, note) {
+      var row = document.createElement("div");
+      row.className = "vz-price-offer-option";
+      var name = document.createElement("span");
+      name.className = "vz-price-offer-name";
+      name.textContent = label;
+      var values = document.createElement("span");
+      values.className = "vz-price-offer-values";
+      var oldPrice = document.createElement("del");
+      oldPrice.textContent = fmt(oldAmount);
+      var newPrice = document.createElement("b");
+      newPrice.textContent = fmt(newAmount);
+      values.append(oldPrice, newPrice);
+      row.append(name, values);
+      if (note) {
+        var detail = document.createElement("small");
+        detail.textContent = note;
+        row.appendChild(detail);
+      }
+      options.appendChild(row);
+    }
+    addOption(copy.single, 69, COM.goods(1), "");
+    addOption(copy.pair, 98, COM.goods(2), fmt(COM.goods(2) / 2) + " " + copy.each);
+    box.append(heading, options);
+    summary.insertBefore(box, $(".summary-lines", summary));
+  }
+
   function updateSummary() {
     if (!CHECKOUT || !current) return;
+    ensurePriceOffer();
     var feeRow = $('#vz-fee-row');
     if (feeRow) { feeRow.hidden = !COM.fee(); $('dd', feeRow).textContent = fmt(COM.fee()); }
     var paymentButton = $('#submit');
