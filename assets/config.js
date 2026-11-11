@@ -30,7 +30,7 @@ window.VINILAZO_CONFIG = {
   INSTAGRAM: "vinilazoo",
 
   // ID del Pixel Meta per misurare le pubblicità (lascia vuoto se non lo usi)
-  META_PIXEL_ID: "1621265198920991",
+  META_PIXEL_ID: "997073866170694",
 
   // Dati di chi vende: obbligatori per vendere online (in Germania si chiama "Impressum").
   // Esempio: "Nome Società S.r.l. – Via ..., 12100 Cuneo (CN), Italia – P.IVA 01234567890 – email@esempio.it"
