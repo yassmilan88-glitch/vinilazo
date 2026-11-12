@@ -5,14 +5,17 @@ export const START = Date.parse('2026-10-25T12:00:00Z');
 export const END = START + 7 * 86400000;
 export const LIMIT = 100;
 export const COD = { IT: 400, FR: 800, CH: 1400 };
+// Prezzi in centesimi, spedizione inclusa. Devono coincidere con PRICE e PAIR_PRICE in assets/config.js.
+// Se PAIR_CENTS è uguale a 2 × UNIT_CENTS non c'è sconto pacchetto.
+export const UNIT_CENTS = 3900, PAIR_CENTS = 7800;
 export const store = () => getStore({ name: 'vinilazo-orders-v1', consistency: 'strong' });
 export const digest = (value) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 export const activeAt = (now = Date.now()) => false;
 export function pricing(qty, launch, method = 'online', iso = '') {
   if (!Number.isInteger(qty) || qty < 1 || qty > 6) throw new Error('invalid_quantity');
   if (!['online','cod'].includes(method) || (method === 'cod' && !COD[iso])) throw new Error('invalid_payment_method');
-  const subtotal = qty * 4900;
-  const goods = Math.floor(qty / 2) * 7800 + (qty % 2) * 4900;
+  const subtotal = qty * UNIT_CENTS;
+  const goods = Math.floor(qty / 2) * PAIR_CENTS + (qty % 2) * UNIT_CENTS;
   const fee = method === 'cod' ? COD[iso] : 0;
   return { subtotal, discount: subtotal - goods, goods, fee, total: goods + fee, launch: false, currency: 'EUR' };
 }

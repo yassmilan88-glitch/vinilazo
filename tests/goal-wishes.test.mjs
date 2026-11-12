@@ -14,7 +14,7 @@ const {default:handler}=await import('../netlify/functions/create-checkout.mjs')
 const {buildOrder,customerEmail}=await import('../netlify/functions/stripe-webhook.mjs');
 process.env.STRIPE_SECRET_KEY='sk_live_fixture';process.env.VINILAZO_CHECKOUT_ENABLED='true';
 let stripe,form;
-global.fetch=async(url,opts)=>{if(url.startsWith('https://api.stripe.com/')){stripe=opts.body;return Response.json({id:'cs_fixture',livemode:true,amount_total:4900,url:'https://checkout.stripe.com/fixture'});}form=opts.body;return new Response('OK');};
+global.fetch=async(url,opts)=>{if(url.startsWith('https://api.stripe.com/')){stripe=opts.body;return Response.json({id:'cs_fixture',livemode:true,amount_total:3900,url:'https://checkout.stripe.com/fixture'});}form=opts.body;return new Response('OK');};
 const order={reference:'VZ-00000000000000A1',lang:'it',gift:false,items:[{teamId:'argentina',qty:1}],email:'test@example.com',customer:{name:'Fixture',phone:'123',address:'Test',cap:'10000',city:'Test',iso:'IT'},goalWishes:[wish]};
 const post=o=>handler(new Request('https://vinilazo.eu/.netlify/functions/create-checkout',{method:'POST',headers:{origin:'https://vinilazo.eu'},body:JSON.stringify(o)}));
 test('preferences reach storage, Stripe and emails; changing them invalidates reuse',async()=>{

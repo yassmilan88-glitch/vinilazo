@@ -4,12 +4,17 @@
    ============================================================ */
 window.VINILAZO_CONFIG = {
   // Prezzo in euro, spedizione inclusa in tutto il mondo
-  PRICE: 49,
+  PRICE: 39,
+
+  // Prezzo barrato. Regola UE (Omnibus): deve essere il prezzo più basso
+  // degli ultimi 30 giorni prima dello sconto. Dal 12/11/2026 il prezzo
+  // precedente è 49 €. Dopo il 12/12/2026 mettere 0 (niente prezzo barrato).
+  OLD_PRICE: 49,
 
   // Set only after verifying the official VINILAZO business profile.
   TRUSTPILOT_URL: "",
 
-  // Due prodotti a 39 euro ciascuno, anche squadre diverse.
+  // Prezzo per 2 pezzi. Se è uguale a 2 × PRICE l'offerta pacchetto non viene mostrata.
   PAIR_PRICE: 78,
 
   // Link di pagamento Stripe (Payment Link). Se è vuoto, l'ordine arriva su Netlify e mandi tu il link di pagamento su WhatsApp.

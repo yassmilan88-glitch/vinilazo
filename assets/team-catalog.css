@@ -574,3 +574,23 @@ body:not(.vz-catalog-mode) .hero-copy .vz-sub-extra[hidden]{display:none!importa
 .vz-choice-orb{background:#06132a!important;animation:none!important;transform:none!important}
 .vz-choice .vz-choice-orb-mark{width:100%!important;height:100%!important;border-radius:50%;overflow:hidden!important;filter:none!important}
 .vz-choice .vz-choice-orb-mark .vz-trophy-asset{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover;display:block;transform:none!important;filter:none!important}
+
+/* Prezzo nel primo schermo della home */
+.vz-catalog-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin:20px 0 0;font:600 15px/1.35 system-ui,sans-serif;color:#d2e1f4}
+.vz-catalog-price strong{font:900 34px/1 system-ui,sans-serif;color:#fff;letter-spacing:-.01em}
+.vz-catalog-price del{font-size:19px;opacity:.6;text-decoration-thickness:2px}
+.vz-catalog-price span{flex-basis:100%;color:#98ceff}
+@media(max-width:720px){.vz-catalog-price{margin-top:16px}.vz-catalog-price strong{font-size:30px}}
+
+/* Barra fissa della home: prezzo + scegli la squadra */
+.vz-home-bar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(4,11,24,.96);box-shadow:0 -6px 24px rgba(0,0,0,.4);border-top:1px solid rgba(152,206,255,.25);transform:translateY(110%);transition:transform .25s ease;visibility:hidden}
+.vz-home-bar.is-visible{transform:none;visibility:visible}
+.vz-home-bar-price{display:grid;grid-template-columns:auto auto;align-items:baseline;column-gap:8px;margin:0;color:#fff;font:600 13px/1.2 system-ui,sans-serif}
+.vz-home-bar-price del{opacity:.6;font-size:14px}
+.vz-home-bar-price strong{font:900 24px/1 system-ui,sans-serif}
+.vz-home-bar-price small{grid-column:1/-1;color:#98ceff;font-size:12px;margin-top:3px}
+.vz-home-bar-btn{flex:0 0 auto;min-height:46px;padding:10px 16px;border:0;border-radius:999px;background:#6fa9dc;color:#06142a;font:800 16px/1.2 system-ui,sans-serif;cursor:pointer;white-space:nowrap}
+.vz-home-bar-btn:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media(min-width:721px){.vz-home-bar{left:50%;right:auto;bottom:16px;width:min(560px,calc(100% - 32px));transform:translate(-50%,140%);border:1px solid rgba(152,206,255,.25);border-radius:18px;padding:10px 12px 10px 18px}.vz-home-bar.is-visible{transform:translate(-50%,0)}}
+@media(prefers-reduced-motion:reduce){.vz-home-bar{transition:none}}
+body.vz-modal-open .vz-home-bar{visibility:hidden!important;pointer-events:none!important}

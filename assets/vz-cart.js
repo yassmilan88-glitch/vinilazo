@@ -13,7 +13,7 @@
   var t = W[lang] || W.it;
   var KEY = 'vinilazo-cart', MAX = 6;
   var CFG = window.VINILAZO_CONFIG || {};
-  var PRICE = CFG.PRICE || 49, PAIR = Number(CFG.PAIR_PRICE) || PRICE * 2;
+  var PRICE = CFG.PRICE || 39, PAIR = Number(CFG.PAIR_PRICE) || PRICE * 2;
   var memory = [];
   var argentinaPage = /\/argentina\/?$/.test(location.pathname);
   var base = argentinaPage ? '../' : './';

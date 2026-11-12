@@ -123,6 +123,16 @@ var main=make('main','vz-catalog');main.id='vz-catalog-main';
 var hero=make('section','vz-catalog-hero');
 var left=make('div','vz-hero-left');
 left.append(make('p','vz-kicker',t.eyebrow),make('h1','vz-catalog-title',t.title),make('p','vz-catalog-description',t.intro));
+// Prezzo subito visibile: chi arriva dalle pubblicità deve vederlo prima di scegliere la squadra.
+(function(){
+ var cfg=window.VINILAZO_CONFIG||{},price=Number(cfg.PRICE)||0,oldPrice=Number(cfg.OLD_PRICE)>price?Number(cfg.OLD_PRICE):0;if(!price)return;
+ var ship={it:'Spedizione inclusa in tutto il mondo',es:'Envío incluido a todo el mundo',fr:'Livraison incluse dans le monde entier',en:'Shipping included worldwide',de:'Versand weltweit inklusive'}[locale]||'Spedizione inclusa in tutto il mondo';
+ function euro(n){try{return new Intl.NumberFormat(locale,{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n)}catch(e){return n+' €'}}
+ var line=make('p','vz-catalog-price');
+ if(oldPrice)line.append(make('del','',euro(oldPrice)));
+ line.append(make('strong','',euro(price)),make('span','',ship));
+ left.append(line);
+})();
 var choose=make('div','vz-choose');choose.id='vz-choose';
 choose.append(make('h2','vz-choose-heading',t.choose));
 var choices=make('div','vz-choices');
@@ -617,4 +627,30 @@ if(navLinks){
 }
 if(location.hash==='#vz-nazionali')openGroup('nat');
 if(location.hash==='#vz-club')openGroup('club');
+// Barra in basso con prezzo e invito a scegliere la squadra: la home è lunga e
+// chi scorre deve sempre avere il prezzo e un pulsante a portata di pollice.
+(function(){
+ var cfg=window.VINILAZO_CONFIG||{},price=Number(cfg.PRICE)||0,oldPrice=Number(cfg.OLD_PRICE)>price?Number(cfg.OLD_PRICE):0;
+ if(!price||!('IntersectionObserver' in window))return;
+ var w={it:['Spedizione inclusa','Scegli la squadra'],es:['Envío incluido','Elige tu equipo'],fr:['Livraison incluse','Choisir mon équipe'],en:['Shipping included','Choose your team'],de:['Versand inklusive','Team wählen']}[locale]||['Spedizione inclusa','Scegli la squadra'];
+ function euro(n){try{return new Intl.NumberFormat(locale,{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n)}catch(e){return n+' €'}}
+ var homeBar=make('div','vz-home-bar');homeBar.setAttribute('aria-hidden','true');
+ var info=make('p','vz-home-bar-price');
+ if(oldPrice)info.append(make('del','',euro(oldPrice)));
+ info.append(make('strong','',euro(price)),make('small','',w[0]));
+ var go=make('button','vz-home-bar-btn',w[1]+' →');go.type='button';go.tabIndex=-1;
+ go.addEventListener('click',function(){
+  var target=!stage.hidden?stage:choose;
+  target.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+ });
+ homeBar.append(info,go);document.body.append(homeBar);
+ var seen=new Set();
+ var io=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting)seen.add(e.target);else seen.delete(e.target)});
+  var show=seen.size===0;
+  homeBar.classList.toggle('is-visible',show);homeBar.setAttribute('aria-hidden',show?'false':'true');go.tabIndex=show?0:-1;
+ },{threshold:0.15});
+ io.observe(choose);io.observe(stage);
+ var heroPrice=document.querySelector('.vz-catalog-price');if(heroPrice)io.observe(heroPrice);
+})();
 })();
