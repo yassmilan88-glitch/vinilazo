@@ -1,6 +1,7 @@
 const json=(body,status=200)=>new Response(JSON.stringify(body),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store','Referrer-Policy':'no-referrer'}});
-// Stessa regola di create-checkout: ogni coppia 2 × 62,10 €, pezzo dispari 69 €, massimo 6 pezzi.
-export const totalFor=(n)=>Math.floor(n/2)*12420+(n%2)*6900;
+import { pricing } from './lib/commerce.mjs';
+// Stessa regola di create-checkout (prezzi in lib/commerce.mjs), massimo 6 pezzi.
+export const totalFor=(n)=>pricing(n,false).goods;
 export function purchaseFrom(s){
  const m=s.metadata||{},n=Number(m.quantity);
  if(s.livemode!==true||s.status!=='complete'||s.payment_status!=='paid'||!/^VZ-[A-F0-9]{16}$/.test(m.order_reference||'')||!Number.isInteger(n)||n<1||n>6||s.currency!=='eur'||s.amount_total!==totalFor(n))return {paid:false};

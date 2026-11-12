@@ -1,12 +1,12 @@
 import { normalizeWishes, wishesText } from './lib/goal-wishes.mjs';
 import { createHash } from 'node:crypto';
 import teams from './teams.json' with { type: 'json' };
-import { campaign, reserve, pricing, store, digest } from './lib/commerce.mjs';
+import { campaign, reserve, pricing, store, digest, UNIT_CENTS, PAIR_CENTS } from './lib/commerce.mjs';
 const SITE = 'https://vinilazo.eu';
 const ALLOWED_ORIGINS = new Set([SITE, 'https://www.vinilazo.eu', 'https://vinilazo.netlify.app']);
 const json = (body, status = 200) => new Response(JSON.stringify(body), {status, headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
-// Carrello: fino a 6 pezzi, anche squadre diverse. Ogni coppia costa 78 € (39 € ciascuno); un pezzo dispari costa 49 €.
-export const MAX_ITEMS = 6, UNIT = 4900, PAIR_UNIT = 3900;
+// Carrello: fino a 6 pezzi, anche squadre diverse. Prezzi da lib/commerce.mjs (39 € l'uno, nessuno sconto coppia).
+export const MAX_ITEMS = 6, UNIT = UNIT_CENTS, PAIR_UNIT = PAIR_CENTS / 2;
 export const totalFor = (n) => Math.floor(n / 2) * PAIR_UNIT * 2 + (n % 2) * UNIT;
 // Accetta il nuovo formato {items:[{teamId,qty}]} e quello vecchio {qty,teamId,secondTeamId}.
 export function normalizeItems(order) {
@@ -120,7 +120,8 @@ export default async function handler(request) {
     params.set(`line_items[${i}][price_data][unit_amount]`,String(line.unit));
     params.set(`line_items[${i}][price_data][tax_behavior]`,'inclusive');
     params.set(`line_items[${i}][price_data][product_data][name]`,`VINILAZO · ${teams[line.id]}`);
-    params.set(`line_items[${i}][price_data][product_data][description]`,line.unit===PAIR_UNIT?'Offerta 2 pezzi: 62,10 euro ciascuno. Spedizione inclusa.':'Spedizione inclusa.');
+    const pairDeal = PAIR_UNIT < UNIT && line.unit === PAIR_UNIT;
+    params.set(`line_items[${i}][price_data][product_data][description]`,pairDeal?`Offerta 2 pezzi: ${(PAIR_UNIT/100).toFixed(2).replace('.',',')} euro ciascuno. Spedizione inclusa.`:'Spedizione inclusa.');
   });
   params.set('payment_intent_data[metadata][order_reference]',reference);
   // Shipping details typed on the site, kept with the payment for the confirmation messages (optional, never blocks the payment).

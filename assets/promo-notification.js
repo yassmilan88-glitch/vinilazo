@@ -43,7 +43,11 @@
     var link = document.createElement("a");
     link.className = "vz-promo-notice-link";
     link.href = href;
-    link.setAttribute("aria-label", copy.title + ", 69 euro barrati, 49 euro, " + copy.ship);
+    var cfg = window.VINILAZO_CONFIG || {};
+    var price = Number(cfg.PRICE) || 39;
+    var oldPrice = Number(cfg.OLD_PRICE) > price ? Number(cfg.OLD_PRICE) : 0;
+    function euro(n) { try { return new Intl.NumberFormat(lang, { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n); } catch (e) { return n + " €"; } }
+    link.setAttribute("aria-label", copy.title + ", " + (oldPrice ? euro(oldPrice) + " → " : "") + euro(price) + ", " + copy.ship);
     link.innerHTML =
       '<svg class="vz-promo-notice-icon" viewBox="0 0 48 48" aria-hidden="true">' +
         '<rect x="1" y="1" width="46" height="46" rx="13" fill="#6fa9dc"/>' +
@@ -55,12 +59,15 @@
       '</svg>' +
       '<span class="vz-promo-notice-copy">' +
         '<span class="vz-promo-notice-top"><strong class="vz-promo-notice-title"></strong><span class="vz-promo-notice-time"></span></span>' +
-        '<span class="vz-promo-notice-price"><del>69 €</del><strong>49 €</strong></span>' +
+        '<span class="vz-promo-notice-price"><del></del><strong></strong></span>' +
         '<span class="vz-promo-notice-shipping"></span>' +
       '</span>';
     link.querySelector(".vz-promo-notice-title").textContent = copy.title;
     link.querySelector(".vz-promo-notice-time").textContent = copy.time;
     link.querySelector(".vz-promo-notice-shipping").textContent = copy.ship;
+    var oldEl = link.querySelector(".vz-promo-notice-price del");
+    if (oldPrice) oldEl.textContent = euro(oldPrice); else oldEl.remove();
+    link.querySelector(".vz-promo-notice-price strong").textContent = euro(price);
 
     var close = document.createElement("button");
     close.className = "vz-promo-notice-close";

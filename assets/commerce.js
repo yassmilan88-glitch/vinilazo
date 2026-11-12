@@ -14,7 +14,8 @@
   var api = window.VZCommerce = {
     copy:copy, ready:false,
     launch:function(){return false;},
-    goods:function(n){return (Math.floor(n/2)*7800 + (n%2)*4900)/100;},
+    // Prezzi da config.js, calcolati in centesimi (stessa regola del server).
+    goods:function(n){var c=window.VINILAZO_CONFIG||{},u=Math.round((Number(c.PRICE)||39)*100),p=Math.round((Number(c.PAIR_PRICE)||0)*100);if(!(p>0&&p<u*2))p=u*2;return (Math.floor(n/2)*p + (n%2)*u)/100;},
     method:function(){var el=document.getElementById('vz-payment-method');return el ? el.value : 'online';},
     iso:function(){var c=document.getElementById('f-country');return c && c.selectedOptions[0] ? c.selectedOptions[0].dataset.iso : '';},
     fee:function(){return api.method()==='cod' ? ({IT:4,FR:8,CH:14}[api.iso()] || 0) : 0;},

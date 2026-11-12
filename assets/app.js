@@ -3,11 +3,14 @@
   "use strict";
   var DATA = JSON.parse(document.getElementById("data").textContent);
   var CFG = window.VINILAZO_CONFIG || {};
-  var PRICE = CFG.PRICE || 49;
+  var PRICE = CFG.PRICE || 39;
+  var OLD_PRICE = Number(CFG.OLD_PRICE) > PRICE ? Number(CFG.OLD_PRICE) : 0;
   var T = DATA.t;
   var CHECKOUT = DATA.checkout;
   var STORE = DATA.store;
   var PAIR_PRICE = Number(CFG.PAIR_PRICE) > 0 && Number(CFG.PAIR_PRICE) < PRICE * 2 ? Number(CFG.PAIR_PRICE) : PRICE * 2;
+  // Offerta pacchetto solo se c'è davvero uno sconto sui 2 pezzi.
+  var PAIR_DEAL = PAIR_PRICE < PRICE * 2;
   var checkoutReady = false;
   var COM = window.VZCommerce;
   var MAX_QTY = CFG.STRIPE_LINK ? Math.max(1, Math.min(10, Number(CFG.STRIPE_MAX_QTY) || 1)) : 10;
@@ -677,7 +680,7 @@
     if (submitting) return;
     updateSummary();
     var f = $('#order-form'); if (f) f.elements.totale.value = fmt(total());
-    $$('.bundle-offer, .gift-pair').forEach(function(el){ el.hidden = COM.launch() || !checkoutReady; });
+    $$('.bundle-offer, .gift-pair').forEach(function(el){ el.hidden = COM.launch() || !checkoutReady || !PAIR_DEAL; });
   });
   if ($("#f-custom")) $("#f-custom").addEventListener("change", function () {
     var on = custom();
@@ -688,7 +691,8 @@
     setQty(qty);
   });
   /* prezzo da config.js (spedizione inclusa) */
-  $$("[data-price]").forEach(function (el) { el.replaceChildren(); var old = document.createElement("del"); old.className = "vz-old-price"; old.textContent = fmt(69); el.append(old, document.createTextNode(" " + fmt(PRICE))); });
+  $$("[data-price]").forEach(function (el) { el.replaceChildren(); if (OLD_PRICE) { var old = document.createElement("del"); old.className = "vz-old-price"; old.textContent = fmt(OLD_PRICE); el.append(old, document.createTextNode(" ")); } el.append(document.createTextNode(fmt(PRICE))); });
+  $$("[data-old-price]").forEach(function (el) { if (OLD_PRICE) el.setAttribute("data-old-price", fmt(OLD_PRICE)); else el.removeAttribute("data-old-price"); });
   $$("[data-price-cta]").forEach(function (el) { el.textContent = T.cta.replace(/\d+\s?€|€\s?\d+/, fmt(PRICE)); });
   $$("[data-qty]").forEach(function (b) { b.addEventListener("click", function () { setQty(qty + Number(b.dataset.qty)); }); });
 
@@ -736,7 +740,7 @@
     fetch(CFG.CHECKOUT_ENDPOINT, typeof AbortSignal.timeout === "function" ? {signal:AbortSignal.timeout(5000)} : {}).then(function (r) { if (!r.ok) throw new Error("unavailable"); return r.json(); }).then(function (state) {
       if (state.ready !== true || submitting) return;
       checkoutReady = true; MAX_QTY = 2;
-      $$(".bundle-offer, .gift-pair").forEach(function (el) { el.hidden = COM.launch(); });
+      $$(".bundle-offer, .gift-pair").forEach(function (el) { el.hidden = COM.launch() || !PAIR_DEAL; });
       $("#qty-out").parentElement.hidden = false; setQty(qty);
     }).catch(function () {});
   }
